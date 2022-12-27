@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus'
 let loadingObj = null
 const Service = axios.create({
     timeout:8000,
-    baseURL:"http://123.249.26.49:8082/api/",
+    baseURL:"/api/",
     headers:{
         "Content-type":"application/json;chartset=utf-8"
     }
@@ -43,7 +43,7 @@ export const post = config =>{
     return Service({
         ...config,
         method:"post",
-    
+
     })
 }
 //get请求
