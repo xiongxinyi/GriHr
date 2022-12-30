@@ -49,10 +49,23 @@ import { useRouter } from "vue-router";
 const login = async (id) => {
   const result = await axios.post("http://123.249.26.49:8082/api/user/login",{
     id:id,
-      });
+      })
   console.log(result);
   localStorage.setItem("token",result.data.token)
+  localStorage.setItem("name",result.data.username)
+  // localStorage.setItem("usercode",result.data.usercode) 
+  // 获取用户权限和部门
+  const res = await axios.get("http://123.249.26.49:8082/api/user/getrole",{
+    params:{
+      usercode:result.data.usercode,
+    }
+      });
+  console.log(res)
+  localStorage.setItem("role",res.data.role)
+  localStorage.setItem("dept",res.data.dept)
+  window.location.reload()
   };
+
 export default {
   name: "login",
   setup() {
@@ -72,11 +85,12 @@ export default {
       login(id)
       store.commit('setUserInfo',data.loginData);
       localStorage.setItem("loginData",JSON.stringify(data.loginData))
-      //跳转/users 
+      //跳转
       router.push({
-        path:"/users"
+        path:"/application"
       })
     }
+
     //vuex更改语法
     //   console.log("修改前getters",store.getters["number/countStatus"])
     //   const handleLogin=()=>{

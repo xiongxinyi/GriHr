@@ -10,7 +10,8 @@ export default{
         return state.count<=1
       }
     },
-  // 更新状态的方法-更新state的唯一方法，commit mutations,用的时候store commit 方法名字
+  // 更新状态的方法-更新state的唯一方法，
+  // commit mutations,用的时候store commit 方法名字，里面的方法不可以异步操作，不可以return promise
     mutations: {
       setCount(state,num){
         state.count=num

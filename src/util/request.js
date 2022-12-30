@@ -162,3 +162,34 @@ export const updateSalaryApi=(data)=>{
         data
     })
 }
+/**
+ * 2022.12.30
+ */
+//创建新申请表
+export const createApplicationApi=(data)=>{
+    return post({
+        url: "application/insert",
+        data
+    })
+}
+//查询个人申请表
+export const myApplicationApi=(data)=>{
+    return get({
+        url: "application/get",
+        data
+    })
+}
+//查询待审批申请单
+export const approveApi=(data)=>{
+    return get({
+        url: "application/approvalget",
+        data
+    })
+}
+//人力审批
+export const auditApi=(data)=>{
+    return post({
+        url: "application/audit",
+        data
+    })
+}

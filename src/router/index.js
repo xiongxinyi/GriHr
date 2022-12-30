@@ -46,11 +46,26 @@ const routes = [
         name:"salary",
         component:()=>import("../views/pages/salaryList.vue")
       },
-      // {
-      //   path:"/roles",
-      //   name:"roles",
-      //   component:()=>import("../views/pages/rolesList.vue")
-      // },
+      {
+        path:"/audit",
+        name:"audit",
+        component:()=>import("../views/pages/audit.vue")
+      },
+      {
+        path:"/application",
+        name:"application",
+        component:()=>import("../views/pages/application.vue")
+      },
+      {
+        path:"/checkApplication",
+        name:"checkAplication",
+        component:()=>import("../views/pages/checkApplication.vue")
+      },
+      {
+        path:"/checkEveryone",
+        name:"checkEveryone",
+        component:()=>import("../views/pages/checkEveryone.vue")
+      },
     ]
   }
 ]
@@ -77,5 +92,5 @@ router.beforeEach((to,from,next)=>{
     next()
   }
 })
-// 暴露路由对象
+//暴露路由对象
 export default router

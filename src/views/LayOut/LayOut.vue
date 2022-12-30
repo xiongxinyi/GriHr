@@ -1,73 +1,38 @@
 <template>
   <div class="common-layout">
-
     <el-container>
-
       <el-header class="common-header flex-float">
-
         <div class="flex">
           <img class="logo" src="../../assets/logo1.jpg" alt="" />
           <h1 class="title">社招人员信息管理系统</h1>
         </div>
-
-        <el-button type="danger" @click="loginOut">退出</el-button>
+        <!-- 头像 -->
+          <el-avatar style="position: relative; left: 620px" 
+          shape="square" :size="50"> {{ name }} </el-avatar>
+        <!-- 退出按钮 -->
+        <el-button type="danger" @click="loginOut">退出登录</el-button>
       </el-header>
 
       <el-container>
-
-        <el-aside class="common-aside" width="140px">
+        <el-aside class="common-aside" width="160px">
           <el-menu background-color="none" text-color="#fff" :router="true">
 
-            <el-sub-menu index="1">
-              <template #title>
-                <el-icon><Avatar /></el-icon>
-                <span>基础信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/users">基础信息列表</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
+            <el-menu-item index="/application">
+              <el-icon><List /></el-icon>
+                <span>查询个人申请表</span>
+              </el-menu-item>
 
-            <el-sub-menu index="2">
-              <template #title>
-                <el-icon><Box /></el-icon>
-                <span>教育信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/education">教育信息列表</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
+              <el-menu-item index="/audit">
+              <el-icon><Checked /></el-icon>
+                <span>审批审核</span>
+              </el-menu-item>
 
-            <el-sub-menu index="3">
-              <template #title>
-                <el-icon><Grid /></el-icon>
-                <span>岗级信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/job">岗级信息列表</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
 
-            <el-sub-menu index="4">
-              <template #title>
-                <el-icon><DataLine /></el-icon>
-                <span>绩效信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/performance">绩效信息列表</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
+            <el-menu-item index="/checkEveryone">
+              <el-icon><Avatar /></el-icon>
+                <span>查看部门所有人</span>
+            </el-menu-item>
 
-            <el-sub-menu index="5">
-              <template #title>
-                <el-icon><Wallet /></el-icon>
-                <span>工资信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="/salary">工资信息列表</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
-          
           </el-menu>
         </el-aside>
 
@@ -75,38 +40,53 @@
           <!--router-view-->
           <router-view></router-view>
         </el-main>
-
       </el-container>
     </el-container>
-
   </div>
 </template>
 <script>
-import { useStore } from "vuex"
-import { useRouter } from "vue-router"
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
-  name:"layOut",
-  setup(){
-    const store = useStore()
-    const router = useRouter()
-    const loginOut=()=>{
-      localStorage.removeItem("loginData")
-      store.commit('setUserInfo',{})
+  name: "layOut",
+  setup() {
+    const name = localStorage.getItem("name");
+    const store = useStore();
+    const router = useRouter();
+    const loginOut = () => {
+      localStorage.removeItem(
+        "dept",
+        "loginData",
+        "usercode",
+        "role",
+        "name",
+        "token"
+      );
+      localStorage.removeItem("loginData");
+      localStorage.removeItem("usercode");
+      localStorage.removeItem("role");
+      localStorage.removeItem("name");
+      localStorage.removeItem("token");
+      store.commit("setUserInfo", {});
       router.push({
-        path:"./login"
-      })
-    }
-    return{
-      loginOut
-    }
-  }
+        path: "./login",
+      });
+    };
+    return {
+      loginOut,
+      name,
+    };
+  },
 };
 </script>
 <style>
 .el-container {
   height: 100vh;
   overflow: hidden;
+}
+.avatar-container {
+  position: relative;
 }
 .common-header {
   background: rgb(39, 45, 53);
