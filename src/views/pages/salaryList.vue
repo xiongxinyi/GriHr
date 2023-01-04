@@ -1,4 +1,3 @@
-
 <template>
   <div>
   <!-- 面包屑 -->
@@ -70,9 +69,7 @@
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
-    <el-form ref="salaryForm" :model="data.formData"
-      :rules="rules"
-    >
+    <el-form :rules="rules" ref="salaryForm" :model="data.formData">
         <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.formData.wageDate" placeholder="请输入工资发放年月" />
         </el-form-item>
@@ -127,8 +124,8 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted} from "vue";
-import { salaryListApi,deleteSalaryApi,addSalaryApi,updateSalaryApi} from "@/util/request";
+import { reactive, ref, toRefs ,onMounted } from "vue";
+import { salaryListApi,deleteSalaryApi,addSalaryApi,updateSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -139,7 +136,7 @@ import { ElMessage } from "element-plus";
       dialogFormVisible:false,
       id:'',
       KeyWord:"",
-      title:"新增员工工资信息",
+      title:"",
       searchParams:{
         dept:"",
         pagesize:5,
@@ -164,14 +161,6 @@ import { ElMessage } from "element-plus";
       },
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
-        userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
-        idCard: [{
-            requried:false,
-            pattern:
-              /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-            message: "请填写正确的身份证号",
-            trigger: "blur",
-          },],
       }
     });
 

@@ -6,8 +6,7 @@
         :model="loginData"
         label-width="100px"
         class="demo-dynamic">
-      
- 
+
 <!-- 员工编号 -->
         <el-form-item
           prop="username"

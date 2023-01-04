@@ -49,9 +49,7 @@
      @current-change="pageChange"
      />
     </div>
-  <el-dialog
-    v-model="data.deleteDialog"
-    width="30%">
+  <el-dialog v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
@@ -63,9 +61,7 @@
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
-    <el-form ref="jobForm" :model="data.formData"
-      :rules="rules"
-    >
+    <el-form ref="jobForm" :model="data.formData" :rules="rules">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
@@ -117,7 +113,7 @@ import { ElMessage } from "element-plus";
       dialogFormVisible:false,
       id:'',
       KeyWord:"",
-      title:"新增员工岗级信息",
+      title:"",
       searchParams:{
         dept:"",
         pagesize:5,
@@ -138,13 +134,6 @@ import { ElMessage } from "element-plus";
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
         userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
-        idCard: [{
-            requried:false,
-            pattern:
-              /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-            message: "请填写正确的身份证号",
-            trigger: "blur",
-          },],
       }
     });
 

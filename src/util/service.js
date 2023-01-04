@@ -23,10 +23,10 @@ Service.interceptors.request.use(config=>{
 //响应拦截-对返回值做统一处理
 Service.interceptors.response.use(response=>{
         loadingObj.close()
-       const data = response.data
+        const data = response.data
         // if(!data.data){
-        //     ElMessage.error(data.meta.msg||"服务器错误")
         //     //请求出错
+        //     ElMessage.error(data.meta.msg||"服务器错误")   
         //     return data
         // }
         return data

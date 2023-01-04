@@ -59,8 +59,7 @@
     <!-- <div v-for="item in arr" :key="item">{{ item.name }} {{ item.nation }}</div>
   </div> -->
   <el-dialog
-    v-model="data.deleteDialog"
-    width="30%">
+    v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
@@ -72,19 +71,35 @@
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
-    <el-form ref="userForm" :model="data.formData"
-      :rules="rules"
-    >
-        <el-form-item label="姓名" prop="name">
+    <el-form :model="data.formData" ref="userForm" >
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-input v-model="data.formData.sex" placeholder="请输入性别" />
         </el-form-item>
-        <el-form-item label="员工号" prop="userCode">
+        <el-form-item label="员工号" prop="userCode" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
@@ -138,7 +153,7 @@ import { ElMessage } from "element-plus";
       dialogFormVisible:false,
       id:'',
       KeyWord:"",
-      title:"新增员工基础信息",
+      title:"",
       searchParams:{
         dept:"",
         pagesize:5,
@@ -160,17 +175,17 @@ import { ElMessage } from "element-plus";
         joinTime:"",
         state:"",
       },
-      rules:{
-        name:[{required:true,message:"此项为必填项",trigger:"blur"}],
-        userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
-        idCard: [{
-            requried:false,
-            pattern:
-              /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-            message: "请填写正确的身份证号",
-            trigger: "blur",
-          },],
-      }
+      // rules:{
+      //   name:[{required:true,message:"此项为必填项",trigger:"blur"}],
+      //   userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
+        // idCard:[{
+        //     requried:false,
+        //     pattern:
+        //       /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+        //     message: "请填写正确的身份证号",
+        //     trigger: "blur",
+        //   },],
+      // }
     });
 
     onMounted(() => {
@@ -190,7 +205,7 @@ import { ElMessage } from "element-plus";
     const userAllget = async() => {
       const result = await userListApi(data.searchParams);
       data.userList = result.data
-      data.total = result.total
+      data.total =  result.total
     }
 
     const searchUser = async() => {
