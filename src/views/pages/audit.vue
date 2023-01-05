@@ -9,7 +9,6 @@
     <div class="page_content">
       <div class="flex">
         <el-button type="primary">待审核</el-button>
-        <el-button type="primary">已审核</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -24,9 +23,10 @@
         <el-table-column prop="type" label="审批类型" width="100" />
         <el-table-column prop="handle" label="操作" width="100" />
         <el-table-column prop="createtime" label="创建时间" width="100" />
-        <el-table-column prop="data" label="查看申请信息">
+        <el-table-column prop="data" label="查看申请信息 审核">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
+            <el-button type="primary" @click="infoCheck(scope.row)">审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -40,6 +40,7 @@
         @current-change="pageChange"
       />
     </div>
+    <!-- 提交申请提示框 -->
     <el-dialog v-model="data.deleteDialog" width="30%">
       <span>请确认是否提交申请?</span>
       <template #footer>
@@ -49,8 +50,18 @@
         </span>
       </template>
     </el-dialog>
+    <!-- 审核是否同意提示框 -->
+    <el-dialog v-model="data.agreeDialog" width="30%">
+      <span>审核是否同意?</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="data.agreeDialog = false">不同意</el-button>
+          <el-button type="primary" @click="agreeUser">同意</el-button>
+        </span>
+      </template>
+    </el-dialog>
     <!-- 弹窗 -->
-    <el-dialog v-model="data.infoVisible" title="我申请的信息">
+    <el-dialog v-model="data.infoVisible" title="查看申请的信息">
     <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
         <el-table-column prop="id" label="ID" width="60" />
@@ -81,7 +92,7 @@ import { ElMessage } from "element-plus";
 */
 const data = reactive({
   deleteId: null,
-  deleteDialog: false,
+  agreeDialog: false,
   dialogFormVisible: false,
   infoVisible:false,
   id: "",
@@ -184,17 +195,7 @@ const addUser = (flag, userId, userInfo) => {
 const infoCheck = (user) => {
 
   data.infoVisible = true;
-  data.userCheck = user.data
- 
-  // if (flag === 1) {
-  //   data.id = null;
-  //   data.title = "申请表";
-  //   data.formData = {};
-  // } else {
-  //   data.id = userId;
-  //   data.title = "修改员工基础信息";
-  //   Object.assign(data.formData, userInfo);
-  // }
+  data.userCheck = user.data;
 };
 
 const submitForm = async () => {

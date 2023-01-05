@@ -57,11 +57,6 @@ const routes = [
         component:()=>import("../views/pages/application.vue")
       },
       {
-        path:"/checkApplication",
-        name:"checkAplication",
-        component:()=>import("../views/pages/checkApplication.vue")
-      },
-      {
         path:"/checkEveryone",
         name:"checkEveryone",
         component:()=>import("../views/pages/checkEveryone.vue")
