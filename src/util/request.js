@@ -7,17 +7,17 @@ export const userListApi=(params)=>{
         params
     })
 }
+//基础信息usersList-按身份证号查询
+export const searchUserApi=(params)=>{
+  return get({
+      url: "user/get",
+      params
+  })
+}
 //基础信息usersList-删除
 export const deleteUserApi=(params)=>{
     return deletex({
         url: "user/delete",
-        params
-    })
-}
-//基础信息usersList-按身份证号查询
-export const searchUserApi=(params)=>{
-    return get({
-        url: "user/get",
         params
     })
 }

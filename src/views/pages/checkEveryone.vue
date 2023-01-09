@@ -10,7 +10,7 @@
       <div class="flex">
         <div class="input_box">
           <el-input
-            v-model="data.searchParams.dept"
+            v-model="data.searchParams.idCard"
             placeholder="搜索关键字"
             class="input-with-select">
             <template #append>
@@ -155,7 +155,7 @@ import { ElMessage } from "element-plus";
       KeyWord:"",
       title:"",
       searchParams:{
-        dept:"",
+        idCard:"",
         pagesize:5,
         pagenum:1
       },
@@ -210,7 +210,7 @@ import { ElMessage } from "element-plus";
 
     const searchUser = async() => {
       const result = await searchUserApi(data.searchParams);
-      if(!data.searchParams.dept){
+      if(!data.searchParams.idCard){
         userAllget()
       }else{
         if(result.code === 200){

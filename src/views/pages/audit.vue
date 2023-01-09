@@ -99,7 +99,7 @@ const data = reactive({
   KeyWord: "",
   title: "申请表",
   searchParams: {
-    dept: "",
+    idCard: "",
     pagesize: 5,
     pagenum: 1,
   },
@@ -154,7 +154,7 @@ const applicationget = async () => {
 
 const searchUser = async () => {
   const result = await searchUserApi(data.searchParams);
-  if (!data.searchParams.dept) {
+  if (!data.searchParams.idCard) {
     userAllget();
   } else {
     if (result.code === 200) {

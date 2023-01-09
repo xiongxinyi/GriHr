@@ -165,7 +165,7 @@ const data = reactive({
   KeyWord: "",
   title: "申请表",
   searchParams: {
-    dept: "",
+    idCard: "",
     pagesize: 5,
     pagenum: 1,
   },
