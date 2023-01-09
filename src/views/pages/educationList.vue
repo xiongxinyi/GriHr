@@ -10,7 +10,7 @@
       <div class="flex">
         <div class="input_box">
           <el-input
-            v-model="data.searchParams.name"
+            v-model="data.searchParams.idCard"
             placeholder="搜索关键字"
             class="input-with-select">
             <template #append>
@@ -114,7 +114,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs ,onMounted} from "vue";
-import { eduListApi,deleteEduApi,searchEduApi,addEduApi,updateEduApi} from "@/util/request";
+import { eduListApi, deleteEduApi, searchEduApi, addEduApi, updateEduApi} from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -127,7 +127,7 @@ import { ElMessage } from "element-plus";
       KeyWord:"",
       title:"",
       searchParams:{
-        name:"",
+        idCard:"",
         pagesize:5,
         pagenum:1
       },
@@ -173,10 +173,10 @@ import { ElMessage } from "element-plus";
 
     const searchEdu = async() => {
       const result = await searchEduApi(data.searchParams);
-      if(!data.searchParams.name){
+      if(!data.searchParams.idCard){
         eduAllget()
       }else{
-        if(result.code === 200){
+        if(result.status === 200){
           data.eduList = result.data
           data.total = result.total
           eduAllget()

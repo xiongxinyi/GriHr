@@ -125,7 +125,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs ,onMounted } from "vue";
-import { salaryListApi,deleteSalaryApi,addSalaryApi,updateSalaryApi } from "@/util/request";
+import { salaryListApi, deleteSalaryApi, addSalaryApi, updateSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据

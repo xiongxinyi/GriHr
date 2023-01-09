@@ -31,6 +31,32 @@
               <el-icon><Avatar /></el-icon>
                 <span>查看部门所有人</span>
             </el-menu-item>
+            <!-- 信息模块 -->
+
+            <el-menu-item index="/users">
+              <el-icon><Box /></el-icon>
+                <span>基础信息</span>
+            </el-menu-item>
+
+            <el-menu-item index="/education">
+              <el-icon><Box /></el-icon>
+                <span>教育信息</span>
+            </el-menu-item>
+
+            <el-menu-item index="/job">
+              <el-icon><Box /></el-icon>
+                <span>岗级信息</span>
+            </el-menu-item>
+
+            <el-menu-item index="/performance">
+              <el-icon><Box /></el-icon>
+                <span>绩效信息</span>
+            </el-menu-item>
+
+            <el-menu-item index="/salary">
+              <el-icon><Box /></el-icon>
+                <span>工资信息</span>
+            </el-menu-item>
 
           </el-menu>
         </el-aside>

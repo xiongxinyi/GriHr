@@ -17,6 +17,21 @@ const routes = [
     //子路由/嵌套路由
     children:[
       {
+        path:"/audit",
+        name:"audit",
+        component:()=>import("../views/pages/audit.vue")
+      },
+      {
+        path:"/application",
+        name:"application",
+        component:()=>import("../views/pages/application.vue")
+      },
+      {
+        path:"/checkEveryone",
+        name:"checkEveryone",
+        component:()=>import("../views/pages/checkEveryone.vue")
+      },
+      {
         path:"/index",
         name:"index",
         component:()=>import("../views/pages/index.vue")
@@ -45,21 +60,6 @@ const routes = [
         path:"/salary",
         name:"salary",
         component:()=>import("../views/pages/salaryList.vue")
-      },
-      {
-        path:"/audit",
-        name:"audit",
-        component:()=>import("../views/pages/audit.vue")
-      },
-      {
-        path:"/application",
-        name:"application",
-        component:()=>import("../views/pages/application.vue")
-      },
-      {
-        path:"/checkEveryone",
-        name:"checkEveryone",
-        component:()=>import("../views/pages/checkEveryone.vue")
       },
     ]
   }
