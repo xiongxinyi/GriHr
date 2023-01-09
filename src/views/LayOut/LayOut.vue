@@ -27,7 +27,6 @@
                 <span>审批审核</span>
               </el-menu-item>
 
-
             <el-menu-item index="/checkEveryone">
               <el-icon><Avatar /></el-icon>
                 <span>查看部门所有人</span>
