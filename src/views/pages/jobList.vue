@@ -10,7 +10,7 @@
       <div class="flex">
         <div class="input_box">
           <el-input
-            v-model="data.searchParams.dept"
+            v-model="data.searchParams.idCard"
             placeholder="搜索关键字"
             class="input-with-select">
             <template #append>
@@ -27,6 +27,7 @@
         <el-table-column prop="id" label="" width="60" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="userCode" label="员工号" width="100" />
+        <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="job" label="岗位名称" width="100" />
         <el-table-column prop="jobType" label="工作类型" width="100" />
         <el-table-column prop="level" label="岗级" width="80" />
@@ -67,6 +68,9 @@
         </el-form-item>
         <el-form-item label="员工号" prop="userCode">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
+        </el-form-item>
+        <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="岗位名称" prop="job">
           <el-input v-model="data.formData.job" placeholder="请输入岗位名称" />
@@ -124,6 +128,7 @@ import { ElMessage } from "element-plus";
       formData:{
         name:"",
         userCode:"",
+        idCard:"",
         job:"",
         jobType:"",
         level:"",

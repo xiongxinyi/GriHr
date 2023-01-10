@@ -7,11 +7,14 @@ export const userListApi = (params) => {
         params
     })
 }
+
 //基础信息usersList-按身份证号查询
-export const searchUserApi = (params) => {
+export const searchUserApi = (idCard) => {
     return get({
         url: "user/get",
-        params
+        params:{
+            idcard:idCard
+        }
     })
 }
 //基础信息usersList-删除
@@ -45,10 +48,12 @@ export const eduListApi = (params) => {
     })
 }
 //教育信息educationList-按身份证号查询
-export const searchEduApi = (params) => {
+export const searchEduApi = (idCard) => {
     return get({
         url: "educate/get",
-        params
+        params:{
+            idcard:idCard
+        }
     })
 }
 //教育信息educationList-删除
@@ -82,6 +87,15 @@ export const jobListApi = (params) => {
         params
     })
 }
+//岗级信息jobList-按身份证号查询
+export const searchJobApi = (idCard) => {
+    return get({
+        url: "joblevel/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
 //岗级信息jobList-删除
 export const deleteJobApi = (params) => {
     return deletex({
@@ -112,6 +126,15 @@ export const performListApi = (params) => {
         params
     })
 }
+//绩效信息performList-按身份证号查询
+export const searchPerformApi = (idCard) => {
+    return get({
+        url: "performance/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
 //绩效信息performList-删除
 export const deletePerformApi = (params) => {
     return deletex({
@@ -140,6 +163,15 @@ export const salaryListApi = (params) => {
     return get({
         url: "salary/all",
         params
+    })
+}
+//工资信息salaryList-按身份证号查询
+export const searchSalaryApi = (idCard) => {
+    return get({
+        url: "salary/get",
+        params:{
+            idcard:idCard
+        }
     })
 }
 //工资信息salaryList-删除

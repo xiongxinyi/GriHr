@@ -48,15 +48,14 @@
         v-model:currentPage="data.searchParams.pagenum"
         v-model:page-size="data.searchParams.pagesize"
         :total="data.total"
-        @current-change="pageChange"
-      />
+        @current-change="pageChange" />
     </div>
     <!-- 弹窗 -->
     <el-dialog v-model="data.infoVisible" title="查看此员工信息">
       <!-- 查看员工基础、教育、岗级、绩效、工资五个模块的信息 -->
-      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="基础信息" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="基础信息" name="基础信息">
-          <el-table :data="data.userList" style="width: 100%">
+          <el-table :data="data.user" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="sex" label="性别" width="60" />
             <el-table-column prop="userCode" label="员工号" width="100" />
@@ -72,7 +71,7 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="教育信息" name="教育信息">
-          <el-table :data="data.eduList" style="width: 100%">
+          <el-table :data="data.edu" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
             <el-table-column prop="educateLevel" label="现文化程度" width="100" />
@@ -87,9 +86,10 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="岗级信息" name="岗级信息">
-          <el-table :data="data.jobList" style="width: 100%">
+          <el-table :data="data.job" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="userCode" label="员工号" width="100" />
+            <el-table-column prop="idCard" label="身份证号" width="180" />
             <el-table-column prop="job" label="岗位名称" width="100" />
             <el-table-column prop="jobType" label="工作类型" width="100" />
             <el-table-column prop="level" label="岗级" width="80" />
@@ -99,7 +99,7 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="绩效信息" name="绩效信息">
-          <el-table :data="data.performList" style="width: 100%">
+          <el-table :data="data.performance" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
             <el-table-column prop="department" label="部门" width="120" />
@@ -115,7 +115,7 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="工资信息" name="工资信息">
-          <el-table :data="data.salaryList" style="width: 100%">
+          <el-table :data="data.salary" style="width: 100%">
             <el-table-column prop="wageDate" label="工资发放年月" width="80" />
             <el-table-column prop="name" label="姓名" width="60" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
@@ -138,89 +138,126 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted } from "vue";
-import { userListApi, eduListApi, jobListApi, performListApi, salaryListApi} from "@/util/request";
+import { reactive, ref, toRefs, onMounted } from "vue";
+import { userListApi, searchUserApi, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
 import { ElMessage } from "element-plus";
-    /* 
-      定义数据
-    */
-    const data = reactive({
-      infoVisible:false,
-      id:'',
-      KeyWord:"",
-      searchParams:{
-        idCard:"",
-        pagesize:5,
-        pagenum:1
-      },
-      total:0,
-      userList:[],
-      eduList:[],
-      jobList:[],
-      performList:[],
-      salaryList:[],
-    });
+/* 
+  定义数据
+*/
+const data = reactive({
+  infoVisible: false,
+  id: "",
+  KeyWord: "",
+  idCard: "",
+  searchParams: {
+    idCard: "",
+    pagesize: 5,
+    pagenum: 1,
+  },
+  total: 0,
+  userList: [],
+  user:[],
+  edu: [],
+  job: [],
+  performance: [],
+  salary: [],
+});
 
-    onMounted(() => {
-      userAllget()
-    })
+onMounted(() => {
+  userAllget();
+});
 
-    const infoCheck = () => {
-        data.infoVisible = true
-       
-    }
+const infoCheck = (e) => {
+  data.user = []
+  data.idCard = e.idCard
+  userget(e.idCard)
+  eduget(e.idCard)
+  jobget(e.idCard)
+  performget(e.idCard)
+  salaryget(e.idCard)
+  data.infoVisible = true;
+};
 
-    const pageChange = (val) =>{
-        data.searchParams.pagenum = val
-        userAllget()
-    }
+const handleClick = (tab) => {
+  console.log(tab);
+  const label = tab.props?.label;
+  const idCard = data.idCard
+  console.log(label);
+  switch (label) {
+    case "基础信息":
+      userget(idCard)
+      break;
+    case "教育信息":
+      eduget(idCard)
+      break;
+    case "岗级信息":
+      jobget(idCard)
+      break;
+    case "绩效信息":
+      performget(idCard)
+      break;
+    case "工资信息":
+      salaryget(idCard)
+      break;
+  }
+};
 
-    const userAllget = async() => {
-      const result = await userListApi(data.searchParams);
-      data.userList = result.data
-      data.total =  result.total
-    }
+const userCheck = () => {
+  console.log(123);
+};
 
-    const eduAllget = async() => {
-      const result = await eduListApi(data.searchParams);
-      data.eduList = result.data
-      data.total = result.total
-    }
+const pageChange = (val) => {
+  data.searchParams.pagenum = val;
+  userAllget();
+};
 
-    const jobAllget = async() => {
-      const result = await jobListApi(data.searchParams);
-      data.jobList = result.data
-      data.total = result.total
-    }
+const userAllget = async () => {
+  const result = await userListApi(data.searchParams);
+  data.userList = result.data;
+  data.total = result.total;
+};
 
-    const performAllget = async () => {
-      const result = await performListApi(data.searchParams);
-      data.performList = result.data;
+const userget = async (idCard) => {
+  const result = await searchUserApi(idCard);
+  data.user = result.data;
+};
+
+const eduget = async (idCard) => {
+  const result = await searchEduApi(idCard);
+  console.log(result);
+  data.edu = result.data;
+};
+
+const jobget = async (idCard) => {
+  const result = await searchJobApi(idCard);
+  data.job = result.data;
+};
+
+const performget = async (idCard) => {
+  const result = await searchPerformApi(idCard);
+  data.performance = result.data;
+};
+
+const salaryget = async (idCard) => {
+  const result = await searchSalaryApi(idCard);
+  data.salary = result.data;
+};
+
+const searchUser = async () => {
+  const result = await searchUserApi(data.searchParams);
+  if (!data.searchParams.idCard) {
+    userAllget();
+  } else {
+    if (result.status === 200) {
+      data.userList = result.data;
       data.total = result.total;
+      userAllget();
+    } else {
+      data.userList = [];
+      data.total = 0;
     }
-
-    const salaryAllget = async() => {
-      const result = await salaryListApi(data.searchParams);
-      data.salaryList = result.data
-      data.total = result.total
-    }
-
-    const searchUser = async() => {
-      const result = await searchUserApi(data.searchParams);
-      if(!data.searchParams.idCard){
-        userAllget()
-      }else{
-        if(result.status === 200){
-          data.userList = result.data
-          data.total = result.total
-          userAllget()
-        }else{
-          data.userList = []
-          data.total = 0
-        }
-      }
-    }
-
+  }
+};
 </script>
 
 <style scoped>
