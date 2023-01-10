@@ -58,8 +58,7 @@
   </div> -->
     <!-- <div v-for="item in arr" :key="item">{{ item.name }} {{ item.nation }}</div>
   </div> -->
-  <el-dialog
-    v-model="data.deleteDialog" width="30%">
+  <el-dialog v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">

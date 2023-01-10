@@ -19,14 +19,14 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="process" label="流程数" width="80" />
-        <el-table-column prop="status" label="审批单所处状态" width="130" />
+        <el-table-column prop="status" label="审批单所处状态" width="140" />
         <el-table-column prop="type" label="审批类型" width="100" />
         <el-table-column prop="handle" label="操作" width="100" />
-        <el-table-column prop="createtime" label="创建时间" width="100" />
+        <el-table-column prop="createtime" label="创建时间" width="180" />
         <el-table-column prop="data" label="查看申请信息 审核">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
-            <el-button type="primary" @click="infoCheck(scope.row)">审核</el-button>
+            <el-button type="primary" @click="aduitUser(1)">审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -41,22 +41,22 @@
       />
     </div>
     <!-- 提交申请提示框 -->
-    <el-dialog v-model="data.deleteDialog" width="30%">
+    <el-dialog v-model="data.submitDialog" width="30%">
       <span>请确认是否提交申请?</span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.deleteDialog = false">否</el-button>
-          <el-button type="primary" @click="deleteUser">是</el-button>
+          <el-button @click="data.submitDialog = false">否</el-button>
+          <el-button type="primary" @click="submitUser">是</el-button>
         </span>
       </template>
     </el-dialog>
     <!-- 审核是否同意提示框 -->
-    <el-dialog v-model="data.agreeDialog" width="30%">
+    <el-dialog v-model="data.auditDialog" width="30%">
       <span>审核是否同意?</span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.agreeDialog = false">不同意</el-button>
-          <el-button type="primary" @click="agreeUser">同意</el-button>
+          <el-button @click="data.aduitDialog = false">不同意</el-button>
+          <el-button type="primary" @click="auditUser">同意</el-button>
         </span>
       </template>
     </el-dialog>
@@ -92,8 +92,7 @@ import { ElMessage } from "element-plus";
 */
 const data = reactive({
   deleteId: null,
-  agreeDialog: false,
-  dialogFormVisible: false,
+  aduitDialog: false,
   infoVisible:false,
   id: "",
   KeyWord: "",
@@ -179,18 +178,14 @@ const deleteUser = async () => {
   data.deleteDialog = false;
 };
 
-const addUser = (flag, userId, userInfo) => {
-  data.dialogFormVisible = true;
-  if (flag === 1) {
-    data.id = null;
-    data.title = "申请表";
-    data.formData = {};
-  } else {
-    data.id = userId;
-    data.title = "修改";
-    Object.assign(data.formData, userInfo);
-  }
-};
+const aduitUser = (flag,userId,userInfo) => {
+      data.aduitDialog = true
+      if(flag === 1){
+        data.id = null
+        data.title = '新增员工基础信息'
+        data.formData = {}
+      }
+    }
 
 const infoCheck = (user) => {
 

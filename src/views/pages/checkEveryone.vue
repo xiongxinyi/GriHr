@@ -165,9 +165,9 @@ import { ElMessage } from "element-plus";
       userAllget()
     })
 
-    const infoCheck = (user) => {
+    const infoCheck = () => {
         data.infoVisible = true
-        data.userCheck = user.data
+       
     }
 
     const pageChange = (val) =>{
@@ -210,7 +210,7 @@ import { ElMessage } from "element-plus";
       if(!data.searchParams.idCard){
         userAllget()
       }else{
-        if(result.code === 200){
+        if(result.status === 200){
           data.userList = result.data
           data.total = result.total
           userAllget()
