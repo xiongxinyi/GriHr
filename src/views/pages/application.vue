@@ -36,8 +36,7 @@
         v-model:currentPage="data.searchParams.pagenum"
         v-model:page-size="data.searchParams.pagesize"
         :total="data.total"
-        @current-change="pageChange"
-      />
+        @current-change="pageChange" />
     </div>
     <!-- 提交申请提示框 -->
     <el-dialog v-model="data.deleteDialog" width="30%">

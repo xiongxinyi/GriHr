@@ -80,8 +80,8 @@
             <el-table-column prop="joinTime" label="入学时间" width="100" />
             <el-table-column prop="leaveTime" label="毕业时间" width="100" />
             <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
-            <el-table-column prop="institute" label="院系" width="140" />
-            <el-table-column prop="major" label="专业" width="140" />
+            <el-table-column prop="institute" label="院系" width="150" />
+            <el-table-column prop="major" label="专业" width="130" />
             <el-table-column prop="languageLevel" label="外语水平" width="80" />
           </el-table>
         </el-tab-pane>
@@ -149,12 +149,12 @@ const data = reactive({
   id: "",
   KeyWord: "",
   idCard: "",
+  total: 0,
   searchParams: {
     idCard: "",
     pagesize: 5,
     pagenum: 1,
   },
-  total: 0,
   userList: [],
   user:[],
   edu: [],
@@ -202,10 +202,6 @@ const handleClick = (tab) => {
   }
 };
 
-const userCheck = () => {
-  console.log(123);
-};
-
 const pageChange = (val) => {
   data.searchParams.pagenum = val;
   userAllget();
@@ -244,14 +240,14 @@ const salaryget = async (idCard) => {
 };
 
 const searchUser = async () => {
-  const result = await searchUserApi(data.searchParams);
-  if (!data.searchParams.idCard) {
+  const result = await searchUserApi(idCard);
+  if (!data.idCard) {
     userAllget();
   } else {
     if (result.status === 200) {
       data.userList = result.data;
       data.total = result.total;
-      userAllget();
+      userget();
     } else {
       data.userList = [];
       data.total = 0;

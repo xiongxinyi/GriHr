@@ -8,7 +8,7 @@
     <!-- 白色内容区域 -->
     <div class="page_content">
       <div class="flex">
-        <el-button type="primary">待审核</el-button>
+        <p class="underline">待审核</p>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -37,8 +37,7 @@
         v-model:currentPage="data.searchParams.pagenum"
         v-model:page-size="data.searchParams.pagesize"
         :total="data.total"
-        @current-change="pageChange"
-      />
+        @current-change="pageChange" />
     </div>
     <!-- 提交申请提示框 -->
     <el-dialog v-model="data.submitDialog" width="30%">
@@ -58,6 +57,11 @@
           <el-button @click="data.aduitDialog = false">不同意</el-button>
           <el-button type="primary" @click="auditUser">同意</el-button>
         </span>
+         <el-input
+            v-model="textarea"
+            :rows="2"
+            type="textarea"
+            placeholder="备注" />
       </template>
     </el-dialog>
     <!-- 弹窗 -->
@@ -220,4 +224,7 @@ const userForm = ref();
 </script>
 
 <style scoped>
+.underline{
+  text-decoration:underline
+}
 </style>

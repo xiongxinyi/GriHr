@@ -33,8 +33,8 @@
         <el-table-column prop="joinTime" label="入学时间" width="100" />
         <el-table-column prop="leaveTime" label="毕业时间" width="100" />
         <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
-        <el-table-column prop="institute" label="院系" width="140" />
-        <el-table-column prop="major" label="专业" width="140" />
+        <el-table-column prop="institute" label="院系" width="150" />
+        <el-table-column prop="major" label="专业" width="130" />
         <el-table-column prop="languageLevel" label="外语水平" width="80" />
         <el-table-column label="操作">
           <template #default="scope">

@@ -7,7 +7,6 @@ export const userListApi = (params) => {
         params
     })
 }
-
 //基础信息usersList-按身份证号查询
 export const searchUserApi = (idCard) => {
     return get({
@@ -15,6 +14,17 @@ export const searchUserApi = (idCard) => {
         params:{
             idcard:idCard
         }
+    })
+}
+//基础信息usersList-查询用户列表（权限查询）
+export const userListCheckApi = (params) => {
+    const token = localStorage.getItem("token")
+    return get({
+        url: "user/userlist",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+        params
     })
 }
 //基础信息usersList-删除
