@@ -13,7 +13,7 @@
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
       label：列标题 scope.row:相当于一条数据-->
-      <el-table :data="data.userList" style="width: 100%">
+      <el-table :data="data.applicationList" style="width: 100%">
         <el-table-column prop="id" label="申请表id" width="80" />
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="name" label="姓名" width="80" />
@@ -39,12 +39,12 @@
         @current-change="pageChange" />
     </div>
     <!-- 提交申请提示框 -->
-    <el-dialog v-model="data.deleteDialog" width="30%">
+    <el-dialog v-model="data.admitDialog" width="30%">
       <span>请确认是否提交申请?</span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.deleteDialog = false">否</el-button>
-          <el-button type="primary" @click="deleteUser">是</el-button>
+          <el-button @click="data.admitDialog = false">否</el-button>
+          <el-button type="primary" @click="admitUser">是</el-button>
         </span>
       </template>
     </el-dialog>
@@ -150,7 +150,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListApi,deleteUserApi,searchUserApi,addUserApi,updateUserApi,myApplicationApi,createApplicationApi } from "@/util/request";
+import { updateUserApi,myApplicationApi,createApplicationApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -169,8 +169,8 @@ const data = reactive({
     pagenum: 1,
   },
   total: 0,
-  userList: [],
-  userCheck:[],
+  applicationList: [],
+  userCheck: [],
   formData: {
     name: "",
     userCode: "",
@@ -212,15 +212,15 @@ const pageChange = (val) => {
 
 const applicationget = async () => { 
   const result = await myApplicationApi(data.searchParams);
- 
-  data.userList = result.data;
+
+  data.applicationList = result.data;
   data.total = result.total;
 };
 
-const infoCheck = (user) => {
+const infoCheck = (e) => {
 
   data.infoVisible = true;
-  data.userCheck = user.data;
+  data.userCheck = e.data;
 };
 
 const addUser = (flag,userId,userInfo) => {
@@ -242,7 +242,7 @@ const addUser = (flag,userId,userInfo) => {
         let res = await createApplicationApi(data.formData)
         if(res.message === 'OK'){
           ElMessage.success('添加成功')
-          userAllget()
+          applicationget()
         }else{
           ElMessage.error('请添加必填项')
         }
@@ -252,7 +252,7 @@ const addUser = (flag,userId,userInfo) => {
         let res = await updateUserApi({...data.formData,id:data.id})
         if(res.message === 'OK'){
           ElMessage.success('修改成功')
-          userAllget()
+          applicationget();
         }else{
           ElMessage.error('请添加必填项')
         }

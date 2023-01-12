@@ -20,7 +20,7 @@ export const searchUserApi = (idCard) => {
 export const userListCheckApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
-        url: "user/userlist",
+        url: "userlist",
         headers: {
             authorization: `Bearer ${token}`,
         },
@@ -206,7 +206,7 @@ export const updateSalaryApi = (data) => {
     })
 }
 /**
- * 2022.12.30
+ * 申请表
  */
 //创建新申请表
 export const createApplicationApi = (data) => {
@@ -228,15 +228,62 @@ export const myApplicationApi = (data) => {
 }
 //查询待审批申请单
 export const approveApi = (data) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "application/approvalget",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         data
     })
 }
+//查询已审批申请单
+export const approvedApi = (data) => {
+    const token = localStorage.getItem("token")
+    return get({
+        url: "application/auditcheck",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+        data
+    })
+}
+//查询个人已退回申请单
+export const approveBackApi = (data) => {
+    const token = localStorage.getItem("token")
+    return get({
+        url: "application/auditback",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+        data
+    })
+}
+/*
+*   审批
+*/
 //人力审批
 export const auditApi = (data) => {
+    const token = localStorage.getItem("token")
     return post({
         url: "application/audit",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+        data
+    })
+}
+/*
+*   申请记录
+*/
+//查询审批操作记录
+export const appCheckApi = (data) => {
+    const token = localStorage.getItem("token")
+    return get({
+        url: "application/appcheck",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         data
     })
 }

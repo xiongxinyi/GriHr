@@ -139,7 +139,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListApi, searchUserApi, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
+import { userListCheckApi, searchUserApi, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -208,7 +208,7 @@ const pageChange = (val) => {
 };
 
 const userAllget = async () => {
-  const result = await userListApi(data.searchParams);
+  const result = await userListCheckApi(data.searchParams);
   data.userList = result.data;
   data.total = result.total;
 };
@@ -220,7 +220,6 @@ const userget = async (idCard) => {
 
 const eduget = async (idCard) => {
   const result = await searchEduApi(idCard);
-  console.log(result);
   data.edu = result.data;
 };
 
