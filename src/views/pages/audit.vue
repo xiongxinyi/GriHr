@@ -63,8 +63,8 @@
       <span>审核是否同意?</span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.auditDialog = false">不同意</el-button>
-          <el-button type="primary" @click="auditUser">同意</el-button>
+          <el-button @click="auditReject">不同意</el-button>
+          <el-button type="primary" @click="auditPass">同意</el-button>
         </span>
          <el-input
             v-model="textarea"
@@ -105,6 +105,8 @@ import { ElMessage } from "element-plus";
 */
 const data = reactive({
   deleteId: null,
+  opinion:"",
+  textarea:"",
   deleteDialog: false,
   infoVisible:false,
   id: "",
@@ -121,6 +123,10 @@ const data = reactive({
   userCheck: [],
 });
 
+// const auditPass =() =>{
+//   data.textarea = 
+  
+// }
 // onMounted(() => {
 //   approveget();
 // });
@@ -137,7 +143,7 @@ const pageChange = (val) => {
 
 const approveget = async () => { 
   const result = await approveApi(data.searchParams);
-  console.log(result);
+  // console.log(result);
   data.pendingApproveList = result.data;
   data.total = result.total;
 };
@@ -175,7 +181,7 @@ const auditCheck = () => {
 
 };
 
-const textarea = ref('')
+// const textarea = ref('')
 
 </script>
 
