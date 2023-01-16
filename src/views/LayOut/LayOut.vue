@@ -22,7 +22,7 @@
                 <span>查询个人申请表</span>
               </el-menu-item>
 
-              <el-menu-item index="/audit">
+            <el-menu-item index="/audit">
               <el-icon><Checked /></el-icon>
                 <span>审批审核</span>
               </el-menu-item>
@@ -31,8 +31,13 @@
               <el-icon><Avatar /></el-icon>
                 <span>查看部门所有人</span>
             </el-menu-item>
-            <!-- 信息模块 -->
 
+            <el-menu-item index="/records">
+              <el-icon><MoreFilled /></el-icon>
+                <span>审批进程</span>
+            </el-menu-item>
+            
+            <!-- 信息模块 -->
             <el-menu-item index="/users">
               <el-icon><Box /></el-icon>
                 <span>基础信息</span>

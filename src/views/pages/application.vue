@@ -48,7 +48,7 @@
         </span>
       </template>
     </el-dialog>
-    <!-- 弹窗 -->
+    <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="我申请的信息">
     <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
@@ -159,10 +159,10 @@ const data = reactive({
   deleteId: null,
   deleteDialog: false,
   dialogFormVisible: false,
-  infoVisible:false,
+  infoVisible: false,
   id: "",
   KeyWord: "",
-  title: "申请表",
+  title: "申请表",  
   searchParams: {
     idCard: "",
     pagesize: 5,

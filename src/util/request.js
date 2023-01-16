@@ -266,7 +266,7 @@ export const approveBackApi = (data) => {
 export const auditApi = (data) => {
     const token = localStorage.getItem("token")
     return post({
-        url: "application/audit",
+        url: "audit",
         headers: {
             authorization: `Bearer ${token}`,
         },
@@ -278,12 +278,8 @@ export const auditApi = (data) => {
 */
 //查询审批操作记录
 export const appCheckApi = (data) => {
-    const token = localStorage.getItem("token")
     return get({
         url: "application/appcheck",
-        headers: {
-            authorization: `Bearer ${token}`,
-        },
         data
     })
 }

@@ -32,6 +32,11 @@ const routes = [
         component:()=>import("../views/pages/checkEveryone.vue")
       },
       {
+        path:"/records",
+        name:"records",
+        component:()=>import("../views/pages/records.vue")
+      },
+      {
         path:"/index",
         name:"index",
         component:()=>import("../views/pages/index.vue")

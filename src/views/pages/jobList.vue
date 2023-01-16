@@ -105,8 +105,8 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted} from "vue";
-import { jobListApi, deleteJobApi, addJobApi, updateJobApi} from "@/util/request";
+import { reactive, ref, toRefs, onMounted } from "vue";
+import { jobListApi, deleteJobApi, addJobApi, updateJobApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -119,7 +119,7 @@ import { ElMessage } from "element-plus";
       KeyWord:"",
       title:"",
       searchParams:{
-        dept:"",
+        idCard:"",
         pagesize:5,
         pagenum:1
       },
@@ -164,10 +164,10 @@ import { ElMessage } from "element-plus";
 
     const searchJob = async() => {
       const result = await searchJobApi(data.searchParams);
-      if(!data.searchParams.dept){
+      if(!data.searchParams.idCard){
         jobAllget()
       }else{
-        if(result.code === 200){
+        if(result.status === 200){
           data.jobList = result.data
           data.total = result.total
           jobAllget()

@@ -50,8 +50,7 @@
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
-     @current-change="pageChange"
-     />
+     @current-change="pageChange"/>
     </div>
     <!-- <div  v-for="(item,index) in arr" :key="item.index">
     {{item.name}}  {{item.sex}}  {{item.userCode}}

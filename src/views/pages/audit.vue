@@ -36,7 +36,25 @@
             <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="process" label="流程数" width="80" />
             <el-table-column prop="status" label="审批单所处状态" width="140" />
-            <el-table-column prop="statusCode" label="状态码" width="140" />
+            <el-table-column prop="createtime" label="创建时间" width="180" />
+            <el-table-column prop="updatetime" label="更新时间" width="180" />
+            <el-table-column prop="type" label="审批类型" width="100" />
+            <el-table-column prop="handle" label="操作" width="100" />  
+            <el-table-column prop="data" label="查看申请信息">
+              <template #default="scope">
+                <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="个人已退回申请单" name="个人已退回申请单">
+          <el-table :data="data.approveBackList" style="width: 100%">
+            <el-table-column prop="id" label="申请表id" width="80" />
+            <el-table-column prop="userCode" label="员工号" width="100" />
+            <el-table-column prop="name" label="姓名" width="80" />
+            <el-table-column prop="department" label="部门" width="120" />
+            <el-table-column prop="process" label="流程数" width="80" />
+            <el-table-column prop="status" label="审批单所处状态" width="140" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="updatetime" label="更新时间" width="180" />
             <el-table-column prop="type" label="审批类型" width="100" />
@@ -67,7 +85,7 @@
           <el-button type="primary" @click="auditPass">同意</el-button>
         </span>
          <el-input
-            v-model="textarea"
+            v-model="auditData.desc"
             :rows="2"
             type="textarea"
             placeholder="备注" />
@@ -98,17 +116,17 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { approveApi,approvedApi } from "@/util/request";
+import { approveApi, approvedApi, auditApi, approveBackApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
 */
 const data = reactive({
   deleteId: null,
-  opinion:"",
-  textarea:"",
+  textarea: "",
   deleteDialog: false,
-  infoVisible:false,
+  infoVisible: false,
+  auditDialog: false,
   id: "",
   KeyWord: "",
   title: "申请表",
@@ -120,16 +138,31 @@ const data = reactive({
   total: 0,
   pendingApproveList: [],
   approvedList: [],
+  approveBackList: [],
   userCheck: [],
 });
 
-// const auditPass =() =>{
-//   data.textarea = 
+const auditData = reactive({
+  opinion:"",
+  desc:""
+})
+
+let AppData ={}
+
+const auditPass = async() => {
+  auditData.opinion = "PASS"
+  const data ={
+    ...auditData,
+    ...AppData
+  }
   
-// }
-// onMounted(() => {
-//   approveget();
-// });
+const result = await auditApi(data);
+  console.log(result);
+  if(result.status===200){
+    data.auditDialog = false;
+    console.log(data.auditDialog);
+  } 
+}
 
 const deleteUserDialog = (id) => {
   data.deleteDialog = true;
@@ -137,6 +170,7 @@ const deleteUserDialog = (id) => {
 };
 
 const pageChange = (val) => {
+  console.log(val);
   data.searchParams.pagenum = val;
   approveget();
 };
@@ -152,6 +186,13 @@ const approvedget = async () => {
   const result = await approvedApi(data.searchParams);
   console.log(result);
   data.approvedList = result.data;
+  data.total = result.total;
+};
+
+const approveBackget = async () => { 
+  const result = await approveBackApi(data.searchParams);
+  console.log(result);
+  data.approveBackList = result.data;
   data.total = result.total;
 };
 
@@ -172,11 +213,14 @@ const handleClick = (tab) => {
     case "已审批":
       approvedget()
       break;
+    case "个人已退回申请单":
+      approveBackget()
+      break;
   }
 };
 
-const auditCheck = () => {
-
+const auditCheck = (e) => {
+  AppData = e
   data.auditDialog = true;
 
 };
