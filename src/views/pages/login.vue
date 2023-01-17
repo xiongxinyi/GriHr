@@ -52,7 +52,7 @@ const login = async (id) => {
   console.log(result);
   localStorage.setItem("token",result.data.token)
   localStorage.setItem("name",result.data.username)
-  // localStorage.setItem("usercode",result.data.usercode) 
+  localStorage.setItem("usercode",result.data.usercode) 
   // 获取用户权限和部门
   const res = await axios.get("http://123.249.26.49:8082/api/user/getrole",{
     params:{
@@ -60,8 +60,9 @@ const login = async (id) => {
     }
       });
   console.log(res)
-  localStorage.setItem("role",res.data.role)
-  localStorage.setItem("dept",res.data.dept)
+  localStorage.setItem("role",res.data.data.role)
+  localStorage.setItem("dept",res.data.data.department)
+  // 页面刷新
   window.location.reload()
   };
 
