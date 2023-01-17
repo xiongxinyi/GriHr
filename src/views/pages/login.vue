@@ -60,8 +60,9 @@ const login = async (id) => {
     }
       });
   console.log(res)
-  localStorage.setItem("role",res.data.role)
-  localStorage.setItem("dept",res.data.dept)
+  localStorage.setItem("role",res.data.data.role)
+  localStorage.setItem("dept",res.data.data.department)
+  // 页面刷新
   window.location.reload()
   };
 
