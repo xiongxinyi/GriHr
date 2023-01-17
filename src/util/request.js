@@ -7,12 +7,21 @@ export const userListApi = (params) => {
         params
     })
 }
-//基础信息usersList-按身份证号查询
+//基础信息usersList-按身份证号idcard精确查询
 export const searchUserApi = (idCard) => {
     return get({
         url: "user/get",
         params:{
             idcard:idCard
+        }
+    })
+}
+//基础信息usersList-按姓名name模糊查询
+export const searchUserApi1 = (name) => {
+    return get({
+        url: "user/get",
+        params:{
+            name:name
         }
     })
 }

@@ -11,10 +11,18 @@
         <div class="input_box">
           <el-input
             v-model="data.searchParams.idCard"
-            placeholder="搜索关键字"
+            placeholder="按身份证号搜索"
             class="input-with-select">
             <template #append>
               <el-button @click="searchUser"><el-icon><Search /></el-icon></el-button>
+            </template>
+          </el-input>
+          <el-input
+            v-model="data.searchParams.name"
+            placeholder="按姓名姓氏搜索"
+            class="input-with-select">
+            <template #append>
+              <el-button @click="searchUser1"><el-icon><Search /></el-icon></el-button>
             </template>
           </el-input>
         </div>
@@ -139,7 +147,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListCheckApi, searchUserApi, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
+import { userListCheckApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -152,6 +160,7 @@ const data = reactive({
   total: 0,
   searchParams: {
     idCard: "",
+    name: "",
     pagesize: 5,
     pagenum: 1,
   },
@@ -218,6 +227,11 @@ const userget = async (idCard) => {
   data.user = result.data;
 };
 
+const userget1 = async (name) => {
+  const result = await searchUserApi1(name);
+  data.user = result.data;
+};
+
 const eduget = async (idCard) => {
   const result = await searchEduApi(idCard);
   data.edu = result.data;
@@ -247,6 +261,22 @@ const searchUser = async () => {
       data.userList = result.data;
       data.total = result.total;
       userget();
+    } else {
+      data.userList = [];
+      data.total = 0;
+    }
+  }
+};
+
+const searchUser1 = async () => {
+  const result = await searchUserApi1(data.searchParams.name);
+  if (!data.searchParams.name) {
+    userAllget();
+  } else {
+    if (result.status === 200) {
+      data.userList = result.data;
+      data.total = result.total;
+      userget1();
     } else {
       data.userList = [];
       data.total = 0;
