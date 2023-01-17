@@ -210,8 +210,12 @@ export const updateSalaryApi = (data) => {
  */
 //创建新申请表
 export const createApplicationApi = (data) => {
+    const token = localStorage.getItem("token")
     return post({
         url: "application/insert",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         data
     })
 }
