@@ -204,7 +204,7 @@ const handleClick = (tab) => {
 
 const pageChange = (val) => {
   data.searchParams.pagenum = val;
-  userAllget();
+  // userAllget();
 };
 
 const userAllget = async () => {
@@ -239,8 +239,8 @@ const salaryget = async (idCard) => {
 };
 
 const searchUser = async () => {
-  const result = await searchUserApi(idCard);
-  if (!data.idCard) {
+  const result = await searchUserApi(data.searchParams.idCard);
+  if (!data.searchParams.idCard) {
     userAllget();
   } else {
     if (result.status === 200) {
