@@ -158,10 +158,11 @@ const auditPass = async() => {
   
 const result = await auditApi(data);
   console.log(result);
-  if(result.status===200){
-    data.auditDialog = false;
-    console.log(data.auditDialog);
-  } 
+  closeAudit()
+}
+
+const closeAudit = ()=>{
+  data.auditDialog=false
 }
 
 const deleteUserDialog = (id) => {
