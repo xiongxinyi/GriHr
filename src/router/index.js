@@ -32,6 +32,11 @@ const routes = [
         component:()=>import("../views/pages/checkEveryone.vue")
       },
       {
+        path:"/approveBack",
+        name:"approveBack",
+        component:()=>import("../views/pages/approveBack.vue")
+      },
+      {
         path:"/records",
         name:"records",
         component:()=>import("../views/pages/records.vue")

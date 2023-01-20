@@ -47,7 +47,7 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="个人已退回申请单" name="个人已退回申请单">
+        <!-- <el-tab-pane label="个人已退回申请单" name="个人已退回申请单">
           <el-table :data="data.approveBackList" style="width: 100%">
             <el-table-column prop="id" label="申请表id" width="80" />
             <el-table-column prop="userCode" label="员工号" width="100" />
@@ -65,7 +65,7 @@
               </template>
             </el-table-column>
           </el-table>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
       <!-- 分页器 -->
       <el-pagination
@@ -138,7 +138,7 @@ const data = reactive({
   total: 0,
   pendingApproveList: [],
   approvedList: [],
-  approveBackList: [],
+  // approveBackList: [],
   userCheck: [],
 });
 
@@ -190,12 +190,12 @@ const approvedget = async () => {
   data.total = result.total;
 };
 
-const approveBackget = async () => { 
-  const result = await approveBackApi(data.searchParams);
-  console.log(result);
-  data.approveBackList = result.data;
-  data.total = result.total;
-};
+// const approveBackget = async () => { 
+//   const result = await approveBackApi(data.searchParams);
+//   console.log(result);
+//   data.approveBackList = result.data;
+//   data.total = result.total;
+// };
 
 const infoCheck = (e) => {
 
@@ -214,9 +214,9 @@ const handleClick = (tab) => {
     case "已审批":
       approvedget()
       break;
-    case "个人已退回申请单":
-      approveBackget()
-      break;
+    // case "个人已退回申请单":
+    //   approveBackget()
+    //   break;
   }
 };
 

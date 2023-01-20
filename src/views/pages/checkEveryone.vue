@@ -9,7 +9,18 @@
     <div class="page_content">
       <div class="flex">
         <div class="input_box">
-          <el-input
+          <el-input placeholder="请选择查询条件" v-model="data.searchParams.content" clearable class="input-with-select" >
+            <template #prepend>
+            <el-select v-model="data.searchParams.select" placeholder="请选择" style="width: 100px;">
+              <el-option label="身份证号" value="1"></el-option>
+              <el-option label="姓名姓氏" value="2"></el-option>
+            </el-select>
+            </template>
+            <template #append>
+             <el-button @click="onSearch(data.searchParams.select,data.searchParams.content)"><el-icon><Search /></el-icon></el-button>
+            </template>
+          </el-input>
+          <!-- <el-input
             v-model="data.searchParams.idCard"
             placeholder="按身份证号搜索"
             class="input-with-select">
@@ -24,7 +35,7 @@
             <template #append>
               <el-button @click="searchUser1"><el-icon><Search /></el-icon></el-button>
             </template>
-          </el-input>
+          </el-input> -->
         </div>
       </div>
       <!-- 表格 -->
@@ -159,8 +170,8 @@ const data = reactive({
   idCard: "",
   total: 0,
   searchParams: {
-    idCard: "",
-    name: "",
+    content:"",
+    select:"",
     pagesize: 5,
     pagenum: 1,
   },
@@ -175,6 +186,18 @@ const data = reactive({
 onMounted(() => {
   userAllget();
 });
+
+const onSearch = (id,content) =>{
+  switch (id){
+    case "1":
+      searchUser(content)
+      break
+    // console.log(content)
+    case "2":
+      searchUser1(content)
+      break
+  }
+}
 
 const infoCheck = (e) => {
   data.user = []
@@ -213,7 +236,7 @@ const handleClick = (tab) => {
 
 const pageChange = (val) => {
   data.searchParams.pagenum = val;
-  // userAllget();
+  // userAllget()
 };
 
 const userAllget = async () => {
@@ -225,11 +248,13 @@ const userAllget = async () => {
 const userget = async (idCard) => {
   const result = await searchUserApi(idCard);
   data.user = result.data;
+  return result
 };
 
 const userget1 = async (name) => {
   const result = await searchUserApi1(name);
   data.user = result.data;
+  return result
 };
 
 const eduget = async (idCard) => {
@@ -252,31 +277,34 @@ const salaryget = async (idCard) => {
   data.salary = result.data;
 };
 
-const searchUser = async () => {
-  const result = await searchUserApi(data.searchParams.idCard);
-  if (!data.searchParams.idCard) {
+const searchUser = async (content) => {
+  // const result = await searchUserApi(content);
+  if (!content) {
     userAllget();
   } else {
+    const result = await userget(content)
+    console.log(result);
     if (result.status === 200) {
       data.userList = result.data;
-      data.total = result.total;
-      userget();
+      data.total = result.total; 
     } else {
+      console.log(123);
       data.userList = [];
       data.total = 0;
     }
   }
 };
 
-const searchUser1 = async () => {
-  const result = await searchUserApi1(data.searchParams.name);
-  if (!data.searchParams.name) {
+const searchUser1 = async (content) => {
+  // const result = await searchUserApi1(content);
+  if (!content) {
     userAllget();
   } else {
+    const result = await userget1(content)
     if (result.status === 200) {
       data.userList = result.data;
       data.total = result.total;
-      userget1();
+      // userget1();
     } else {
       data.userList = [];
       data.total = 0;
@@ -287,7 +315,13 @@ const searchUser1 = async () => {
 
 <style scoped>
 .input_box {
-  width: 200px;
+  width: 340px;
   margin-right: 15px;
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select {
+  background-color: #fff;
 }
 </style>

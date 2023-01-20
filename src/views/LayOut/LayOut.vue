@@ -16,17 +16,21 @@
       <el-container>
         <el-aside class="common-aside" width="160px">
           <el-menu background-color="none" text-color="#fff" :router="true">
-            
 
             <el-menu-item index="/audit" v-if="role==='2'||role==='3'">
               <el-icon><Checked /></el-icon>
                 <span>审批审核</span>
-              </el-menu-item>
+            </el-menu-item>
         
-              <el-menu-item index="/application" v-else>
+            <el-menu-item index="/application" v-else>
               <el-icon><List /></el-icon>
                 <span>查询个人申请表</span>
-              </el-menu-item>
+            </el-menu-item>
+
+            <el-menu-item index="/approveBack">
+              <el-icon><Failed /></el-icon>
+                <span>已退回申请单</span>
+            </el-menu-item>
 
             <el-menu-item index="/checkEveryone">
               <el-icon><Avatar /></el-icon>
@@ -75,19 +79,16 @@
     </el-container>
   </div>
 </template>
-<script>
 
+<script>
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-
-
-
 
 export default {
   name: "layOut",
   setup() {
     const name = localStorage.getItem("name");
-    const role =  localStorage.getItem("role")
+    const role = localStorage.getItem("role")
     console.log(role);
     const store = useStore();
     const router = useRouter();

@@ -124,7 +124,7 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted } from "vue";
+import { reactive, ref, toRefs, onMounted } from "vue";
 import { salaryListApi, deleteSalaryApi, addSalaryApi, updateSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
