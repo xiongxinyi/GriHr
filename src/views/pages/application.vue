@@ -52,7 +52,6 @@
     <el-dialog v-model="data.infoVisible" title="我申请的信息">
     <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
-        <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="sex" label="性别" width="60" />
         <el-table-column prop="userCode" label="员工号" width="100" />
@@ -161,7 +160,7 @@
 <script setup>
 import axios, { Axios } from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { updateUserApi,myApplicationApi,createApplicationApi } from "@/util/request";
+import { updateUserApi, myApplicationApi, createApplicationApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -214,11 +213,6 @@ onMounted(() => {
   applicationget();
 });
 
-const deleteUserDialog = (id) => {
-  data.deleteDialog = true;
-  data.deleteId = id;
-};
-
 const pageChange = (val) => {
   data.searchParams.pagenum = val;
   applicationget();
@@ -238,10 +232,8 @@ const infoCheck = (e) => {
 };
 
 const addApp = () => {
-      data.dialogFormVisible=true
-    }
-
-
+  data.dialogFormVisible = true;
+};
 
 const submitForm = async() => {
   data.formData.process = parseInt(data.formData.process) 

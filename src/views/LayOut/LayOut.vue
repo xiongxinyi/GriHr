@@ -22,12 +22,12 @@
                 <span>审批审核</span>
             </el-menu-item>
         
-            <el-menu-item index="/application" v-else>
+            <el-menu-item index="/application" v-if="role==='1'">
               <el-icon><List /></el-icon>
                 <span>查询个人申请表</span>
             </el-menu-item>
 
-            <el-menu-item index="/approveBack">
+            <el-menu-item index="/approveBack" v-if="role==='1'">
               <el-icon><Failed /></el-icon>
                 <span>已退回申请单</span>
             </el-menu-item>

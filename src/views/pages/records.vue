@@ -53,14 +53,14 @@ import { ElMessage } from "element-plus";
   定义数据
 */
 const data = reactive({
-  id: "",
-  applicationId: "",
-  userCode: "",
-  name: "",
-  department: "",
-  approvalTime: "",
-  opinion: "",
-  desc: "",
+  // id: "",
+  // applicationId: "",
+  // userCode: "",
+  // name: "",
+  // department: "",
+  // approvalTime: "",
+  // opinion: "",
+  // desc: "",
   KeyWord: "",
   total: 0,
   searchParams: {
@@ -71,20 +71,20 @@ const data = reactive({
   recordsList: [],
 });
 
-const pageChange = (val) => {
-  data.searchParams.pagenum = val;
-  recordsAllget();
-};
+// const pageChange = (val) => {
+//   data.searchParams.pagenum = val;
+//   recordsAllget();
+// };
 
-const recordsAllget = async () => {
-  const result = await appCheckApi(data.searchParams);
-  data.recordsList = result.data;
-  data.total = result.total;
-};
+// const recordsAllget = async () => {
+//   const result = await appCheckApi(data.searchParams);
+//   data.recordsList = result.data;
+//   data.total = result.total;
+// };
 
 const searchRecord = async () => {
-  const result = await appCheckApi(applicationId);
-  if (!data.applicationId) {
+  const result = await appCheckApi(data.searchParams);
+  if (!data.searchParams.applicationId) {
     recordsAllget();
   } else {
     if (result.status === 200) {

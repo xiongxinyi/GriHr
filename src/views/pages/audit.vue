@@ -95,7 +95,6 @@
     <el-dialog v-model="data.infoVisible" title="申请信息">
     <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
-        <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="sex" label="性别" width="60" />
         <el-table-column prop="userCode" label="员工号" width="100" />

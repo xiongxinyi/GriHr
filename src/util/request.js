@@ -290,9 +290,20 @@ export const auditApi = (data) => {
 *   申请记录
 */
 //查询审批操作记录
-export const appCheckApi = (data) => {
+export const appCheckApi = (applicationId) => {
     return get({
         url: "application/appcheck",
-        data
+        params:{
+             id:applicationId
+         }
     })
 }
+// //教育信息educationList-按身份证号查询
+// export const searchEduApi = (idCard) => {
+//     return get({
+//         url: "educate/get",
+//         params:{
+//             idcard:idCard
+//         }
+//     })
+// }
