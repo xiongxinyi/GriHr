@@ -250,17 +250,6 @@ export const approveApi = (data) => {
         data
     })
 }
-
-// 查询申请表记录
-export const recordApi = (id) =>{
-    return get({
-        url:"application/appcheck",
-        params:{
-            id:id
-        }
-    })
-}
-
 //查询已审批申请单
 export const approvedApi = (data) => {
     const token = localStorage.getItem("token")
@@ -301,20 +290,11 @@ export const auditApi = (data) => {
 *   申请记录
 */
 //查询审批操作记录
-export const appCheckApi = (applicationId) => {
+export const recordApi = (id) =>{
     return get({
-        url: "application/appcheck",
+        url:"application/appcheck",
         params:{
-             id:applicationId
-         }
+            id:id
+        }
     })
 }
-// //教育信息educationList-按身份证号查询
-// export const searchEduApi = (idCard) => {
-//     return get({
-//         url: "educate/get",
-//         params:{
-//             idcard:idCard
-//         }
-//     })
-// }
