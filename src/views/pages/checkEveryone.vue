@@ -242,6 +242,7 @@ const pageChange = (val) => {
 
 const userAllget = async () => {
   const result = await userListCheckApi(data.searchParams);
+  console.log(result);
   data.userList = result.data;
   data.total = result.total;
 };
@@ -287,7 +288,6 @@ const searchUser = async (content) => {
     console.log(result);
     if (result.status === 200) {
       data.userList = result.data;
-      data.total = result.total; 
     } else {
       console.log(123);
       data.userList = [];
@@ -304,7 +304,6 @@ const searchUser1 = async (content) => {
     const result = await userget1(content)
     if (result.status === 200) {
       data.userList = result.data;
-      data.total = result.total;
       // userget1();
     } else {
       data.userList = [];
