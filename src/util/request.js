@@ -250,6 +250,17 @@ export const approveApi = (data) => {
         data
     })
 }
+
+// 查询申请表记录
+export const recordApi = (id) =>{
+    return get({
+        url:"application/appcheck",
+        params:{
+            id:id
+        }
+    })
+}
+
 //查询已审批申请单
 export const approvedApi = (data) => {
     const token = localStorage.getItem("token")

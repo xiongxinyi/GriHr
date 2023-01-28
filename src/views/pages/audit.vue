@@ -20,10 +20,11 @@
             <el-table-column prop="type" label="审批类型" width="100" />
             <el-table-column prop="handle" label="操作" width="100" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
-            <el-table-column prop="data" label="查看申请信息 审核">
+            <el-table-column prop="data" label="查看申请信息  审核   申请单记录">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
                 <el-button type="primary" @click="auditCheck(scope.row)">审核</el-button>
+                <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -40,9 +41,10 @@
             <el-table-column prop="updatetime" label="更新时间" width="180" />
             <el-table-column prop="type" label="审批类型" width="100" />
             <el-table-column prop="handle" label="操作" width="100" />  
-            <el-table-column prop="data" label="查看申请信息">
+            <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
+                <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -91,6 +93,24 @@
             placeholder="备注" />
       </template>
     </el-dialog>
+
+        <!-- 流转记录弹出框 -->
+    <el-dialog v-model="data.logDialog" width="50%">
+      <span>申请表流转记录</span>
+      <div class="block" style="margin-top: 20px;">
+  <el-timeline :reverse="reverse" >
+    <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
+      <el-card>
+        <h4>{{ item.opinion }}  </h4>
+        <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
+        <p>审核意见：&nbsp;{{ item.desc }}</p>
+      </el-card>
+    </el-timeline-item>
+  </el-timeline>
+</div>
+    </el-dialog>
+
+
     <!-- 弹窗 -->
     <el-dialog v-model="data.infoVisible" title="申请信息">
     <!-- 查看申请信息 -->
@@ -116,7 +136,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { approveApi, approvedApi, auditApi, approveBackApi } from "@/util/request";
+import { approveApi, approvedApi, auditApi, approveBackApi,recordApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -127,6 +147,7 @@ const data = reactive({
   deleteDialog: false,
   infoVisible: false,
   auditDialog: false,
+  logDialog:false,
   id: "",
   KeyWord: "",
   title: "申请表",
@@ -137,6 +158,7 @@ const data = reactive({
   },
   total: 0,
   pendingApproveList: [],
+  Record:[],
   approvedList: [],
   // approveBackList: [],
   userCheck: [],
@@ -236,8 +258,19 @@ const auditCheck = (e) => {
   AppData = e
   console.log(AppData);
   data.auditDialog = true;
-
 };
+
+const logCheck = async(e) =>{
+  console.log(e.id);
+  data.logDialog = true
+  // console.log();
+  const result = await recordApi(e.id)
+  data.Record = result.data
+  // console.log(result);
+  // 获取审核记录
+
+ 
+}
 
 // const textarea = ref('')
 
