@@ -161,6 +161,18 @@ const result = await auditApi(data);
   closeAudit()
 }
 
+const auditReject = async() => {
+  auditData.opinion = "REJECT"
+  const data ={
+    ...auditData,
+    ...AppData
+  }
+  
+const result = await auditApi(data);
+  console.log(result);
+  closeAudit()
+}
+
 const closeAudit = ()=>{
   data.auditDialog=false
 }
@@ -222,6 +234,7 @@ const handleClick = (tab) => {
 
 const auditCheck = (e) => {
   AppData = e
+  console.log(AppData);
   data.auditDialog = true;
 
 };
