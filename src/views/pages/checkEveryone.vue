@@ -172,8 +172,8 @@ const data = reactive({
   searchParams: {
     content:"",
     select:"",
-    pagesize: 5,
-    pagenum: 1,
+    pagesize:5,
+    pagenum:1,
   },
   userList: [],
   user: [],
@@ -235,6 +235,7 @@ const handleClick = (tab) => {
 };
 
 const pageChange = (val) => {
+  console.log(val);
   data.searchParams.pagenum = val;
   // userAllget()
 };
