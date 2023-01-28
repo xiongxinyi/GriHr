@@ -267,8 +267,6 @@ const logCheck = async(e) =>{
   data.Record = result.data
   // console.log(result);
   // 获取审核记录
-
- 
 }
 
 // const textarea = ref('')

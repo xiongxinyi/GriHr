@@ -21,12 +21,29 @@
         <el-table-column prop="updatetime" label="更新时间" width="180" />
         <el-table-column prop="type" label="审批类型" width="100" />
         <el-table-column prop="handle" label="操作" width="100" />
-        <el-table-column label="操作">
+        <el-table-column label="操作&nbsp;申请单记录">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
+            <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
           </template>
         </el-table-column>
       </el-table>
+            <!-- 流转记录弹出框 -->
+            <el-dialog v-model="data.logDialog" width="50%">
+      <span>申请表流转记录</span>
+      <div class="block" style="margin-top: 20px;">
+  <el-timeline :reverse="reverse" >
+    <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
+      <el-card>
+        <h4>{{ item.opinion }}  </h4>
+        <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
+        <p>审核意见：&nbsp;{{ item.desc }}</p>
+      </el-card>
+    </el-timeline-item>
+  </el-timeline>
+</div>
+    </el-dialog>
+
       <!-- 分页器 -->
       <el-pagination background
         layout="prev, pager, ->, total"
@@ -59,18 +76,20 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { approveBackApi } from "@/util/request";
+import { approveBackApi,recordApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
 */
 const data = reactive({
   infoVisible: false,
+  logDialog:false,
   id: "",
   KeyWord: "",
   idCard: "",
   total: 0,
   approveBackList: [],
+  Record:[],
   userCheck: [],
   searchParams: {
     idCard: "",
@@ -87,6 +106,15 @@ const pageChange = (val) => {
   data.searchParams.pagenum = val;
   approveBackget()
 };
+
+const logCheck = async(e) =>{
+  console.log(e.id);
+  data.logDialog = true
+  // console.log();
+  const result = await recordApi(e.id)
+  data.Record = result.data
+ 
+}
 
 const approveBackget = async () => { 
   const result = await approveBackApi(data.searchParams);
