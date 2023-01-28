@@ -4,6 +4,8 @@ import { ElMessage } from 'element-plus'
 // import { config } from "webpack"
 //使用create创建axios实例
 let loadingObj = null
+
+
 const Service = axios.create({
     timeout:8000,
     baseURL:"/api/",
@@ -22,8 +24,21 @@ Service.interceptors.request.use(config=>{
 })
 //响应拦截-对返回值做统一处理
 Service.interceptors.response.use(response=>{
+
         loadingObj.close()
         const data = response.data
+       
+        if (data.message === "token授权已过期,请重新登录") {
+            
+            ElMessage({
+                message:"登陆过期请重新登陆!",
+                type:"error",
+                duration:2000
+            })
+            window.location.replace("/login#/index")
+            
+            // router.push({path:"/login"})
+        }
         // if(!data.data){
         //     //请求出错
         //     ElMessage.error(data.meta.msg||"服务器错误")   
