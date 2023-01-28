@@ -98,7 +98,7 @@
     <el-dialog v-model="data.logDialog" width="50%">
       <span>申请表流转记录</span>
       <div class="block" style="margin-top: 20px;">
-  <el-timeline :reverse="reverse" >
+  <el-timeline reverse="true" >
     <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
       <el-card>
         <h4>{{ item.opinion }}  </h4>
