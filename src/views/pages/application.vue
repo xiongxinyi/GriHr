@@ -114,8 +114,14 @@
             <el-option label="创建申请" value="创建申请" />
           </el-select>
         </el-form-item>
-        <el-form-item label="审批类型" prop="type">
-          <el-input v-model="data.formData.type" disabled placeholder="请输入审批类型" />
+        <el-form-item label="审批类型" prop="type">     
+        <el-select v-model="data.formData.type" placeholder="请选择审批类型">
+            <el-option label="基础信息" value="基础信息" />
+            <el-option label="教育信息" value="教育信息" />
+            <el-option label="岗级信息" value="岗级信息" />
+            <el-option label="绩效信息" value="绩效信息" />
+            <el-option label="工资信息" value="工资信息" />
+          </el-select>
         </el-form-item>
         <el-form-item label="操作" prop="handle">
           <el-select v-model="data.formData.handle" placeholder="请选择操作">
@@ -123,58 +129,101 @@
             <el-option label="修改" value="修改" />
           </el-select>
         </el-form-item>
-      <h4>导入员工信息</h4>
+      </el-form>
 
+     <el-form v-if="data.formData.type==='基础信息'">
+      <h4>导入员工信息</h4>
         <el-form-item label="姓名" prop="name">
-          <el-input v-model="data.formData.data[0].name" placeholder="请输入姓名" />
+          <el-input v-model="data.userdata.name" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-select v-model="data.formData.data[0].sex" placeholder="请选择性别">
+          <el-select v-model="data.userdata.sex" placeholder="请选择性别">
             <el-option label="男" value="男" />
             <el-option label="女" value="女" />
           </el-select>
         </el-form-item>
         <el-form-item label="身份证号" prop="idCard">
-          <el-input v-model="data.formData.data[0].idCard" placeholder="请输入身份证号" />
+          <el-input v-model="data.userdata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="员工号" prop="userCode">
-          <el-input v-model="data.formData.data[0].userCode" placeholder="请输入员工号" />
+          <el-input v-model="data.userdata.userCode" placeholder="请输入员工号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
-          <el-input v-model.number="data.formData.data[0].nation" placeholder="请输入民族" />
+          <el-input v-model.number="data.userdata.nation" placeholder="请输入民族" />
         </el-form-item>
         <el-form-item label="政治面貌" prop="political">
-          <el-select v-model="data.formData.data[0].political" placeholder="请选择政治面貌">
+          <el-select v-model="data.userdata.political" placeholder="请选择政治面貌">
             <el-option label="党员" value="党员" />
             <el-option label="团员" value="团员" />
             <el-option label="群众" value="群众" />
           </el-select>
         </el-form-item>
         <el-form-item label="部门" prop="department">
-          <el-input v-model="data.formData.data[0].department" placeholder="请输入部门" />
+          <el-input v-model="data.userdata.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="基层单位" prop="basicUnit">
-          <el-input v-model="data.formData.data[0].basicUnit" placeholder="请输入基层单位" />
+          <el-input v-model="data.userdata.basicUnit" placeholder="请输入基层单位" />
         </el-form-item>
         <el-form-item label="工作岗位" prop="job">
-          <el-input v-model="data.formData.data[0].job" placeholder="请输入工作岗位" />
+          <el-input v-model="data.userdata.job" placeholder="请输入工作岗位" />
         </el-form-item>
         <el-form-item label="员工来源" prop="source">
-          <el-input v-model="data.formData.data[0].source" placeholder="请输入员工来源" />
+          <el-input v-model="data.userdata.source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model="data.formData.data[0].joinTime" placeholder="请输入加入时间(例如:20230101)" />
+          <el-input v-model="data.userdata.joinTime" placeholder="请输入加入时间(例如:20230101)" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
-          <el-input v-model="data.formData.data[0].state" placeholder="请输入目前状态" />
+          <el-input v-model="data.userdata.state" placeholder="请输入目前状态" />
         </el-form-item>
       </el-form>
+
+      <el-form v-if="data.formData.type==='教育信息'">
+      <h4>导入教育信息</h4>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="data.educatedata.name" placeholder="请输入姓名" />
+        </el-form-item>
+        <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="data.educatedata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="文化程度" prop="educateLevel">
+          <el-input v-model="data.educatedata.educateLevel" placeholder="请输入现文化程度" />
+        </el-form-item>
+        <el-form-item label="学历性质" prop="academicQua">
+          <el-input v-model="data.educatedata.academicQua" placeholder="请输入学历性质" />
+        </el-form-item>
+        <el-form-item label="学位" prop="academicDegree">
+          <el-input v-model="data.educatedata.academicDegree" placeholder="请输入学位" />
+        </el-form-item>
+        <el-form-item label="入学时间" prop="joinTime">
+          <el-input v-model="data.educatedata.joinTime" placeholder="请输入入学时间(例如:20200910)" />
+        </el-form-item>
+        <el-form-item label="毕业时间" prop="leaveTime">
+          <el-input v-model="data.educatedata.leaveTime" placeholder="请输入毕业时间(例如:20220620)" />
+        </el-form-item>
+        <el-form-item label="毕业院校" prop="graduateSchool">
+          <el-input v-model="data.educatedata.graduateSchool" placeholder="请输入毕业院校" />
+        </el-form-item>
+        <el-form-item label="院系" prop="institute">
+          <el-input v-model="data.educatedata.institute" placeholder="请输入院系" />
+        </el-form-item>
+        <el-form-item label="专业" prop="major">
+          <el-input v-model="data.educatedata.major" placeholder="请输入专业" />
+        </el-form-item>
+
+        <el-form-item label="外语水平" prop="languageLevel">
+          <el-input v-model="data.userdata.languageLevel" placeholder="请输入外语水平" />
+        </el-form-item>
+      </el-form>
+
+
       <template #footer>
         <div class="flex-float">
           <el-button @click="data.dialogFormVisible = false">取消</el-button>
           <el-button type="primary" @click="submitForm()">提交申请</el-button>
         </div>
       </template>
+      <!-- 弹窗结束 -->
     </el-dialog>
   </div>
 </template>
@@ -211,26 +260,37 @@ const data = reactive({
     department: localStorage.getItem("dept"),
     process: "",
     status: "",
-    type: "用户操作",
+    type: "",
     handle: "",
-    data:[
-      {
-        name:"",
-        sex: "",
-        idCard: "",
-        userCode: "",
-        nation: "",
-        political: "",
-        department: "",
-        basicUnit: "",
-        job: "",
-        source: "",
-        joinTime: "",
-        state: "",
-      }
-    ]
-
   },
+  userdata:{
+      name:"",
+      sex: "",
+      idCard: "",
+      userCode: "",
+      nation: "",
+      political: "",
+      department: "",
+      basicUnit: "",
+      job: "",
+      source: "",
+      joinTime: "",
+      state: "",
+  },
+  educatedata:{
+    name:"",
+    idCard:"",
+    educateLevel:"",
+    academicQua:"",
+    academicDegree:"",
+    joinTime:"",
+    leaveTime:"",
+    graduateSchool:"",
+    institute:"",
+    major:"",
+    languageLevel:"",
+  }
+
 });
 
 onMounted(() => {
@@ -273,16 +333,41 @@ const addApp = () => {
 
 const submitForm = async() => {
   data.formData.process = parseInt(data.formData.process) 
-  data.formData.data[0].joinTime = parseInt(data.formData.data[0].joinTime)
-  const data1 = {
-    ...data.formData
+  let data1
+  let result
+  switch(data.formData.type){
+    case "基础信息":
+      // 提交基础信息申请
+      data.userdata.joinTime = parseInt(data.userdata.joinTime)
+      data1 = {
+        ...data.formData,
+        "data":data.userdata, 
+      }
+      result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible =false
+      data.userdata = {}
+      break;
+    case "教育信息":
+      // 提交教育信息申请
+      data.educatedata.joinTime = parseInt(data.educatedata.joinTime)
+      data.educatedata.leaveTime = parseInt(data.educatedata.leaveTime)
+      data1 = {
+        ...data.formData,
+        "data":data.educatedata
+      }
+      result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible =false
+      data.educatedata = {}
+      break;
   }
-  // console.log(data1);
-  const result = await createApplicationApi(data1)
-  console.log(result);
-  ElMessage.success('提交成功')
 
-  data.dialogFormVisible =false
+
+
+  // console.log(data1);
   // if(!data.id){
   //   let res = await createApplicationApi(data.formData)
   //   if(res.message === 'OK'){
