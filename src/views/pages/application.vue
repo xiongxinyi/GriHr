@@ -86,9 +86,15 @@
 
     <!-- 弹窗 -->
     <el-dialog v-model="data.dialogFormVisible" title="申请表">
+      <!-- 流程 -->
+      <el-steps  >
+        <el-step title="三级人事员" />
+        <el-step title="院人力" />
+        <el-step title="院人力副主任" />
+       </el-steps>
       <!-- 申请表 -->
       <el-form  :model="data.formData" :rules="rules">
-       填写人信息
+       <h4>填写人信息</h4>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.formData.name" disabled placeholder="请输入姓名" />
         </el-form-item>
@@ -117,7 +123,7 @@
             <el-option label="修改" value="修改" />
           </el-select>
         </el-form-item>
-      导入员工信息
+      <h4>导入员工信息</h4>
 
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.formData.data[0].name" placeholder="请输入姓名" />
@@ -157,7 +163,7 @@
           <el-input v-model="data.formData.data[0].source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model="data.formData.data[0].joinTime" placeholder="请输入加入时间" />
+          <el-input v-model="data.formData.data[0].joinTime" placeholder="请输入加入时间(例如:20230101)" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.formData.data[0].state" placeholder="请输入目前状态" />
