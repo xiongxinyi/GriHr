@@ -18,8 +18,12 @@ export const searchUserApi = (idCard) => {
 }
 //基础信息usersList-按姓名name模糊查询
 export const searchUserApi1 = (name) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "user/get",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params:{
             name:name
         }

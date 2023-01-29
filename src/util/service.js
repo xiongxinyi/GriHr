@@ -35,7 +35,7 @@ Service.interceptors.response.use(response=>{
                 type:"error",
                 duration:2000
             })
-            window.location.replace("/login#/index")
+            window.location.replace("/login#/login")
             
             // router.push({path:"/login"})
         }
