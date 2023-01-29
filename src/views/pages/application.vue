@@ -88,7 +88,7 @@
     <el-dialog v-model="data.dialogFormVisible" title="申请表">
       <!-- 流程 -->
       <el-steps  >
-        <el-step title="三级人事员" />
+        <el-step title="部门人力" />
         <el-step title="院人力" />
         <el-step title="院人力副主任" />
        </el-steps>
@@ -132,7 +132,7 @@
       </el-form>
 
      <el-form v-if="data.formData.type==='基础信息'">
-      <h4>导入员工信息</h4>
+      <h4>导入员工基础信息</h4>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.userdata.name" placeholder="请输入姓名" />
         </el-form-item>
@@ -171,7 +171,7 @@
           <el-input v-model="data.userdata.source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model="data.userdata.joinTime" placeholder="请输入加入时间(例如:20230101)" />
+          <el-input v-model="data.userdata.joinTime" placeholder="请输入加入时间(例如:20220821)" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.userdata.state" placeholder="请输入目前状态" />
@@ -179,27 +179,41 @@
       </el-form>
 
       <el-form v-if="data.formData.type==='教育信息'">
-      <h4>导入教育信息</h4>
-        <el-form-item label="姓名" prop="name">
+      <h4>导入员工教育信息</h4>
+      <el-form-item label="姓名" prop="name">
           <el-input v-model="data.educatedata.name" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="身份证号" prop="idCard">
           <el-input v-model="data.educatedata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
-        <el-form-item label="文化程度" prop="educateLevel">
-          <el-input v-model="data.educatedata.educateLevel" placeholder="请输入现文化程度" />
+        <el-form-item label="现文化程度" prop="educateLevel">
+          <el-select v-model="data.educatedata.educateLevel" placeholder="请选择现文化程度">
+            <el-option label="大专" value="大专" />
+            <el-option label="大学本科" value="大学本科" />
+            <el-option label="硕士研究生" value="硕士研究生" />
+            <el-option label="博士研究生" value="博士研究生" />
+          </el-select>
         </el-form-item>
         <el-form-item label="学历性质" prop="academicQua">
-          <el-input v-model="data.educatedata.academicQua" placeholder="请输入学历性质" />
+          <el-select v-model="data.educatedata.academicQua" placeholder="请选择学历性质">
+            <el-option label="普通" value="普通" />
+            <el-option label="国外性质" value="国外性质" />
+            <el-option label="网络教育" value="网络教育" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="学位" prop="academicDegree">
-          <el-input v-model="data.educatedata.academicDegree" placeholder="请输入学位" />
+         <el-form-item label="学位" prop="academicDegree">
+          <el-select v-model="data.educatedata.academicDegree" placeholder="请选择学位">
+            <el-option label="无" value="无" />
+            <el-option label="学士" value="学士" />
+            <el-option label="硕士" value="硕士" />
+            <el-option label="博士" value="博士" />
+          </el-select>
         </el-form-item>
         <el-form-item label="入学时间" prop="joinTime">
-          <el-input v-model="data.educatedata.joinTime" placeholder="请输入入学时间(例如:20200910)" />
+          <el-input v-model.number="data.educatedata.joinTime" placeholder="请输入入学时间(例如:20190910)" />
         </el-form-item>
         <el-form-item label="毕业时间" prop="leaveTime">
-          <el-input v-model="data.educatedata.leaveTime" placeholder="请输入毕业时间(例如:20220620)" />
+          <el-input v-model.number="data.educatedata.leaveTime" placeholder="请输入毕业时间(例如:20220610)" />
         </el-form-item>
         <el-form-item label="毕业院校" prop="graduateSchool">
           <el-input v-model="data.educatedata.graduateSchool" placeholder="请输入毕业院校" />
@@ -208,14 +222,133 @@
           <el-input v-model="data.educatedata.institute" placeholder="请输入院系" />
         </el-form-item>
         <el-form-item label="专业" prop="major">
-          <el-input v-model="data.educatedata.major" placeholder="请输入专业" />
+          <el-input v-model="data.educatedata.major" placeholder="请输入民族" />
         </el-form-item>
-
         <el-form-item label="外语水平" prop="languageLevel">
-          <el-input v-model="data.userdata.languageLevel" placeholder="请输入外语水平" />
+          <el-input v-model="data.educatedata.languageLevel" placeholder="请输入外语水平" />
         </el-form-item>
       </el-form>
 
+      <el-form v-if="data.formData.type==='岗级信息'">
+      <h4>导入员工岗级信息</h4>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="data.jobdata.name" placeholder="请输入姓名" />
+        </el-form-item>
+        <el-form-item label="员工号" prop="userCode">
+          <el-input v-model="data.jobdata.userCode" placeholder="请输入员工号" />
+        </el-form-item>
+        <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="data.jobdata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="岗位名称" prop="job">
+          <el-input v-model="data.jobdata.job" placeholder="请输入岗位名称" />
+        </el-form-item>
+        <el-form-item label="工作类型" prop="jobType">
+          <el-select v-model="data.jobdata.jobType" placeholder="请选择工作类型">
+            <el-option label="专业技术岗" value="专业技术岗" />
+            <el-option label="管理岗" value="管理岗" />
+            <el-option label="操作岗" value="操作岗" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="岗级" prop="level">
+          <el-input v-model="data.jobdata.level" placeholder="请输入岗级" />
+        </el-form-item>
+        <el-form-item label="档次" prop="grade">
+          <el-input v-model="data.jobdata.grade" placeholder="请输入档次" />
+        </el-form-item>
+        <el-form-item label="执行开始时间" prop="executeTime">
+          <el-input v-model.number="data.jobdata.executeTime" placeholder="请输入执行开始时间(例如:20200910)" />
+        </el-form-item>
+        <el-form-item label="备注" prop="note">
+          <el-input v-model="data.jobdata.note" placeholder="请输入备注" />
+        </el-form-item>
+      </el-form>
+
+      <el-form v-if="data.formData.type==='绩效信息'">
+      <h4>导入员工绩效信息</h4>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="data.performdata.name" placeholder="请输入姓名" />
+        </el-form-item>
+         <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="data.performdata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.performdata.department" placeholder="请输入部门" />
+        </el-form-item>
+        <el-form-item label="基层单位" prop="unit">
+          <el-input v-model="data.performdata.unit" placeholder="请输入基层单位" />
+        </el-form-item>
+        <el-form-item label="工作岗位" prop="job">
+          <el-input v-model="data.performdata.job" placeholder="请输入工作岗位" />
+        </el-form-item>
+        <el-form-item label="行政级别" prop="exeLevel">
+          <el-input v-model="data.performdata.exeLevel" placeholder="请输入行政级别" />
+        </el-form-item>
+        <el-form-item label="考核期" prop="evaPeriod">
+          <el-input v-model="data.performdata.evaPeriod" placeholder="请输入考核期" />
+        </el-form-item>
+        <el-form-item label="考核开始时间" prop="evaStaTime">
+          <el-input v-model.number="data.performdata.evaStaTime" placeholder="请输入考核开始时间(例如:20200910)" />
+        </el-form-item>
+        <el-form-item label="考核结束时间" prop="evaEndTime">
+          <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间(例如:20220910)" />
+        </el-form-item>
+        <el-form-item label="考核得分" prop="evaScore">
+          <el-input v-model="data.performdata.evaScore" placeholder="请输入考核得分" />
+        </el-form-item>
+        <el-form-item label="考核档次" prop="evaClass">
+          <el-input v-model="data.performdata.evaClass" placeholder="请输入考核档次" />
+        </el-form-item>
+        <el-form-item label="考核负责人" prop="evaHead">
+          <el-input v-model="data.performdata.evaHead" placeholder="请输入考核负责人" />
+        </el-form-item>
+      </el-form>
+
+      <el-form v-if="data.formData.type==='工资信息'">
+      <h4>导入员工工资信息</h4>
+      <el-form-item label="工资发放年月" prop="wageDate">
+          <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月(例如:202203)" />
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="data.salarydata.name" placeholder="请输入姓名" />
+        </el-form-item>
+         <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="data.salarydata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.salarydata.department" placeholder="请输入部门" />
+        </el-form-item>
+        <el-form-item label="基层单位" prop="unit">
+          <el-input v-model="data.salarydata.unit" placeholder="请输入基层单位" />
+        </el-form-item>
+        <el-form-item label="工资代发机构" prop="issAgency">
+          <el-input v-model="data.salarydata.issAgency" placeholder="请输入工资代发机构" />
+        </el-form-item>
+        <el-form-item label="社保是否缴纳" prop="insurance">
+          <el-select v-model="data.salarydata.insurance" placeholder="请选择社保是否缴纳">
+            <el-option label="是" value="是" />
+            <el-option label="否" value="否" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="基本工资" prop="basicSalary">
+          <el-input v-model="data.salarydata.basicSalary" placeholder="请输入基本工资" />
+        </el-form-item>
+        <el-form-item label="奖金" prop="bonus">
+          <el-input v-model="data.salarydata.bonus" placeholder="请输入奖金" />
+        </el-form-item>
+        <el-form-item label="其他" prop="other">
+          <el-input v-model="data.salarydata.other" placeholder="请输入其他" />
+        </el-form-item>
+        <el-form-item label="备注" prop="note">
+          <el-input v-model="data.salarydata.note" placeholder="请输入备注" />
+        </el-form-item>
+        <el-form-item label="应发金额" prop="shouldIssue">
+          <el-input v-model="data.salarydata.shouldIssue" placeholder="请输入应发金额" />
+        </el-form-item>
+        <el-form-item label="实发金额" prop="realIssue">
+          <el-input v-model="data.salarydata.realIssue" placeholder="请输入实发金额" />
+        </el-form-item>
+      </el-form>
 
       <template #footer>
         <div class="flex-float">
@@ -231,7 +364,7 @@
 <script setup>
 import axios, { Axios } from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { updateUserApi, myApplicationApi, createApplicationApi,recordApi } from "@/util/request";
+import { updateUserApi, myApplicationApi, createApplicationApi, recordApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -264,18 +397,18 @@ const data = reactive({
     handle: "",
   },
   userdata:{
-      name:"",
-      sex: "",
-      idCard: "",
-      userCode: "",
-      nation: "",
-      political: "",
-      department: "",
-      basicUnit: "",
-      job: "",
-      source: "",
-      joinTime: "",
-      state: "",
+    name:"",
+    sex: "",
+    idCard: "",
+    userCode: "",
+    nation: "",
+    political: "",
+    department: "",
+    basicUnit: "",
+    job: "",
+    source: "",
+    joinTime: "",
+    state: "",
   },
   educatedata:{
     name:"",
@@ -289,8 +422,47 @@ const data = reactive({
     institute:"",
     major:"",
     languageLevel:"",
-  }
-
+  },
+  jobdata:{
+    name:"",
+    userCode: "",
+    idCard: "",
+    job: "",
+    jobType: "",
+    level: "",
+    grade: "",
+    executeTime: "",
+    note: "",
+  },
+  performdata:{
+    name:"",
+    idCard: "",
+    department: "",
+    unit: "",
+    job: "",
+    exeLevel: "",
+    evaPeriod: "",
+    evaStaTime: "",
+    evaEndTime: "",
+    evaScore: "",
+    evaClass: "",
+    evaHead: "",
+  },
+  salarydata:{
+    wageDate: "",
+    name:"",
+    idCard: "",
+    department: "",
+    unit: "",
+    issAgency: "",
+    insurance: "",
+    basicSalary: "",
+    bonus: "",
+    other: "",
+    note: "",
+    shouldIssue: "",
+    realIssue: "",
+  },
 });
 
 onMounted(() => {
@@ -310,19 +482,15 @@ const logCheck = async(e) =>{
   data.Record = result.data
   // console.log(result);
   // 获取审核记录
-
- 
 }
 
 const applicationget = async () => { 
   const result = await myApplicationApi(data.searchParams);
-
   data.applicationList = result.data;
   data.total = result.total;
 };
 
 const infoCheck = (e) => {
-
   data.infoVisible = true;
   data.userCheck = e.data;
 };
@@ -363,9 +531,47 @@ const submitForm = async() => {
       data.dialogFormVisible =false
       data.educatedata = {}
       break;
+    case "岗级信息":
+      // 提交岗级信息申请
+      data.jobdata.executeTime = parseInt(data.jobdata.executeTime)
+      data1 = {
+        ...data.formData,
+        "data":data.jobdata, 
+      }
+      result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible =false
+      data.jobdata = {}
+      break;
+    case "绩效信息":
+      // 提交绩效信息申请
+      data.performdata.evaStaTime = parseInt(data.performdata.evaStaTime)
+      data.performdata.evaEndTime = parseInt(data.performdata.evaEndTime)
+      data1 = {
+        ...data.formData,
+        "data":data.performdata, 
+      }
+      result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible =false
+      data.performdata = {}
+      break;
+    case "工资信息":
+      // 提交工资信息申请
+      data.salarydata.joinTime = parseInt(data.salarydata.joinTime)
+      data1 = {
+        ...data.formData,
+        "data":data.salarydata, 
+      }
+      result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible =false
+      data.salarydata = {}
+      break;
   }
-
-
 
   // console.log(data1);
   // if(!data.id){
@@ -389,8 +595,6 @@ const submitForm = async() => {
   //   data.dialogFormVisible =false
   // }
 }
-
-   
 </script>
 
 <style scoped>
