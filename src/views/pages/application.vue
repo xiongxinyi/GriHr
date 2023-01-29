@@ -149,7 +149,7 @@
           <el-input v-model="data.userdata.userCode" placeholder="请输入员工号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
-          <el-input v-model.number="data.userdata.nation" placeholder="请输入民族" />
+          <el-input v-model="data.userdata.nation" placeholder="请输入民族" />
         </el-form-item>
         <el-form-item label="政治面貌" prop="political">
           <el-select v-model="data.userdata.political" placeholder="请选择政治面貌">
@@ -171,7 +171,7 @@
           <el-input v-model="data.userdata.source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model="data.userdata.joinTime" placeholder="请输入加入时间(例如:20220821)" />
+          <el-input v-model.number="data.userdata.joinTime" placeholder="请输入加入时间(例如:20220821)" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.userdata.state" placeholder="请输入目前状态" />
@@ -257,7 +257,7 @@
           <el-input v-model="data.jobdata.grade" placeholder="请输入档次" />
         </el-form-item>
         <el-form-item label="执行开始时间" prop="executeTime">
-          <el-input v-model.number="data.jobdata.executeTime" placeholder="请输入执行开始时间(例如:20200910)" />
+          <el-input v-model.number="data.jobdata.executeTime" placeholder="请输入执行开始时间(例如:20220821)" />
         </el-form-item>
         <el-form-item label="备注" prop="note">
           <el-input v-model="data.jobdata.note" placeholder="请输入备注" />
@@ -288,10 +288,10 @@
           <el-input v-model="data.performdata.evaPeriod" placeholder="请输入考核期" />
         </el-form-item>
         <el-form-item label="考核开始时间" prop="evaStaTime">
-          <el-input v-model.number="data.performdata.evaStaTime" placeholder="请输入考核开始时间(例如:20200910)" />
+          <el-input v-model.number="data.performdata.evaStaTime" placeholder="请输入考核开始时间(例如:20220821)" />
         </el-form-item>
         <el-form-item label="考核结束时间" prop="evaEndTime">
-          <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间(例如:20220910)" />
+          <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间(例如:20221201)" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
           <el-input v-model="data.performdata.evaScore" placeholder="请输入考核得分" />
