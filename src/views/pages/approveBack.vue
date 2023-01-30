@@ -28,23 +28,22 @@
           </template>
         </el-table-column>
       </el-table>
-            <!-- 流转记录弹出框 -->
-  <el-dialog v-model="data.logDialog" width="50%">
-      <span>申请表流转记录</span>
+    <!-- 流转记录弹出框 -->
+    <el-dialog v-model="data.logDialog" width="50%">
+    <span>申请表流转记录</span>
       <div class="block" style="margin-top: 20px;">
-  <el-timeline reverse=true >
-    <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
-      <el-card>
-        <h4>{{ item.opinion }}  </h4>
-        <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
-        <p>审核意见：&nbsp;{{ item.desc }}</p>
-      </el-card>
-    </el-timeline-item>
-  </el-timeline>
-</div>
+        <el-timeline reverse=true >
+          <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
+            <el-card>
+              <h4>{{ item.opinion }}  </h4>
+              <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
+              <p>审核意见：&nbsp;{{ item.desc }}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
     </el-dialog>
-
-      <!-- 分页器 -->
+    <!-- 分页器 -->
       <el-pagination background
         layout="prev, pager, ->, total"
         v-model:currentPage="data.searchParams.pagenum"
@@ -107,15 +106,6 @@ const pageChange = (val) => {
   approveBackget()
 };
 
-const logCheck = async(e) =>{
-  console.log(e.id);
-  data.logDialog = true
-  // console.log();
-  const result = await recordApi(e.id)
-  data.Record = result.data
- 
-}
-
 const approveBackget = async () => { 
   const result = await approveBackApi(data.searchParams);
   console.log(result);
@@ -123,14 +113,21 @@ const approveBackget = async () => {
   data.total = result.total;
 };
 
+// 查看申请信息
 const infoCheck = (e) => {
-
   data.infoVisible = true;
   data.userCheck = e.data;
 };
 
+// 获取审核记录
+const logCheck = async(e) =>{
+  console.log(e.id);
+  data.logDialog = true
+  const result = await recordApi(e.id)
+  data.Record = result.data
+}
+
 </script>
 
 <style scoped>
-
 </style>

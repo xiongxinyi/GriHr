@@ -3,7 +3,7 @@
     <!-- 面包屑 -->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>查询个人申请表</el-breadcrumb-item>
+      <el-breadcrumb-item>查询个人申请表</el-breadcrumb-item>  
     </el-breadcrumb>
     <!-- 白色内容区域 -->
     <div class="page_content">
@@ -39,19 +39,9 @@
         :total="data.total"
         @current-change="pageChange" />
     </div>
-    <!-- 提交申请提示框 -->
-    <el-dialog v-model="data.admitDialog" width="30%">
-      <span>请确认是否提交申请?</span>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="data.admitDialog = false">否</el-button>
-          <el-button type="primary" @click="admitUser">是</el-button>
-        </span>
-      </template>
-    </el-dialog>
     <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="我申请的信息">
-    <!-- 查看申请信息 -->
+    <!-- 查看申请基础信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="sex" label="性别" width="60" />
@@ -68,26 +58,26 @@
       </el-table>
     </el-dialog>
 
-            <!-- 流转记录弹出框 -->
-  <el-dialog v-model="data.logDialog" width="50%">
-      <span>申请表流转记录</span>
+    <!-- 流转记录弹出框 -->
+    <el-dialog v-model="data.logDialog" width="50%">
+    <span>申请表流转记录</span>
       <div class="block" style="margin-top: 20px;">
-  <el-timeline :reverse="reverse" >
-    <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
-      <el-card>
-        <h4>{{ item.opinion }}  </h4>
-        <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
-        <p>审核意见：&nbsp;{{ item.desc }}</p>
-      </el-card>
-    </el-timeline-item>
-  </el-timeline>
-</div>
+        <el-timeline :reverse="reverse" >
+          <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
+            <el-card>
+              <h4>{{item.opinion}}</h4>
+              <p>{{item.name}} &nbsp;&nbsp; {{item.department}}</p>
+              <p>审核意见：&nbsp;{{item.desc}}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
     </el-dialog>
 
-    <!-- 弹窗 -->
+    <!-- 申请表弹窗 -->
     <el-dialog v-model="data.dialogFormVisible" title="申请表">
       <!-- 流程 -->
-      <el-steps  >
+      <el-steps>
         <el-step title="部门人力" />
         <el-step title="院人力" />
         <el-step title="院人力副主任" />
@@ -171,7 +161,7 @@
           <el-input v-model="data.userdata.source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model.number="data.userdata.joinTime" placeholder="请输入加入时间(例如:20220821)" />
+          <el-input v-model.number="data.userdata.joinTime" placeholder="请输入加入时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.userdata.state" placeholder="请输入目前状态" />
@@ -210,10 +200,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="入学时间" prop="joinTime">
-          <el-input v-model.number="data.educatedata.joinTime" placeholder="请输入入学时间(例如:20190910)" />
+          <el-input v-model.number="data.educatedata.joinTime" placeholder="请输入入学时间（例如:20190910）" />
         </el-form-item>
         <el-form-item label="毕业时间" prop="leaveTime">
-          <el-input v-model.number="data.educatedata.leaveTime" placeholder="请输入毕业时间(例如:20220610)" />
+          <el-input v-model.number="data.educatedata.leaveTime" placeholder="请输入毕业时间（例如:20220610）" />
         </el-form-item>
         <el-form-item label="毕业院校" prop="graduateSchool">
           <el-input v-model="data.educatedata.graduateSchool" placeholder="请输入毕业院校" />
@@ -257,7 +247,7 @@
           <el-input v-model="data.jobdata.grade" placeholder="请输入档次" />
         </el-form-item>
         <el-form-item label="执行开始时间" prop="executeTime">
-          <el-input v-model.number="data.jobdata.executeTime" placeholder="请输入执行开始时间(例如:20220821)" />
+          <el-input v-model.number="data.jobdata.executeTime" placeholder="请输入执行开始时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="备注" prop="note">
           <el-input v-model="data.jobdata.note" placeholder="请输入备注" />
@@ -285,13 +275,13 @@
           <el-input v-model="data.performdata.exeLevel" placeholder="请输入行政级别" />
         </el-form-item>
         <el-form-item label="考核期" prop="evaPeriod">
-          <el-input v-model="data.performdata.evaPeriod" placeholder="请输入考核期" />
+          <el-input v-model="data.performdata.evaPeriod" placeholder="请输入考核期（例如:2022年度）" />
         </el-form-item>
         <el-form-item label="考核开始时间" prop="evaStaTime">
-          <el-input v-model.number="data.performdata.evaStaTime" placeholder="请输入考核开始时间(例如:20220821)" />
+          <el-input v-model.number="data.performdata.evaStaTime" placeholder="请输入考核开始时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="考核结束时间" prop="evaEndTime">
-          <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间(例如:20221201)" />
+          <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间（例如:20221201）" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
           <el-input v-model="data.performdata.evaScore" placeholder="请输入考核得分" />
@@ -307,7 +297,7 @@
       <el-form v-if="data.formData.type==='工资信息'">
       <h4>导入员工工资信息</h4>
       <el-form-item label="工资发放年月" prop="wageDate">
-          <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月(例如:202203)" />
+          <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
         </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.salarydata.name" placeholder="请输入姓名" />
@@ -356,7 +346,7 @@
           <el-button type="primary" @click="submitForm()">提交申请</el-button>
         </div>
       </template>
-      <!-- 弹窗结束 -->
+      <!-- 申请表弹窗结束 -->
     </el-dialog>
   </div>
 </template>
@@ -370,9 +360,7 @@ import { ElMessage } from "element-plus";
   定义数据
 */
 const data = reactive({
-  deleteId: null,
-  deleteDialog: false,
-  logDialog:false,
+  logDialog: false,
   dialogFormVisible: false,
   infoVisible: false,
   id: "",
@@ -474,26 +462,26 @@ const pageChange = (val) => {
   applicationget();
 };
 
-const logCheck = async(e) =>{
-  console.log(e.id);
-  data.logDialog = true
-  // console.log();
-  const result = await recordApi(e.id)
-  data.Record = result.data
-  // console.log(result);
-  // 获取审核记录
-}
-
 const applicationget = async () => { 
   const result = await myApplicationApi(data.searchParams);
   data.applicationList = result.data;
   data.total = result.total;
 };
 
+// 查看申请信息
 const infoCheck = (e) => {
   data.infoVisible = true;
   data.userCheck = e.data;
 };
+
+// 获取审核记录
+const logCheck = async(e) =>{
+  console.log(e.id);
+  data.logDialog = true
+  const result = await recordApi(e.id)
+  data.Record = result.data
+  console.log(result);
+}
 
 const addApp = () => {
   data.dialogFormVisible = true;
@@ -514,7 +502,7 @@ const submitForm = async() => {
       result = await createApplicationApi(data1)
       console.log(result);
       ElMessage.success('提交成功')
-      data.dialogFormVisible =false
+      data.dialogFormVisible = false
       data.userdata = {}
       break;
     case "教育信息":
@@ -528,7 +516,7 @@ const submitForm = async() => {
       result = await createApplicationApi(data1)
       console.log(result);
       ElMessage.success('提交成功')
-      data.dialogFormVisible =false
+      data.dialogFormVisible = false
       data.educatedata = {}
       break;
     case "岗级信息":
@@ -541,7 +529,7 @@ const submitForm = async() => {
       result = await createApplicationApi(data1)
       console.log(result);
       ElMessage.success('提交成功')
-      data.dialogFormVisible =false
+      data.dialogFormVisible = false
       data.jobdata = {}
       break;
     case "绩效信息":
@@ -555,12 +543,12 @@ const submitForm = async() => {
       result = await createApplicationApi(data1)
       console.log(result);
       ElMessage.success('提交成功')
-      data.dialogFormVisible =false
+      data.dialogFormVisible = false
       data.performdata = {}
       break;
     case "工资信息":
       // 提交工资信息申请
-      data.salarydata.joinTime = parseInt(data.salarydata.joinTime)
+      data.salarydata.wageDate = parseInt(data.salarydata.wageDate)
       data1 = {
         ...data.formData,
         "data":data.salarydata, 
@@ -568,7 +556,7 @@ const submitForm = async() => {
       result = await createApplicationApi(data1)
       console.log(result);
       ElMessage.success('提交成功')
-      data.dialogFormVisible =false
+      data.dialogFormVisible = false
       data.salarydata = {}
       break;
   }
@@ -595,6 +583,7 @@ const submitForm = async() => {
   //   data.dialogFormVisible =false
   // }
 }
+
 </script>
 
 <style scoped>

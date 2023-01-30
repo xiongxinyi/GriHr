@@ -79,8 +79,9 @@
         @current-change="pageChange" />
     </div>
     <!-- 审核是否同意提示框 -->
-    <el-dialog v-model="data.auditDialog" width="30%">
-      <span>审核是否同意?</span>
+    <el-dialog v-model="data.auditDialog" width="30%" align-center>
+      <!-- <h4 class="dialog-footer">审核是否同意?</h4> -->
+      <h4>审核是否同意?</h4>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="auditReject">不同意</el-button>
@@ -94,24 +95,23 @@
       </template>
     </el-dialog>
 
-        <!-- 流转记录弹出框 -->
+    <!-- 流转记录弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
-      <span>申请表流转记录</span>
+    <h4>申请表流转记录</h4>
       <div class="block" style="margin-top: 20px;">
-  <el-timeline reverse="true" >
-    <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
-      <el-card>
-        <h4>{{ item.opinion }}  </h4>
-        <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
-        <p>审核意见：&nbsp;{{ item.desc }}</p>
-      </el-card>
-    </el-timeline-item>
-  </el-timeline>
-</div>
+        <el-timeline reverse="true" >
+          <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
+            <el-card>
+              <h4>{{item.opinion}}  </h4>
+              <p>{{item.name}} &nbsp;&nbsp; {{item.department}}</p>
+              <p>审核意见：&nbsp;{{item.desc}}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
     </el-dialog>
 
-
-    <!-- 弹窗 -->
+    <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="申请信息">
     <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" style="width: 100%">
@@ -146,7 +146,7 @@ const data = reactive({
   deleteDialog: false,
   infoVisible: false,
   auditDialog: false,
-  logDialog:false,
+  logDialog: false,
   id: "",
   KeyWord: "",
   title: "申请表",
@@ -157,10 +157,10 @@ const data = reactive({
   },
   total: 0,
   pendingApproveList: [],
-  Record:[],
   approvedList: [],
   // approveBackList: [],
   userCheck: [],
+  Record: [],
 });
 
 const auditData = reactive({
@@ -194,8 +194,8 @@ const result = await auditApi(data);
   closeAudit()
 }
 
-const closeAudit = ()=>{
-  data.auditDialog=false
+const closeAudit = () =>{
+  data.auditDialog = false
 }
 
 const deleteUserDialog = (id) => {
@@ -231,7 +231,6 @@ const approvedget = async () => {
 // };
 
 const infoCheck = (e) => {
-
   data.infoVisible = true;
   data.userCheck = e.data;
 };
@@ -253,25 +252,32 @@ const handleClick = (tab) => {
   }
 };
 
+// 审核同意或者不同意
 const auditCheck = (e) => {
   AppData = e
   console.log(AppData);
   data.auditDialog = true;
 };
 
+// 获取审核记录
 const logCheck = async(e) =>{
   console.log(e.id);
   data.logDialog = true
-  // console.log();
   const result = await recordApi(e.id)
   data.Record = result.data
   // console.log(result);
-  // 获取审核记录
 }
-
-// const textarea = ref('')
 
 </script>
 
 <style scoped>
+/* .dialog-footer{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+.dialog-footer{
+  margin-right: 10px;
+}
 </style>
