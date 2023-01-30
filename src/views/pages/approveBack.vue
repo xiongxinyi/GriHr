@@ -35,7 +35,7 @@
         <el-timeline reverse=true >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
             <el-card>
-              <h4>{{ item.opinion }}  </h4>
+              <h4>{{ item.opinion }}</h4>
               <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
               <p>审核意见：&nbsp;{{ item.desc }}</p>
             </el-card>
