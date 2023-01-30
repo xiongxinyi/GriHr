@@ -21,7 +21,7 @@
         <el-table-column prop="process" label="流程数" width="80" />
         <el-table-column prop="status" label="审批单所处状态" width="140" />
         <el-table-column prop="type" label="审批类型"  width="100" />
-        <el-table-column prop="handle" label="操作" width="100" />
+        <el-table-column prop="handle" label="操作" width="80" />
         <el-table-column prop="createtime" label="创建时间" width="180" />
         <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
           <template #default="scope">
@@ -60,7 +60,7 @@
 
     <!-- 流转记录弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
-    <span>申请表流转记录</span>
+    <h4>申请表流转记录</h4>
       <div class="block" style="margin-top: 20px;">
         <el-timeline :reverse="reverse" >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">

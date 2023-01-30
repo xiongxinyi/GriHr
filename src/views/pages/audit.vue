@@ -18,7 +18,7 @@
             <el-table-column prop="process" label="流程数" width="80" />
             <el-table-column prop="status" label="审批单所处状态" width="140" />
             <el-table-column prop="type" label="审批类型" width="100" />
-            <el-table-column prop="handle" label="操作" width="100" />
+            <el-table-column prop="handle" label="操作" width="80" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="data" label="查看申请信息  审核   申请单记录">
               <template #default="scope">
@@ -40,7 +40,7 @@
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="updatetime" label="更新时间" width="180" />
             <el-table-column prop="type" label="审批类型" width="100" />
-            <el-table-column prop="handle" label="操作" width="100" />  
+            <el-table-column prop="handle" label="操作" width="80" />  
             <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
