@@ -82,19 +82,18 @@
     <el-dialog v-model="data.auditDialog" width="30%" align-center>
       <!-- <h4 class="dialog-footer">审核是否同意?</h4> -->
       <h4>审核是否同意?</h4>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="auditReject">不同意</el-button>
-          <el-button type="primary" @click="auditPass">同意</el-button>
-        </span>
-         <el-input
-            v-model="auditData.desc"
-            :rows="2"
-            type="textarea"
-            placeholder="备注" />
-      </template>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="auditReject">不同意</el-button>
+            <el-button type="primary" @click="auditPass">同意</el-button>
+          </span>
+        </template>
+        <el-input
+          v-model="auditData.desc"
+          :rows="2"
+          type="textarea"
+          placeholder="备注" />
     </el-dialog>
-
     <!-- 流转记录弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
     <h4>申请表流转记录</h4>
@@ -110,7 +109,6 @@
         </el-timeline>
       </div>
     </el-dialog>
-
     <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="申请信息">
     <!-- 查看申请信息 -->
