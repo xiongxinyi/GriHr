@@ -42,7 +42,7 @@
     <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="我申请的信息">
     <!-- 查看申请基础信息 -->
-      <el-table :data="data.userCheck" style="width: 100%">
+      <el-table :data="data.userCheck" v-if="data.infotype==='基础信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="sex" label="性别" width="60" />
         <el-table-column prop="userCode" label="员工号" width="100" />
@@ -56,7 +56,27 @@
         <el-table-column prop="joinTime" label="加入时间" width="100" />
         <el-table-column prop="state" label="目前状态" width="60" />
       </el-table>
+
+      <el-table :data="data.educateCheck" v-if="data.infotype==='教育信息'" style="width: 100%">
+        <el-table-column prop="name" label="姓名" width="80" />
+        <el-table-column prop="idCard" label="身份证号" width="60" />
+        <el-table-column prop="educateLevel" label="现文化程度" width="100" />
+        <el-table-column prop="academicQua" label="学历性质" width="180" />
+        <el-table-column prop="academicDegree" label="学位" width="70" />
+        <el-table-column prop="joinTime" label="入学时间" width="60" />
+        <el-table-column prop="leaveTime" label="毕业时间" width="120" />
+        <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
+        <el-table-column prop="institute" label="院系" width="100" />
+        <el-table-column prop="major" label="专业" width="100" />
+        <el-table-column prop="languageLevel" label="外语水平" width="100" />
+
+      </el-table>
+    
+    
     </el-dialog>
+
+
+
 
     <!-- 流转记录弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
@@ -363,6 +383,7 @@ const data = reactive({
   logDialog: false,
   dialogFormVisible: false,
   infoVisible: false,
+  infotype:"",
   id: "",
   KeyWord: "",
   title: "申请表",  
@@ -375,6 +396,7 @@ const data = reactive({
   applicationList: [],
   Record:[],
   userCheck: [],
+  educateCheck:[],
   formData: {
     name: localStorage.getItem("name"),
     userCode: localStorage.getItem("usercode"),
@@ -470,8 +492,21 @@ const applicationget = async () => {
 
 // 查看申请信息
 const infoCheck = (e) => {
+  console.log(e.data);
+
+  data.infotype = e.type
+  // console.log();
   data.infoVisible = true;
-  data.userCheck = e.data;
+  switch(e.type){
+    case "基础信息":
+      data.userCheck = e.data
+      break
+    case "教育信息":
+      data.educateCheck = e.data
+      // console.log(typeof(data.educateCheck),data.educateCheck);
+      break
+  }
+
 };
 
 // 获取审核记录
@@ -487,6 +522,7 @@ const addApp = () => {
   data.dialogFormVisible = true;
 };
 
+// 创建申请
 const submitForm = async() => {
   data.formData.process = parseInt(data.formData.process) 
   let data1
@@ -497,7 +533,7 @@ const submitForm = async() => {
       data.userdata.joinTime = parseInt(data.userdata.joinTime)
       data1 = {
         ...data.formData,
-        "data":data.userdata, 
+        "data":[data.userdata], 
       }
       result = await createApplicationApi(data1)
       console.log(result);
@@ -511,7 +547,7 @@ const submitForm = async() => {
       data.educatedata.leaveTime = parseInt(data.educatedata.leaveTime)
       data1 = {
         ...data.formData,
-        "data":data.educatedata
+        "data":[data.educatedata]
       }
       result = await createApplicationApi(data1)
       console.log(result);
@@ -524,7 +560,7 @@ const submitForm = async() => {
       data.jobdata.executeTime = parseInt(data.jobdata.executeTime)
       data1 = {
         ...data.formData,
-        "data":data.jobdata, 
+        "data":[data.jobdata], 
       }
       result = await createApplicationApi(data1)
       console.log(result);
@@ -538,7 +574,7 @@ const submitForm = async() => {
       data.performdata.evaEndTime = parseInt(data.performdata.evaEndTime)
       data1 = {
         ...data.formData,
-        "data":data.performdata, 
+        "data":[data.performdata], 
       }
       result = await createApplicationApi(data1)
       console.log(result);
@@ -551,7 +587,7 @@ const submitForm = async() => {
       data.salarydata.wageDate = parseInt(data.salarydata.wageDate)
       data1 = {
         ...data.formData,
-        "data":data.salarydata, 
+        "data":[data.salarydata], 
       }
       result = await createApplicationApi(data1)
       console.log(result);

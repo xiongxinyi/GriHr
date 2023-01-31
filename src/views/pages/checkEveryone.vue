@@ -202,11 +202,11 @@ const onSearch = (id,content) =>{
 const infoCheck = (e) => {
   data.user = []
   data.idCard = e.idCard
-  userget(e.idCard)
-  eduget(e.idCard)
-  jobget(e.idCard)
-  performget(e.idCard)
-  salaryget(e.idCard)
+  // userget(e.idCard)
+  // eduget(e.idCard)
+  // jobget(e.idCard)
+  // performget(e.idCard)
+  // salaryget(e.idCard)
   data.infoVisible = true;
 };
 
