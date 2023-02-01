@@ -207,9 +207,10 @@ const data = reactive({
   id: "",
   KeyWord: "",
   title: "申请表",
+  label:"",
   searchParams: {
     idCard: "",
-    pagesize: 5,
+    pagesize: 10,
     pagenum: 1,
   },
   total: 0,
@@ -267,10 +268,20 @@ const deleteUserDialog = (id) => {
 const pageChange = (val) => {
   console.log(val);
   data.searchParams.pagenum = val;
-  approveget();
+  switch(data.label){
+    case"待审批":
+    approveget(data.searchParams);
+      break
+    case"已审批":
+    approvedget(data.searchParams)
+      break
+  }
+
+  
 };
 
 const approveget = async () => { 
+  // console.log(data.searchParams);
   const result = await approveApi(data.searchParams);
   // console.log(result);
   data.pendingApproveList = result.data;
@@ -319,6 +330,7 @@ const infoCheck = (e) => {
 const handleClick = (tab) => {
   console.log(tab);
   const label = tab.props?.label;
+  data.label = label
   console.log(label);
   switch (label) {
     case "待审批":

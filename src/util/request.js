@@ -244,25 +244,25 @@ export const myApplicationApi = (data) => {
     })
 }
 //查询待审批申请单
-export const approveApi = (data) => {
+export const approveApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
         url: "application/approvalget",
         headers: {
             authorization: `Bearer ${token}`,
         },
-        data
+        params:pageParams
     })
 }
 //查询已审批申请单
-export const approvedApi = (data) => {
+export const approvedApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
         url: "application/auditcheck",
         headers: {
             authorization: `Bearer ${token}`,
         },
-        data
+        params:pageParams
     })
 }
 //查询个人已退回申请单
