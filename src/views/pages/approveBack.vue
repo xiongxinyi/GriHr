@@ -71,7 +71,7 @@
 
       <el-table :data="data.educateCheck" v-if="data.infotype==='教育信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
-        <el-table-column prop="idCard" label="身份证号" width="60" />
+        <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="educateLevel" label="现文化程度" width="100" />
         <el-table-column prop="academicQua" label="学历性质" width="180" />
         <el-table-column prop="academicDegree" label="学位" width="70" />
