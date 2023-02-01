@@ -22,7 +22,7 @@
         <el-table-column prop="status" label="审批单所处状态" width="140" />
         <el-table-column prop="type" label="审批类型"  width="100" />
         <el-table-column prop="handle" label="操作" width="80" />
-        <el-table-column prop="createtime" label="创建时间" width="180" />
+        <el-table-column prop="updatetime" label="变更时间" width="180" />
         <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
@@ -705,6 +705,7 @@ const submitForm = async() => {
       // 提交绩效信息申请
       data.performdata.evaStaTime = parseInt(data.performdata.evaStaTime)
       data.performdata.evaEndTime = parseInt(data.performdata.evaEndTime)
+      data.performdata.evaScore = parseFloat(data.performdata.evaScore)
       data1 = {
         ...data.formData,
         "data":[data.performdata], 
@@ -718,6 +719,11 @@ const submitForm = async() => {
     case "工资信息":
       // 提交工资信息申请
       data.salarydata.wageDate = parseInt(data.salarydata.wageDate)
+      data.salarydata.basicSalary = parseFloat(data.salarydata.basicSalary)
+      data.salarydata.bonus = parseFloat(data.salarydata.bonus)
+      data.salarydata.other = parseFloat(data.salarydata.other)
+      data.salarydata.shouldIssue = parseFloat(data.salarydata.shouldIssue)
+      data.salarydata.realIssue = parseFloat(data.salarydata.realIssue)
       data1 = {
         ...data.formData,
         "data":[data.salarydata], 
