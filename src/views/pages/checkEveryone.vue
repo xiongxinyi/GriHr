@@ -237,7 +237,7 @@ const handleClick = (tab) => {
 const pageChange = (val) => {
   console.log(val);
   data.searchParams.pagenum = val;
-  // userAllget()
+  userAllget()
 };
 
 const userAllget = async () => {

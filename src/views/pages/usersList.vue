@@ -91,13 +91,7 @@
           ]">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard" :rules="[
-            {
-              required: true,
-              message: '此项为必填项',
-              trigger: 'blur',
-            },
-          ]">
+        <el-form-item label="身份证号" prop="idCard">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
@@ -179,6 +173,7 @@ import { ElMessage } from "element-plus";
         // idCard:[{
         //     requried:false,
         //     pattern:
+        //       /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
         //       /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
         //     message: "请填写正确的身份证号",
         //     trigger: "blur",

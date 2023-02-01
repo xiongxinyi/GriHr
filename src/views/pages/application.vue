@@ -141,7 +141,7 @@
         <el-step title="院人力副主任" />
        </el-steps>
       <!-- 申请表 -->
-      <el-form  :model="data.formData" :rules="rules">
+      <el-form :model="data.formData" :rules="rules">
        <h4>填写人信息</h4>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.formData.name" disabled placeholder="请输入姓名" />
@@ -181,7 +181,13 @@
 
      <el-form v-if="data.formData.type==='基础信息'">
       <h4>导入员工基础信息</h4>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.userdata.name" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
@@ -190,10 +196,24 @@
             <el-option label="女" value="女" />
           </el-select>
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.userdata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
-        <el-form-item label="员工号" prop="userCode">
+        <el-form-item label="员工号" prop="userCode" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.userdata.userCode" placeholder="请输入员工号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
@@ -228,10 +248,24 @@
 
       <el-form v-if="data.formData.type==='教育信息'">
       <h4>导入员工教育信息</h4>
-      <el-form-item label="姓名" prop="name">
+      <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.educatedata.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.educatedata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
@@ -279,13 +313,32 @@
 
       <el-form v-if="data.formData.type==='岗级信息'">
       <h4>导入员工岗级信息</h4>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.jobdata.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="员工号" prop="userCode">
+        <el-form-item label="员工号" prop="userCode" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.jobdata.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.jobdata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="岗位名称" prop="job">
@@ -314,10 +367,24 @@
 
       <el-form v-if="data.formData.type==='绩效信息'">
       <h4>导入员工绩效信息</h4>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.performdata.name" placeholder="请输入姓名" />
         </el-form-item>
-         <el-form-item label="身份证号" prop="idCard">
+         <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.performdata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="部门" prop="department">
@@ -357,10 +424,24 @@
       <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
         </el-form-item>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.salarydata.name" placeholder="请输入姓名" />
         </el-form-item>
-         <el-form-item label="身份证号" prop="idCard">
+         <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.salarydata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="部门" prop="department">
@@ -514,6 +595,10 @@ const data = reactive({
     shouldIssue: "",
     realIssue: "",
   },
+  rules:{
+        name:[{required:true,message:"此项为必填项",trigger:"blur"}],
+        userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
+      }
 });
 
 onMounted(() => {

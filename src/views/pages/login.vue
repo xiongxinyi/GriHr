@@ -87,7 +87,7 @@ export default {
       localStorage.setItem("loginData",JSON.stringify(data.loginData))
       //跳转
       router.push({
-        path:"/application"
+        path:"/index"
       })
     }
 
