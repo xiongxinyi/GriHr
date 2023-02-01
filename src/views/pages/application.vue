@@ -42,7 +42,7 @@
 
     <!-- 申请信息弹窗 -->
     <el-dialog v-model="data.infoVisible" title="我申请的信息">
-    <!-- 查看申请基础信息 -->
+    <!-- 查看申请信息 -->
       <el-table :data="data.userCheck" v-if="data.infotype==='基础信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="sex" label="性别" width="60" />
@@ -270,7 +270,7 @@
           <el-input v-model="data.educatedata.institute" placeholder="请输入院系" />
         </el-form-item>
         <el-form-item label="专业" prop="major">
-          <el-input v-model="data.educatedata.major" placeholder="请输入民族" />
+          <el-input v-model="data.educatedata.major" placeholder="请输入专业" />
         </el-form-item>
         <el-form-item label="外语水平" prop="languageLevel">
           <el-input v-model="data.educatedata.languageLevel" placeholder="请输入外语水平" />
@@ -418,10 +418,10 @@ import { ElMessage } from "element-plus";
   定义数据
 */
 const data = reactive({
-  logDialog: false,
   dialogFormVisible: false,
+  logDialog: false,
   infoVisible: false,
-  infotype:"",
+  infotype: "",
   id: "",
   KeyWord: "",
   title: "申请表",  
@@ -432,12 +432,12 @@ const data = reactive({
   },
   total: 0,
   applicationList: [],
-  Record:[],
+  Record: [],
   userCheck: [],
-  educateCheck:[],
-  jobCheck:[],
-  performCheck:[],
-  salaryCheck:[],
+  educateCheck: [],
+  jobCheck: [],
+  performCheck: [],
+  salaryCheck: [],
   formData: {
     name: localStorage.getItem("name"),
     userCode: localStorage.getItem("usercode"),
@@ -534,7 +534,6 @@ const applicationget = async () => {
 // 查看申请信息
 const infoCheck = (e) => {
   console.log(e.data);
-
   data.infotype = e.type
   // console.log();
   data.infoVisible = true;
