@@ -32,7 +32,7 @@
                 <span>已退回申请单</span>
             </el-menu-item>
 
-            <el-menu-item index="/checkEveryone">
+            <el-menu-item index="/checkEveryone" v-if="role==='1'||role==='2'||role==='3'">
               <el-icon><Avatar /></el-icon>
                 <span>查看部门所有人</span>
             </el-menu-item>
