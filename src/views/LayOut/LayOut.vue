@@ -7,7 +7,7 @@
           <h1 class="title">社招人员信息管理系统</h1>
         </div>
         <!-- 头像 -->
-          <el-avatar style="position: relative; left: 620px" 
+          <el-avatar style="position: relative; left: 560px" 
           shape="square" :size="50"> {{ name }} </el-avatar>
         <!-- 退出按钮 -->
         <el-button type="danger" @click="loginOut">退出登录</el-button>

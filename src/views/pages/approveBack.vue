@@ -15,7 +15,6 @@
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="process" label="流程数" width="80" />
         <el-table-column prop="status" label="审批单所处状态" width="140" />
         <el-table-column prop="createtime" label="创建时间" width="180" />
         <el-table-column prop="updatetime" label="更新时间" width="180" />

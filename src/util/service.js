@@ -31,7 +31,7 @@ Service.interceptors.response.use(response=>{
         if (data.message === "token授权已过期,请重新登录") {
             
             ElMessage({
-                message:"登陆过期请重新登陆!",
+                message:"登录过期请重新登录!",
                 type:"error",
                 duration:2000
             })
