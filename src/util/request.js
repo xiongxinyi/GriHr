@@ -9,8 +9,12 @@ export const userListApi = (params) => {
 }
 //基础信息usersList-按身份证号idcard精确查询
 export const searchUserApi = (idCard) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "user/get",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params:{
             idcard:idCard
         }
