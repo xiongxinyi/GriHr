@@ -233,14 +233,14 @@ export const createApplicationApi = (data) => {
     })
 }
 //查询个人申请表
-export const myApplicationApi = (data) => {
+export const myApplicationApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
         url: "application/get",
         headers: {
             authorization: `Bearer ${token}`,
         },
-        data
+        params:pageParams
     })
 }
 //查询待审批申请单
@@ -266,14 +266,14 @@ export const approvedApi = (pageParams) => {
     })
 }
 //查询个人已退回申请单
-export const approveBackApi = (data) => {
+export const approveBackApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
         url: "application/auditback",
         headers: {
             authorization: `Bearer ${token}`,
         },
-        data
+        params:pageParams
     })
 }
 /*
