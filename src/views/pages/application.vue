@@ -7,7 +7,8 @@
     </el-breadcrumb>
     <!-- 白色内容区域 -->
     <div class="page_content">
-      <div class="flex">
+      <div style="float: right;">
+        <el-button type="primary" @click="downlolad()" style="margin-right: 20px;">模板下载</el-button>
         <el-button type="primary" @click="addApp()" style="margin-left:auto">创建申请</el-button>
       </div>
       <!-- 表格 -->
@@ -129,6 +130,25 @@
           </el-timeline-item>
         </el-timeline>
       </div>
+    </el-dialog>
+
+        <!-- 下载内容弹框 -->
+  <el-dialog v-model="data.downloadVisble" width="50%">
+    <h4>申请单模板下载</h4>
+    <el-select v-model="data.downloadtype" placeholder="模板选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
+  </el-select>
+    <template #footer>
+        <div class="flex-float">
+          <el-button @click="data.downloadVisble = false">取消</el-button>
+          <el-button type="primary" @click="down()">下载</el-button>
+        </div>
+      </template>
     </el-dialog>
 
     <!-- 申请表弹窗 -->
@@ -492,12 +512,37 @@
 <script setup>
 import axios, { Axios } from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { updateUserApi, myApplicationApi, createApplicationApi, recordApi } from "@/util/request";
+import { updateUserApi, myApplicationApi, createApplicationApi, recordApi,downloadApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
 */
+const options = [
+  {
+    value: '基础信息',
+    label: '基础信息',
+  },
+  {
+    value: '教育信息',
+    label: '教育信息',
+  },
+  {
+    value: '岗级信息',
+    label: '岗级信息',
+  },
+  {
+    value: '绩效信息',
+    label: '绩效信息',
+  },
+  {
+    value: '工资信息',
+    label: '工资信息',
+  },
+]
+
 const data = reactive({
+  downloadVisble:false,
+  downloadtype:"",
   dialogFormVisible: false,
   logDialog: false,
   infoVisible: false,
@@ -649,10 +694,28 @@ const logCheck = async(e) =>{
   data.Record = result.data
   console.log(result);
 }
+const downlolad = () =>{
+  data.downloadVisble = true
+}
 
 const addApp = () => {
   data.dialogFormVisible = true;
 };
+
+// 下载模板
+const down = async() =>{
+  // console.log(data.downloadtype);
+  const result = await downloadApi(data.downloadtype)
+  console.log(result);
+
+  const binaryData = [];
+    binaryData.push(result);
+    let url = window.URL.createObjectURL(new Blob(binaryData ,{type: 'application/vnd.ms-excel'}));//二进制转换
+    var anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = decodeURI(`${data.downloadtype}.xlsx`);
+    anchor.click();
+}
 
 // 创建申请
 const submitForm = async() => {

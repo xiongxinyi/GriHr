@@ -306,3 +306,17 @@ export const recordApi = (id) =>{
         }
     })
 }
+/*
+*   下载
+*/
+//下载申请模板
+export const downloadApi = (type) =>{
+    console.log(type);
+    return get({
+        url:"download",
+        responseType:"blob",
+        params:{
+            type:type
+        }
+    })
+}
