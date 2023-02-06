@@ -7,20 +7,18 @@
     </el-breadcrumb>
     <!-- 白色内容区域 -->
     <div class="page_content">
-      <div class="flex">
+      <div class="flex">   
         <div class="input_box">
           <el-input
-            v-model="data.searchParams.dept"
+            v-model="data.searchParams.idCard"
             placeholder="搜索关键字"
             class="input-with-select">
             <template #append>
-              <el-button @click="searchPerform"
-                ><el-icon><Search /></el-icon
-              ></el-button>
+              <el-button @click="searchPerform"><el-icon><Search /></el-icon></el-button>
             </template>
           </el-input>
         </div>
-        <el-button type="primary" @click="addPerform(1)">新增</el-button>
+        <el-button type="primary" @click="addPerform(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -41,8 +39,8 @@
         <el-table-column prop="evaHead" label="考核负责人" width="100" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="primary" @click="addPerform(2, scope.row.id, scope.row)">修改</el-button>
-            <el-button type="danger" @click="deletePerformDialog(scope.row.id)">删除</el-button>
+            <el-button v-if="data.role==='2'||data.role==='3'" type="primary" @click="addPerform(2, scope.row.id, scope.row)">修改</el-button>
+            <!-- <el-button type="danger" @click="deletePerformDialog(scope.row.id)">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -53,15 +51,14 @@
         v-model:currentPage="data.searchParams.pagenum"
         v-model:page-size="data.searchParams.pagesize"
         :total="data.total"
-        @current-change="pageChange"
-      />
+        @current-change="pageChange" />
     </div>
 
     <el-dialog v-model="data.deleteDialog" width="30%">
       <span>确认删除此信息吗?</span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.deleteDialog = false">取消</el-button>
+          <el-button @click="data.deleteDialog=false">取消</el-button>
           <el-button type="primary" @click="deletePerform">确定</el-button>
         </span>
       </template>
@@ -70,10 +67,22 @@
     <el-dialog v-model="data.dialogFormVisible" :title="data.title">
       <!-- 表单 -->
       <el-form ref="performForm" :model="data.formData" :rules="rules">
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="部门" prop="department">
@@ -98,7 +107,7 @@
           <el-input v-model.number="data.formData.evaEndTime" placeholder="请输入考核结束时间" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
-          <el-input v-model="data.formData.evaScore" placeholder="请输入考核得分" />
+          <el-input v-model.number="data.formData.evaScore" placeholder="请输入考核得分" />
         </el-form-item>
         <el-form-item label="考核档次" prop="evaClass">
           <el-input v-model="data.formData.evaClass" placeholder="请输入考核档次" />
@@ -109,7 +118,7 @@
       </el-form>
       <template #footer>
         <div class="flex-float">
-          <el-button @click="data.dialogFormVisible = false">取消</el-button>
+          <el-button @click="data.dialogFormVisible=false">取消</el-button>
           <el-button type="primary" @click="submitForm(performForm)">确定</el-button>
         </div>
       </template>
@@ -120,7 +129,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { performListApi, deletePerformApi, addPerformApi, updatePerformApi } from "@/util/request";
+import { performListApi, addPerformApi, deletePerformApi, updatePerformApi, searchPerformApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
  定义数据
@@ -129,11 +138,12 @@ const data = reactive({
   deleteId: null,
   deleteDialog: false,
   dialogFormVisible: false,
+  role: "",
   id: "",
   KeyWord: "",
   title: "",
   searchParams: {
-    dept: "",
+    idCard: "",
     pagesize: 5,
     pagenum: 1,
   },
@@ -159,7 +169,9 @@ const data = reactive({
 });
 
 onMounted(() => {
-  performAllget();
+  data.role = localStorage.getItem("role")
+  console.log(data.role)
+  performAllget()
 });
 
 const deletePerformDialog = (id) => {
@@ -180,10 +192,10 @@ const performAllget = async () => {
 
 const searchPerform = async () => {
   const result = await searchPerformApi(data.searchParams);
-  if (!data.searchParams.dept) {
+  if (!data.searchParams.idCard) {
     performAllget();
   } else {
-    if (result.code === 200) {
+    if (result.status === 200) {
       data.performList = result.data;
       data.total = result.total;
       performAllget();
@@ -196,7 +208,7 @@ const searchPerform = async () => {
 
 const deletePerform = async () => {
   const result = await deletePerformApi({ id: data.deleteId });
-  if (result.message === "OK") {
+  if (result.status === 200) {
     ElMessage.success("删除成功");
     performAllget();
   } else {
@@ -221,8 +233,8 @@ const addPerform = (flag, userId, userInfo) => {
 const submitForm = async () => {
   console.log(data.id);
   if (!data.id) {
-    let res = await addPerformApi(data.formData);
-    if (res.message === "OK") {
+    let result = await addPerformApi(data.formData);
+    if (result.status === 200) {
       ElMessage.success("添加成功");
       performAllget();
     } else {
@@ -230,8 +242,9 @@ const submitForm = async () => {
     }
     data.dialogFormVisible = false;
   } else {
-    let res = await updatePerformApi({ ...data.formData, id: data.id });
-    if (res.message === "OK") {
+    let result = await updatePerformApi({ ...data.formData, id: data.id });
+    console.log(result);
+    if (result.status === 200) {
       ElMessage.success("修改成功");
       performAllget();
     } else {

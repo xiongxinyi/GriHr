@@ -34,9 +34,9 @@
         <el-timeline reverse=true >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
             <el-card>
-              <h4>{{ item.opinion }}</h4>
-              <p>{{item.name}} &nbsp;&nbsp; {{ item.department }}</p>
-              <p>审核意见：&nbsp;{{ item.desc }}</p>
+              <h4>{{item.opinion}}</h4>
+              <p>姓名：{{item.name}}&nbsp;&nbsp;部门：{{item.department}}</p>
+              <p>审核意见：&nbsp;{{item.desc}}</p>
             </el-card>
           </el-timeline-item>
         </el-timeline>
@@ -111,7 +111,7 @@
 
       <el-table :data="data.salaryCheck" v-if="data.infotype==='工资信息'" style="width: 100%">
         <el-table-column prop="wageDate" label="工资发放年月" width="80" />
-        <el-table-column prop="name" label="姓名" width="60" />
+        <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="unit" label="基层单位" width="120" />
@@ -132,7 +132,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { approveBackApi,recordApi } from "@/util/request";
+import { approveBackApi, recordApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -202,7 +202,7 @@ const infoCheck = (e) => {
 };
 
 // 获取审核记录
-const logCheck = async(e) =>{
+const logCheck = async(e) => {
   console.log(e.id);
   data.logDialog = true
   const result = await recordApi(e.id)

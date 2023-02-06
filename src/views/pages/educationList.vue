@@ -18,7 +18,7 @@
             </template>
           </el-input>
         </div>
-        <el-button type="primary" @click="addEdu(1)">新增</el-button>
+        <el-button type="primary" @click="addEdu(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -38,26 +38,25 @@
         <el-table-column prop="languageLevel" label="外语水平" width="80" />
         <el-table-column label="操作">
           <template #default="scope">
-                    <el-button type="primary" @click="addEdu(2,scope.row.id,scope.row)">修改</el-button>
-                    <el-button type="danger"  @click="deleteEduDialog(scope.row.id)" >删除</el-button>         
+            <el-button v-if="data.role==='2'" type="primary" @click="addEdu(2,scope.row.id,scope.row)">修改</el-button>
+            <!-- <el-button type="danger"  @click="deleteEduDialog(scope.row.id)" >删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
      <el-pagination background
-     layout="prev, pager, ->, total" 
+     layout="prev, pager, ->, total"  
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
-     @current-change="pageChange"
-     />
+     @current-change="pageChange" />
     </div>
-   
+
   <el-dialog v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="data.deleteDialog = false">取消</el-button>
+        <el-button @click="data.deleteDialog=false">取消</el-button>
         <el-button type="primary" @click="deleteEdu">确定</el-button>
       </span>
     </template>
@@ -66,10 +65,22 @@
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
     <el-form ref="eduForm" :model="data.formData" :rules="rules">
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
@@ -102,7 +113,7 @@
     </el-form>
     <template #footer>
       <div class="flex-float">
-        <el-button @click="data.dialogFormVisible = false">取消</el-button>
+        <el-button @click="data.dialogFormVisible=false">取消</el-button>
         <el-button type=primary @click="submitForm(eduForm)">确定</el-button>
       </div>
     </template>
@@ -113,38 +124,39 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted} from "vue";
-import { eduListApi, deleteEduApi, searchEduApi, addEduApi, updateEduApi} from "@/util/request";
+import { reactive, ref, toRefs, onMounted} from "vue";
+import { eduListApi, addEduApi, deleteEduApi, updateEduApi, searchEduApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
     */
     const data = reactive({
-      deleteId:null,
-      deleteDialog:false,
-      dialogFormVisible:false,
-      id:'',
-      KeyWord:"",
-      title:"",
-      searchParams:{
-        idCard:"",
-        pagesize:5,
-        pagenum:1
+      deleteId: null,
+      deleteDialog: false,
+      dialogFormVisible: false,
+      role: "",
+      id: '',
+      KeyWord: "",
+      title: "",
+      searchParams: {
+        idCard: "",
+        pagesize: 5,
+        pagenum: 1
       },
-      total:0,
-      eduList:[],
-      formData:{
-        name:"",
-        idCard:"",
-        educateLevel:"",
-        academicQua:"",
-        academicDegree:"",
-        joinTime:"",
-        leaveTime:"",
-        graduateSchool:"",
-        institute:"",
-        major:"",
-        languageLevel:"",
+      total: 0,
+      eduList: [],
+      formData: {
+        name: "",
+        idCard: "",
+        educateLevel: "",
+        academicQua: "",
+        academicDegree: "",
+        joinTime: "",
+        leaveTime: "",
+        graduateSchool: "",
+        institute: "",
+        major: "",
+        languageLevel: "",
       },
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
@@ -152,17 +164,19 @@ import { ElMessage } from "element-plus";
     });
 
     onMounted(() => {
+      data.role = localStorage.getItem("role")
+      console.log(data.role)
       eduAllget()
     })
 
-    const deleteEduDialog = (id) =>{
-        data.deleteDialog = true
-        data.deleteId = id 
+    const deleteEduDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id 
     }
 
-    const pageChange = (val) =>{
-        data.searchParams.pagenum = val
-        eduAllget()
+    const pageChange = (val) => {
+      data.searchParams.pagenum = val
+      eduAllget()
     }
 
     const eduAllget = async() => {
@@ -187,9 +201,9 @@ import { ElMessage } from "element-plus";
       }
     }
     
-    const deleteEdu = async() =>{
+    const deleteEdu = async() => {
       const result = await deleteEduApi({id:data.deleteId});
-      if(result.message === 'OK'){
+      if(result.status === 200){
         ElMessage.success('删除成功')
         eduAllget()
       }else{
@@ -199,7 +213,7 @@ import { ElMessage } from "element-plus";
     }
 
     const addEdu = (flag,userId,userInfo) => {
-      data.dialogFormVisible=true
+      data.dialogFormVisible = true
       if(flag === 1){
         data.id = null
         data.title = '新增员工教育信息'
@@ -214,27 +228,27 @@ import { ElMessage } from "element-plus";
     const submitForm = async() => {
       console.log(data.id);
       if(!data.id){
-        let res = await addEduApi(data.formData)
-        if(res.message === 'OK'){
+        let result = await addEduApi(data.formData)
+        if(result.status === 200){
           ElMessage.success('添加成功')
           eduAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
       }else{
-        let res = await updateEduApi({...data.formData,id:data.id})
-        if(res.message === 'OK'){
+        let result = await updateEduApi({...data.formData,id:data.id})
+        if(result.status === 200){
           ElMessage.success('修改成功')
           eduAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
       }
     }
     
-    const eduForm =ref()
+    const eduForm = ref()
 
 </script>
 

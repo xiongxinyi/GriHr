@@ -18,7 +18,7 @@
             </template>
           </el-input>
         </div>
-        <el-button type="primary" @click="addJob(1)">新增</el-button>
+        <el-button type="primary" @click="addJob(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -36,8 +36,8 @@
         <el-table-column prop="note" label="备注" width="100" />
         <el-table-column label="操作">
           <template #default="scope">
-                    <el-button type="primary" @click="addJob(2,scope.row.id,scope.row)">修改</el-button>
-                    <el-button type="danger"  @click="deleteJobDialog(scope.row.id)" >删除</el-button>         
+            <el-button v-if="data.role==='2'" type="primary" @click="addJob(2,scope.row.id,scope.row)">修改</el-button>
+            <!-- <el-button type="danger"  @click="deleteJobDialog(scope.row.id)" >删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -47,14 +47,13 @@
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
-     @current-change="pageChange"
-     />
+     @current-change="pageChange" />
     </div>
   <el-dialog v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="data.deleteDialog = false">取消</el-button>
+        <el-button @click="data.deleteDialog=false">取消</el-button>
         <el-button type="primary" @click="deleteJob">确定</el-button>
       </span>
     </template>
@@ -63,13 +62,31 @@
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
     <el-form ref="jobForm" :model="data.formData" :rules="rules">
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="员工号" prop="userCode">
+        <el-form-item label="员工号" prop="userCode" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="岗位名称" prop="job">
@@ -94,7 +111,7 @@
     </el-form>
     <template #footer>
       <div class="flex-float">
-        <el-button @click="data.dialogFormVisible = false">取消</el-button>
+        <el-button @click="data.dialogFormVisible=false">取消</el-button>
         <el-button type=primary @click="submitForm(jobForm)">确定</el-button>
       </div>
     </template>
@@ -106,35 +123,36 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { jobListApi, deleteJobApi, addJobApi, updateJobApi } from "@/util/request";
+import { jobListApi, addJobApi, deleteJobApi, updateJobApi, searchJobApi} from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
     */
     const data = reactive({
-      deleteId:null,
-      deleteDialog:false,
-      dialogFormVisible:false,
+      deleteId: null,
+      deleteDialog: false,
+      dialogFormVisible: false,
       id:'',
-      KeyWord:"",
-      title:"",
-      searchParams:{
-        idCard:"",
-        pagesize:5,
-        pagenum:1
+      KeyWord: "",
+      title: "",
+      role: "",
+      searchParams: {
+        idCard: "",
+        pagesize: 5,
+        pagenum: 1
       },
-      total:0,
-      jobList:[],
-      formData:{
-        name:"",
-        userCode:"",
-        idCard:"",
-        job:"",
-        jobType:"",
-        level:"",
-        grade:"",
-        executeTime:"",
-        note:"",
+      total: 0,
+      jobList: [],
+      formData :{
+        name: "",
+        userCode: "",
+        idCard: "",
+        job: "",
+        jobType: "",
+        level: "",
+        grade: "",
+        executeTime: "",
+        note: "",
       },
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
@@ -143,17 +161,19 @@ import { ElMessage } from "element-plus";
     });
 
     onMounted(() => {
+      data.role = localStorage.getItem("role")
+      console.log(data.role)
       jobAllget()
     })
 
-    const deleteJobDialog = (id) =>{
-        data.deleteDialog = true
-        data.deleteId = id 
+    const deleteJobDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id 
     }
 
-    const pageChange = (val) =>{
-        data.searchParams.pagenum = val
-        jobAllget()
+    const pageChange = (val) => {
+      data.searchParams.pagenum = val
+      jobAllget()
     }
 
     const jobAllget = async() => {
@@ -178,9 +198,9 @@ import { ElMessage } from "element-plus";
       }
     }
 
-    const deleteJob = async() =>{
+    const deleteJob = async() => {
       const result = await deleteJobApi({id:data.deleteId});
-      if(result.message === 'OK'){
+      if(result.status === 200){
         ElMessage.success('删除成功')
         jobAllget()
       }else{
@@ -190,7 +210,7 @@ import { ElMessage } from "element-plus";
     }
 
     const addJob = (flag,userId,userInfo) => {
-      data.dialogFormVisible=true
+      data.dialogFormVisible = true
       if(flag === 1){
         data.id = null
         data.title = '新增员工岗级信息'
@@ -205,28 +225,28 @@ import { ElMessage } from "element-plus";
     const submitForm = async() => {
       console.log(data.id);
       if(!data.id){
-        let res = await addJobApi(data.formData)
-        if(res.message === 'OK'){
+        let result = await addJobApi(data.formData)
+        if(result.status === 200){
           ElMessage.success('添加成功')
           jobAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
 
       }else{
-        let res = await updateJobApi({...data.formData,id:data.id})
-        if(res.message === 'OK'){
+        let result = await updateJobApi({...data.formData,id:data.id})
+        if(result.status === 200){
           ElMessage.success('修改成功')
           jobAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
       }
     }
 
-    const jobForm =ref()
+    const jobForm = ref()
 
 </script>
 

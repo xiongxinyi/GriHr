@@ -38,7 +38,7 @@
             </el-menu-item>
             
             <!-- 信息模块 -->
-            <!-- <el-menu-item index="/users">
+            <el-menu-item index="/users">
               <el-icon><Box /></el-icon>
                 <span>基础信息</span>
             </el-menu-item>
@@ -61,7 +61,7 @@
             <el-menu-item index="/salary">
               <el-icon><Box /></el-icon>
                 <span>工资信息</span>
-            </el-menu-item> -->
+            </el-menu-item>
 
           </el-menu>
         </el-aside>

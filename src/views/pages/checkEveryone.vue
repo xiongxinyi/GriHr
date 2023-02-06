@@ -136,7 +136,7 @@
         <el-tab-pane label="工资信息" name="工资信息">
           <el-table :data="data.salary" style="width: 100%">
             <el-table-column prop="wageDate" label="工资发放年月" width="80" />
-            <el-table-column prop="name" label="姓名" width="60" />
+            <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
             <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="unit" label="基层单位" width="120" />
@@ -158,7 +158,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListCheckApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi} from "@/util/request";
+import { userListCheckApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
 /* 
   定义数据
@@ -170,10 +170,10 @@ const data = reactive({
   idCard: "",
   total: 0,
   searchParams: {
-    content:"",
-    select:"",
-    pagesize:5,
-    pagenum:1,
+    content: "",
+    select: "",
+    pagesize: 5,
+    pagenum: 1,
   },
   userList: [],
   user: [],
@@ -187,7 +187,7 @@ onMounted(() => {
   userAllget();
 });
 
-const onSearch = (id,content) =>{
+const onSearch = (id,content) => {
   switch (id){
     case "1":
       searchUser(content)
@@ -250,6 +250,7 @@ const userAllget = async () => {
 const userget = async (idCard) => {
   const result = await searchUserApi(idCard);
   data.user = result.data;
+  data.total = 1
   return result
 };
 

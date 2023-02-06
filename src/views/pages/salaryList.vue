@@ -10,7 +10,7 @@
       <div class="flex">
         <div class="input_box">
           <el-input
-            v-model="data.searchParams.dept"
+            v-model="data.searchParams.idCard"
             placeholder="搜索关键字"
             class="input-with-select">
             <template #append>
@@ -18,7 +18,7 @@
             </template>
           </el-input>
         </div>
-        <el-button type="primary" @click="addSalary(1)">新增</el-button>
+        <el-button type="primary" @click="addSalary(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -26,7 +26,7 @@
       <el-table :data="data.salaryList" style="width: 100%">
         <el-table-column prop="id" label="" width="60" />
         <el-table-column prop="wageDate" label="工资发放年月" width="80" />
-        <el-table-column prop="name" label="姓名" width="60" />
+        <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="unit" label="基层单位" width="120" />
@@ -40,8 +40,8 @@
         <el-table-column prop="realIssue" label="实发金额" width="100" />
         <el-table-column label="操作">
           <template #default="scope">
-                    <el-button type="primary" @click="addSalary(2,scope.row.id,scope.row)">修改</el-button>
-                    <el-button type="danger"  @click="deleteSalaryDialog(scope.row.id)" >删除</el-button>         
+            <!-- <el-button v-if="data.role==='2'" type="primary" @click="addSalary(2,scope.row.id,scope.row)">修改</el-button> -->
+            <!-- <el-button type="danger"  @click="deleteSalaryDialog(scope.row.id)">删除</el-button>  -->
           </template>
         </el-table-column>
       </el-table>
@@ -51,17 +51,14 @@
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
-     @current-change="pageChange"
-     />
+     @current-change="pageChange" />
     </div>
 
-  <el-dialog
-    v-model="data.deleteDialog"
-    width="30%">
+  <el-dialog v-model="data.deleteDialog" width="30%">
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="data.deleteDialog = false">取消</el-button>
+        <el-button @click="data.deleteDialog=false">取消</el-button>
         <el-button type="primary" @click="deleteSalary">确定</el-button>
       </span>
     </template>
@@ -73,10 +70,22 @@
         <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.formData.wageDate" placeholder="请输入工资发放年月" />
         </el-form-item>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" prop="name" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="部门" prop="department">
@@ -109,11 +118,10 @@
         <el-form-item label="实发金额" prop="realIssue">
           <el-input v-model.number="data.formData.realIssue" placeholder="请输入实发金额" />
         </el-form-item>
-
     </el-form>
     <template #footer>
       <div class="flex-float">
-        <el-button @click="data.dialogFormVisible = false">取消</el-button>
+        <el-button @click="data.dialogFormVisible=false">取消</el-button>
         <el-button type=primary @click="submitForm(salaryForm)">确定</el-button>
       </div>
     </template>
@@ -125,39 +133,40 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { salaryListApi, deleteSalaryApi, addSalaryApi, updateSalaryApi } from "@/util/request";
+import { salaryListApi, addSalaryApi, deleteSalaryApi, updateSalaryApi, searchSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
     */
     const data = reactive({
-      deleteId:null,
-      deleteDialog:false,
-      dialogFormVisible:false,
-      id:'',
-      KeyWord:"",
-      title:"",
-      searchParams:{
-        dept:"",
-        pagesize:5,
-        pagenum:1
-      },
-      total:0,
-      salaryList:[],
-      formData:{
-        wageDate:"",
-        name:"",
+      deleteId: null,
+      deleteDialog: false,
+      dialogFormVisible: false,
+      role: "",
+      id: '',
+      KeyWord: "",
+      title: "",
+      searchParams: {
         idCard:"",
-        department:"",
-        unit:"",
-        issAgency:"",
-        insurance:"",
-        basicSalary:"",
-        bonus:"",
-        other:"",
-        note:"",
-        shouldIssue:"",
-        realIssue:"",
+        pagesize: 5,
+        pagenum: 1
+      },
+      total: 0,
+      salaryList: [],
+      formData: {
+        wageDate: "",
+        name: "",
+        idCard: "",
+        department: "",
+        unit: "",
+        issAgency: "",
+        insurance: "",
+        basicSalary: "",
+        bonus: "",
+        other: "",
+        note: "",
+        shouldIssue: "",
+        realIssue: "",
       },
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
@@ -165,17 +174,19 @@ import { ElMessage } from "element-plus";
     });
 
     onMounted(() => {
-     salaryAllget()
+      data.role = localStorage.getItem("role")
+      console.log(data.role)
+      salaryAllget()
     })
 
-    const deleteSalaryDialog = (id) =>{
-        data.deleteDialog = true
-        data.deleteId = id 
+    const deleteSalaryDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id 
     }
 
-    const pageChange = (val) =>{
-        data.searchParams.pagenum = val
-       salaryAllget()
+    const pageChange = (val) => {
+      data.searchParams.pagenum = val
+      salaryAllget()
     }
 
     const salaryAllget = async() => {
@@ -186,13 +197,13 @@ import { ElMessage } from "element-plus";
 
     const searchSalary = async() => {
       const result = await searchSalaryApi(data.searchParams);
-      if(!data.searchParams.dept){
-       salaryAllget()
+      if(!data.searchParams.idCard){
+        salaryAllget()
       }else{
-        if(result.code === 200){
+        if(result.status === 200){
           data.salaryList = result.data
           data.total = result.total
-         salaryAllget()
+          salaryAllget()
         }else{
           data.salaryList = []
           data.total = 0
@@ -200,11 +211,12 @@ import { ElMessage } from "element-plus";
       }
     }
 
-    const deleteSalary = async() =>{
+    const deleteSalary = async() => {
       const result = await deleteSalaryApi({id:data.deleteId});
-      if(result.message === 'OK'){
+      console.log(result);
+      if(result.status === 200){
         ElMessage.success('删除成功')
-       salaryAllget()
+        salaryAllget()
       }else{
         ElMessage.error('接口报错')
       }
@@ -212,7 +224,7 @@ import { ElMessage } from "element-plus";
     }
 
     const addSalary = (flag,userId,userInfo) => {
-      data.dialogFormVisible=true
+      data.dialogFormVisible = true
       if(flag === 1){
         data.id = null
         data.title = '新增员工工资信息'
@@ -227,28 +239,28 @@ import { ElMessage } from "element-plus";
     const submitForm = async() => {
       console.log(data.id);
       if(!data.id){
-        let res = await addSalaryApi(data.formData)
-        if(res.message === 'OK'){
+        let result = await addSalaryApi(data.formData)
+        if(result.status === 200){
           ElMessage.success('添加成功')
-         salaryAllget()
+          salaryAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
 
       }else{
-        let res = await updateSalaryApi({...data.formData,id:data.id})
-        if(res.message === 'OK'){
+        let result = await updateSalaryApi({...data.formData,id:data.id})
+        if(result.status === 200){
           ElMessage.success('修改成功')
-         salaryAllget()
+          salaryAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
       }
     }
 
-    const salaryForm =ref()
+    const salaryForm = ref()
 
 </script>
 

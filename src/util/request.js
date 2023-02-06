@@ -69,8 +69,12 @@ export const updateUserApi = (data) => {
  */
 //教育信息educationList-查询全部
 export const eduListApi = (params) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "educate/all",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params
     })
 }
@@ -109,8 +113,12 @@ export const updateEduApi = (data) => {
  */
 //岗级信息jobList-查询全部
 export const jobListApi = (params) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "joblevel/all",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params
     })
 }
@@ -148,8 +156,12 @@ export const updateJobApi = (data) => {
  */
 //绩效信息performList-查询全部
 export const performListApi = (params) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "performance/all",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params
     })
 }
@@ -187,8 +199,12 @@ export const updatePerformApi = (data) => {
  */
 //工资信息salaryList-查询全部
 export const salaryListApi = (params) => {
+    const token = localStorage.getItem("token")
     return get({
         url: "salary/all",
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
         params
     })
 }

@@ -5,20 +5,39 @@
     <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
     <el-breadcrumb-item>基础信息列表</el-breadcrumb-item>
   </el-breadcrumb>
-    <!-- 白色内容区域 -->
-    <div class="page_content">
+  <!-- 白色内容区域 -->
+  <div class="page_content">
       <div class="flex">
         <div class="input_box">
-          <el-input
+          <el-input placeholder="请选择查询条件" v-model="data.searchParams.content" clearable class="input-with-select" >
+            <template #prepend>
+            <el-select v-model="data.searchParams.select" placeholder="请选择" style="width: 100px;">
+              <el-option label="身份证号" value="1"></el-option>
+              <el-option label="姓名姓氏" value="2"></el-option>
+            </el-select>
+            </template>
+            <template #append>
+             <el-button @click="onSearch(data.searchParams.select,data.searchParams.content)"><el-icon><Search /></el-icon></el-button>
+            </template>
+          </el-input>
+          <!-- <el-input
             v-model="data.searchParams.idCard"
-            placeholder="搜索关键字"
+            placeholder="按身份证号搜索"
             class="input-with-select">
             <template #append>
               <el-button @click="searchUser"><el-icon><Search /></el-icon></el-button>
             </template>
           </el-input>
+          <el-input
+            v-model="data.searchParams.name"
+            placeholder="按姓名姓氏搜索"
+            class="input-with-select">
+            <template #append>
+              <el-button @click="searchUser1"><el-icon><Search /></el-icon></el-button>
+            </template>
+          </el-input> -->
         </div>
-        <el-button type="primary" @click="addUser(1)">新增</el-button>
+        <el-button type="primary" @click="addUser(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
@@ -39,8 +58,8 @@
         <el-table-column prop="state" label="目前状态" width="60" />
         <el-table-column label="操作">
           <template #default="scope">
-                    <el-button type="primary" @click="addUser(2,scope.row.id,scope.row)">修改</el-button>
-                    <el-button type="danger"  @click="deleteUserDialog(scope.row.id)" >删除</el-button>         
+            <el-button v-if="data.role==='2'" type="primary" @click="addUser(2,scope.row.id,scope.row)">修改</el-button>
+            <!-- <el-button type="danger"  @click="deleteUserDialog(scope.row.id)">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -50,7 +69,7 @@
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
-     @current-change="pageChange"/>
+     @current-change="pageChange" />
     </div>
     <!-- <div  v-for="(item,index) in arr" :key="item.index">
     {{item.name}}  {{item.sex}}  {{item.userCode}}
@@ -61,7 +80,7 @@
   <span>确认删除此信息吗?</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="data.deleteDialog = false">取消</el-button>
+        <el-button @click="data.deleteDialog=false">取消</el-button>
         <el-button type="primary" @click="deleteUser">确定</el-button>
       </span>
     </template>
@@ -91,7 +110,13 @@
           ]">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: true,
+              message: '此项为必填项',
+              trigger: 'blur',
+            },
+          ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="民族" prop="nation">
@@ -122,7 +147,7 @@
     </el-form>
     <template #footer>
       <div class="flex-float">
-        <el-button @click="data.dialogFormVisible = false">取消</el-button>
+        <el-button @click="data.dialogFormVisible=false">取消</el-button>
         <el-button type=primary @click="submitForm(userForm)">确定</el-button>
       </div>
     </template>
@@ -133,39 +158,42 @@
 
 <script setup>
 import axios from "axios";
-import { reactive, ref, toRefs ,onMounted } from "vue";
-import { userListApi, deleteUserApi, searchUserApi, addUserApi, updateUserApi } from "@/util/request";
+import { reactive, ref, toRefs, onMounted } from "vue";
+import { userListCheckApi, addUserApi, deleteUserApi, updateUserApi, searchUserApi, searchUserApi1} from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
     */
     const data = reactive({
-      deleteId:null,
-      deleteDialog:false,
-      dialogFormVisible:false,
-      id:'',
-      KeyWord:"",
-      title:"",
-      searchParams:{
-        idCard:"",
-        pagesize:5,
-        pagenum:1
+      deleteId: null,
+      deleteDialog: false,
+      dialogFormVisible: false,
+      id: '',
+      KeyWord: "",
+      title: "",
+      idCard: "",
+      total: 0,
+      role: "",
+      searchParams: {
+        content: "",
+        select: "",
+        pagesize: 5,
+        pagenum: 1,
       },
-      total:0,
-      userList:[],
-      formData:{
-        name:"",
-        sex:"",
-        userCode:"",
-        idCard:"",
-        nation:"",
-        political:"",
-        department:"",
-        basicUnit:"",
-        job:"",
-        source:"",
-        joinTime:"",
-        state:"",
+      userList: [],
+      formData: {
+        name: "",
+        sex: "",
+        userCode: "",
+        idCard: "",
+        nation: "",
+        political: "",
+        department: "",
+        basicUnit: "",
+        job: "",
+        source: "",
+        joinTime: "",
+        state: "",
       },
       // rules:{
       //   name:[{required:true,message:"此项为必填项",trigger:"blur"}],
@@ -182,34 +210,60 @@ import { ElMessage } from "element-plus";
     });
 
     onMounted(() => {
+      data.role = localStorage.getItem("role")
+      console.log(data.role);
       userAllget()
     })
 
-    const deleteUserDialog = (id) =>{
-        data.deleteDialog = true
-        data.deleteId = id 
+    const onSearch = (id,content) => {
+      switch (id){
+        case "1":
+          searchUser(content)
+          break
+      // console.log(content)
+        case "2":
+          searchUser1(content)
+          break
+  }
+}
+
+    const deleteUserDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id 
     }
 
-    const pageChange = (val) =>{
-        data.searchParams.pagenum = val
-        userAllget()
+    const pageChange = (val) => {
+      data.searchParams.pagenum = val
+      userAllget()
     }
 
     const userAllget = async() => {
-      const result = await userListApi(data.searchParams);
+      const result = await userListCheckApi(data.searchParams);
       data.userList = result.data
       data.total =  result.total
     }
 
-    const searchUser = async() => {
-      const result = await searchUserApi(data.searchParams);
-      if(!data.searchParams.idCard){
+    const userget = async (idCard) => {
+      const result = await searchUserApi(idCard);
+      data.userList = result.data;
+      data.total = 1
+      return result
+    }
+
+    const userget1 = async (name) => {
+      const result = await searchUserApi1(name);
+      data.userList = result.data;
+      return result
+};
+
+    const searchUser = async(content) => {
+      if(!content){
         userAllget()
       }else{
+        const result = await userget(content)
+        console.log(result);
         if(result.status === 200){
           data.userList = result.data
-          data.total = result.total
-          userAllget()
         }else{
           data.userList = []
           data.total = 0
@@ -217,9 +271,25 @@ import { ElMessage } from "element-plus";
       }
     }
 
-    const deleteUser = async() =>{
+    const searchUser1 = async (content) => {
+  // const result = await searchUserApi1(content);
+      if (!content) {
+        userAllget();
+      } else {
+        const result = await userget1(content)
+        if (result.status === 200) {
+          data.userList = result.data;
+          // userget1();
+        } else {
+          data.userList = [];
+          data.total = 0;
+        }
+      }
+    }
+
+    const deleteUser = async() => {
       const result = await deleteUserApi({id:data.deleteId});
-      if(result.message === 'OK'){
+      if(result.status === 200){
         ElMessage.success('删除成功')
         userAllget()
       }else{
@@ -229,7 +299,7 @@ import { ElMessage } from "element-plus";
     }
 
     const addUser = (flag,userId,userInfo) => {
-      data.dialogFormVisible=true
+      data.dialogFormVisible = true
       if(flag === 1){
         data.id = null
         data.title = '新增员工基础信息'
@@ -244,34 +314,40 @@ import { ElMessage } from "element-plus";
     const submitForm = async() => {
       console.log(data.id);
       if(!data.id){
-        let res = await addUserApi(data.formData)
-        if(res.message === 'OK'){
+        let result = await addUserApi(data.formData)
+        if(result.status === 200){
           ElMessage.success('添加成功')
           userAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
 
       }else{
-        let res = await updateUserApi({...data.formData,id:data.id})
-        if(res.message === 'OK'){
+        let result = await updateUserApi({...data.formData,id:data.id})
+        if(result.status === 200){
           ElMessage.success('修改成功')
           userAllget()
         }else{
           ElMessage.error('请添加必填项')
         }
-        data.dialogFormVisible =false
+        data.dialogFormVisible = false
       }
     }
 
-    const userForm =ref()
+    const userForm = ref()
 
 </script>
 
 <style scoped>
 .input_box {
-  width: 200px;
+  width: 340px;
   margin-right: 15px;
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select {
+  background-color: #fff;
 }
 </style>
