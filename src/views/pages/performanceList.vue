@@ -3,7 +3,7 @@
     <!-- 面包屑 -->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>绩效信息列表</el-breadcrumb-item>
+      <el-breadcrumb-item>绩效信息</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 白色内容区域 -->
     <div class="page_content">
