@@ -8,7 +8,7 @@ module.exports = defineConfig({
         // target: 'http://localhost:9090',
         target: "http://123.249.26.49:8082",
         ws: true,
-        // test
+        // 测试
         changeOrigin: true,
       },
     },
