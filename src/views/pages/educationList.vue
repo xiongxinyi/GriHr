@@ -43,24 +43,24 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 分页器 -->
-     <el-pagination background
+    <!-- 分页器 -->
+    <el-pagination background
      layout="prev, pager, ->, total"  
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
      @current-change="pageChange" />
     </div>
-
-  <el-dialog v-model="data.deleteDialog" width="30%">
-  <span>确认删除此信息吗?</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="data.deleteDialog=false">取消</el-button>
-        <el-button type="primary" @click="deleteEdu">确定</el-button>
-      </span>
-    </template>
-  </el-dialog>
+    <!-- 删除弹出框 -->
+    <el-dialog v-model="data.deleteDialog" width="30%">
+    <span>确认删除此信息吗?</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="data.deleteDialog=false">取消</el-button>
+          <el-button type="primary" @click="deleteEdu">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
@@ -136,7 +136,6 @@ import { ElMessage } from "element-plus";
       dialogFormVisible: false,
       role: "",
       id: '',
-      KeyWord: "",
       title: "",
       searchParams: {
         idCard: "",
@@ -161,7 +160,7 @@ import { ElMessage } from "element-plus";
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
       }
-    });
+    })
 
     onMounted(() => {
       data.role = localStorage.getItem("role")
@@ -179,34 +178,34 @@ import { ElMessage } from "element-plus";
       eduAllget()
     }
 
-    const eduAllget = async() => {
-      const result = await eduListApi(data.searchParams);
+    const eduAllget = async () => {
+      const result = await eduListApi(data.searchParams)
       data.eduList = result.data
       data.total = result.total
     }
 
-    const searchEdu = async() => {
-      const result = await searchEduApi(data.searchParams);
-      if(!data.searchParams.idCard){
+    const searchEdu = async () => {
+      const result = await searchEduApi(data.searchParams)
+      if (!data.searchParams.idCard) {
         eduAllget()
-      }else{
-        if(result.status === 200){
+      } else {
+        if (result.status === 200) {
           data.eduList = result.data
           data.total = result.total
           eduAllget()
-        }else{
+        } else {
           data.eduList = []
           data.total = 0
         }
       }
     }
     
-    const deleteEdu = async() => {
-      const result = await deleteEduApi({id:data.deleteId});
-      if(result.status === 200){
+    const deleteEdu = async () => {
+      const result = await deleteEduApi({id:data.deleteId})
+      if (result.status === 200) {
         ElMessage.success('删除成功')
         eduAllget()
-      }else{
+      } else {
         ElMessage.error('接口报错')
       }
       data.deleteDialog = false
@@ -214,34 +213,34 @@ import { ElMessage } from "element-plus";
 
     const addEdu = (flag,userId,userInfo) => {
       data.dialogFormVisible = true
-      if(flag === 1){
+      if (flag === 1) {
         data.id = null
         data.title = '新增员工教育信息'
         data.formData = {}
-      }else{
+      } else {
         data.id = userId
         data.title = '修改员工教育信息'
         Object.assign(data.formData,userInfo)
       }
     }
 
-    const submitForm = async() => {
+    const submitForm = async () => {
       console.log(data.id);
-      if(!data.id){
+      if (!data.id) {
         let result = await addEduApi(data.formData)
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('添加成功')
           eduAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false
-      }else{
+      } else {
         let result = await updateEduApi({...data.formData,id:data.id})
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('修改成功')
           eduAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false

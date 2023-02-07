@@ -160,158 +160,157 @@ import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
 import { userListCheckApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
-/* 
-  定义数据
-*/
-const data = reactive({
-  infoVisible: false,
-  id: "",
-  KeyWord: "",
-  idCard: "",
-  total: 0,
-  searchParams: {
-    content: "",
-    select: "",
-    pagesize: 5,
-    pagenum: 1,
-  },
-  userList: [],
-  user: [],
-  edu: [],
-  job: [],
-  performance: [],
-  salary: [],
-});
+    /* 
+      定义数据
+    */
+    const data = reactive({
+      infoVisible: false,
+      id: "",
+      idCard: "",
+      searchParams: {
+        content: "",
+        select: "",
+        pagesize: 5,
+        pagenum: 1,
+      },
+      total: 0,
+      userList: [],
+      user: [],
+      edu: [],
+      job: [],
+      performance: [],
+      salary: [],
+    })
 
-onMounted(() => {
-  userAllget();
-});
+    onMounted(() => {
+      userAllget()
+    })
 
-const onSearch = (id,content) => {
-  switch (id){
-    case "1":
-      searchUser(content)
-      break
-    // console.log(content)
-    case "2":
-      searchUser1(content)
-      break
-  }
-}
-
-const infoCheck = (e) => {
-  data.user = []
-  data.idCard = e.idCard
-  // userget(e.idCard)
-  // eduget(e.idCard)
-  // jobget(e.idCard)
-  // performget(e.idCard)
-  // salaryget(e.idCard)
-  data.infoVisible = true;
-};
-
-const handleClick = (tab) => {
-  console.log(tab);
-  const label = tab.props?.label;
-  const idCard = data.idCard
-  console.log(label);
-  switch (label) {
-    case "基础信息":
-      userget(idCard)
-      break;
-    case "教育信息":
-      eduget(idCard)
-      break;
-    case "岗级信息":
-      jobget(idCard)
-      break;
-    case "绩效信息":
-      performget(idCard)
-      break;
-    case "工资信息":
-      salaryget(idCard)
-      break;
-  }
-};
-
-const pageChange = (val) => {
-  console.log(val);
-  data.searchParams.pagenum = val;
-  userAllget()
-};
-
-const userAllget = async () => {
-  const result = await userListCheckApi(data.searchParams);
-  console.log(result);
-  data.userList = result.data;
-  data.total = result.total;
-};
-
-const userget = async (idCard) => {
-  const result = await searchUserApi(idCard);
-  data.user = result.data;
-  data.total = 1
-  return result
-};
-
-const userget1 = async (name) => {
-  const result = await searchUserApi1(name);
-  data.user = result.data;
-  return result
-};
-
-const eduget = async (idCard) => {
-  const result = await searchEduApi(idCard);
-  data.edu = result.data;
-};
-
-const jobget = async (idCard) => {
-  const result = await searchJobApi(idCard);
-  data.job = result.data;
-};
-
-const performget = async (idCard) => {
-  const result = await searchPerformApi(idCard);
-  data.performance = result.data;
-};
-
-const salaryget = async (idCard) => {
-  const result = await searchSalaryApi(idCard);
-  data.salary = result.data;
-};
-
-const searchUser = async (content) => {
-  // const result = await searchUserApi(content);
-  if (!content) {
-    userAllget();
-  } else {
-    const result = await userget(content)
-    console.log(result);
-    if (result.status === 200) {
-      data.userList = result.data;
-    } else {
-      console.log(123);
-      data.userList = [];
-      data.total = 0;
+    const onSearch = (id,content) => {
+      switch (id){
+        case "1":
+          searchUser(content)
+          break
+        // console.log(content)
+        case "2":
+          searchUser1(content)
+          break
+      }
     }
-  }
-};
 
-const searchUser1 = async (content) => {
-  // const result = await searchUserApi1(content);
-  if (!content) {
-    userAllget();
-  } else {
-    const result = await userget1(content)
-    if (result.status === 200) {
-      data.userList = result.data;
-      // userget1();
-    } else {
-      data.userList = [];
-      data.total = 0;
+    const infoCheck = (e) => {
+      data.user = []
+      data.idCard = e.idCard
+      // userget(e.idCard)
+      // eduget(e.idCard)
+      // jobget(e.idCard)
+      // performget(e.idCard)
+      // salaryget(e.idCard)
+      data.infoVisible = true
     }
-  }
-};
+
+    const handleClick = (tab) => {
+      console.log(tab);
+      const label = tab.props?.label
+      const idCard = data.idCard
+      console.log(label);
+      switch (label) {
+        case "基础信息":
+          userget(idCard)
+          break
+        case "教育信息":
+          eduget(idCard)
+          break
+        case "岗级信息":
+          jobget(idCard)
+          break
+        case "绩效信息":
+          performget(idCard)
+          break
+        case "工资信息":
+          salaryget(idCard)
+          break
+      }
+    }
+
+    const pageChange = (val) => {
+      console.log(val);
+      data.searchParams.pagenum = val
+      userAllget()
+    }
+
+    const userAllget = async () => {
+      const result = await userListCheckApi(data.searchParams)
+      console.log(result);
+      data.userList = result.data
+      data.total = result.total
+    }
+
+    const userget = async (idCard) => {
+      const result = await searchUserApi(idCard)
+      data.user = result.data
+      data.total = 1
+      return result
+    }
+
+    const userget1 = async (name) => {
+      const result = await searchUserApi1(name)
+      data.user = result.data
+      return result
+    }
+
+    const eduget = async (idCard) => {
+      const result = await searchEduApi(idCard)
+      data.edu = result.data
+    }
+
+    const jobget = async (idCard) => {
+      const result = await searchJobApi(idCard)
+      data.job = result.data
+    }
+
+    const performget = async (idCard) => {
+      const result = await searchPerformApi(idCard)
+      data.performance = result.data
+    }
+
+    const salaryget = async (idCard) => {
+      const result = await searchSalaryApi(idCard)
+      data.salary = result.data
+    }
+
+    const searchUser = async (content) => {
+      // const result = await searchUserApi(content)
+      if (!content) {
+        userAllget()
+      } else {
+        const result = await userget(content)
+        console.log(result)
+        if (result.status === 200) {
+          data.userList = result.data
+        } else {
+          console.log(123)
+          data.userList = []
+          data.total = 0
+        }
+      }
+    }
+
+    const searchUser1 = async (content) => {
+      // const result = await searchUserApi1(content)
+      if (!content) {
+        userAllget()
+      } else {
+        const result = await userget1(content)
+        if (result.status === 200) {
+          data.userList = result.data
+          // userget1()
+        } else {
+          data.userList = []
+          data.total = 0
+        }
+      }
+    }
 </script>
 
 <style scoped>

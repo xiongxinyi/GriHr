@@ -45,24 +45,24 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 分页器 -->
-     <el-pagination background
-     layout="prev, pager, ->, total" 
+    <!-- 分页器 -->
+    <el-pagination background
+     layout="prev, pager, ->, total"  
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
      @current-change="pageChange" />
     </div>
-
-  <el-dialog v-model="data.deleteDialog" width="30%">
-  <span>确认删除此信息吗?</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="data.deleteDialog=false">取消</el-button>
-        <el-button type="primary" @click="deleteSalary">确定</el-button>
-      </span>
-    </template>
-  </el-dialog>
+    <!-- 删除弹出框 -->
+    <el-dialog v-model="data.deleteDialog" width="30%">
+    <span>确认删除此信息吗?</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="data.deleteDialog=false">取消</el-button>
+          <el-button type="primary" @click="deleteEdu">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
@@ -144,7 +144,6 @@ import { ElMessage } from "element-plus";
       dialogFormVisible: false,
       role: "",
       id: '',
-      KeyWord: "",
       title: "",
       searchParams: {
         idCard:"",
@@ -171,7 +170,7 @@ import { ElMessage } from "element-plus";
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
       }
-    });
+    })
 
     onMounted(() => {
       data.role = localStorage.getItem("role")
@@ -189,35 +188,35 @@ import { ElMessage } from "element-plus";
       salaryAllget()
     }
 
-    const salaryAllget = async() => {
-      const result = await salaryListApi(data.searchParams);
+    const salaryAllget = async () => {
+      const result = await salaryListApi(data.searchParams)
       data.salaryList = result.data
       data.total = result.total
     }
 
-    const searchSalary = async() => {
-      const result = await searchSalaryApi(data.searchParams);
-      if(!data.searchParams.idCard){
+    const searchSalary = async () => {
+      const result = await searchSalaryApi(data.searchParams)
+      if (!data.searchParams.idCard) {
         salaryAllget()
-      }else{
-        if(result.status === 200){
+      } else {
+        if (result.status === 200) {
           data.salaryList = result.data
           data.total = result.total
           salaryAllget()
-        }else{
+        } else {
           data.salaryList = []
           data.total = 0
         }
       }
     }
 
-    const deleteSalary = async() => {
-      const result = await deleteSalaryApi({id:data.deleteId});
+    const deleteSalary = async () => {
+      const result = await deleteSalaryApi({id:data.deleteId})
       console.log(result);
-      if(result.status === 200){
+      if (result.status === 200) {
         ElMessage.success('删除成功')
         salaryAllget()
-      }else{
+      } else {
         ElMessage.error('接口报错')
       }
       data.deleteDialog = false
@@ -225,35 +224,34 @@ import { ElMessage } from "element-plus";
 
     const addSalary = (flag,userId,userInfo) => {
       data.dialogFormVisible = true
-      if(flag === 1){
+      if (flag === 1) {
         data.id = null
         data.title = '新增员工工资信息'
         data.formData = {}
-      }else{
+      } else {
         data.id = userId
         data.title = '修改员工工资信息'
         Object.assign(data.formData,userInfo)
       }
     }
 
-    const submitForm = async() => {
+    const submitForm = async () => {
       console.log(data.id);
-      if(!data.id){
+      if (!data.id) {
         let result = await addSalaryApi(data.formData)
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('添加成功')
           salaryAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false
-
-      }else{
+      } else {
         let result = await updateSalaryApi({...data.formData,id:data.id})
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('修改成功')
           salaryAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false

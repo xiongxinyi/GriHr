@@ -63,9 +63,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 分页器 -->
-     <el-pagination background
-     layout="prev, pager, ->, total" 
+    <!-- 分页器 -->
+    <el-pagination background
+     layout="prev, pager, ->, total"  
      v-model:currentPage="data.searchParams.pagenum"
      v-model:page-size="data.searchParams.pagesize"
      :total="data.total"
@@ -76,15 +76,16 @@
   </div> -->
     <!-- <div v-for="item in arr" :key="item">{{ item.name }} {{ item.nation }}</div>
   </div> -->
-  <el-dialog v-model="data.deleteDialog" width="30%">
-  <span>确认删除此信息吗?</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="data.deleteDialog=false">取消</el-button>
-        <el-button type="primary" @click="deleteUser">确定</el-button>
-      </span>
-    </template>
-  </el-dialog>
+    <!-- 删除弹出框 -->
+    <el-dialog v-model="data.deleteDialog" width="30%">
+    <span>确认删除此信息吗?</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="data.deleteDialog=false">取消</el-button>
+          <el-button type="primary" @click="deleteEdu">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   <!-- 弹窗 -->
   <el-dialog v-model="data.dialogFormVisible" :title="data.title">
     <!-- 表单 -->
@@ -143,7 +144,6 @@
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.formData.state" placeholder="请输入目前状态" />
         </el-form-item>
-
     </el-form>
     <template #footer>
       <div class="flex-float">
@@ -168,18 +168,16 @@ import { ElMessage } from "element-plus";
       deleteId: null,
       deleteDialog: false,
       dialogFormVisible: false,
-      id: '',
-      KeyWord: "",
-      title: "",
-      idCard: "",
-      total: 0,
       role: "",
+      id: '',
+      title: "",
       searchParams: {
         content: "",
         select: "",
         pagesize: 5,
         pagenum: 1,
       },
+      total: 0,
       userList: [],
       formData: {
         name: "",
@@ -207,7 +205,7 @@ import { ElMessage } from "element-plus";
         //     trigger: "blur",
         //   },],
       // }
-    });
+    })
 
     onMounted(() => {
       data.role = localStorage.getItem("role")
@@ -216,7 +214,7 @@ import { ElMessage } from "element-plus";
     })
 
     const onSearch = (id,content) => {
-      switch (id){
+      switch (id) {
         case "1":
           searchUser(content)
           break
@@ -224,8 +222,8 @@ import { ElMessage } from "element-plus";
         case "2":
           searchUser1(content)
           break
-  }
-}
+      }
+    }
 
     const deleteUserDialog = (id) => {
       data.deleteDialog = true
@@ -237,34 +235,34 @@ import { ElMessage } from "element-plus";
       userAllget()
     }
 
-    const userAllget = async() => {
-      const result = await userListCheckApi(data.searchParams);
+    const userAllget = async () => {
+      const result = await userListCheckApi(data.searchParams)
       data.userList = result.data
       data.total =  result.total
     }
 
     const userget = async (idCard) => {
-      const result = await searchUserApi(idCard);
-      data.userList = result.data;
+      const result = await searchUserApi(idCard)
+      data.userList = result.data
       data.total = 1
       return result
     }
 
     const userget1 = async (name) => {
-      const result = await searchUserApi1(name);
-      data.userList = result.data;
+      const result = await searchUserApi1(name)
+      data.userList = result.data
       return result
-};
+    }
 
-    const searchUser = async(content) => {
-      if(!content){
+    const searchUser = async (content) => {
+      if (!content) {
         userAllget()
-      }else{
+      } else {
         const result = await userget(content)
         console.log(result);
-        if(result.status === 200){
+        if (result.status === 200) {
           data.userList = result.data
-        }else{
+        } else {
           data.userList = []
           data.total = 0
         }
@@ -274,25 +272,25 @@ import { ElMessage } from "element-plus";
     const searchUser1 = async (content) => {
   // const result = await searchUserApi1(content);
       if (!content) {
-        userAllget();
+        userAllget()
       } else {
         const result = await userget1(content)
         if (result.status === 200) {
-          data.userList = result.data;
+          data.userList = result.data
           // userget1();
         } else {
-          data.userList = [];
-          data.total = 0;
+          data.userList = []
+          data.total = 0
         }
       }
     }
 
-    const deleteUser = async() => {
-      const result = await deleteUserApi({id:data.deleteId});
-      if(result.status === 200){
+    const deleteUser = async () => {
+      const result = await deleteUserApi({id:data.deleteId})
+      if (result.status === 200) {
         ElMessage.success('删除成功')
         userAllget()
-      }else{
+      } else {
         ElMessage.error('接口报错')
       }
       data.deleteDialog = false
@@ -300,35 +298,34 @@ import { ElMessage } from "element-plus";
 
     const addUser = (flag,userId,userInfo) => {
       data.dialogFormVisible = true
-      if(flag === 1){
+      if (flag === 1) {
         data.id = null
         data.title = '新增员工基础信息'
         data.formData = {}
-      }else{
+      } else {
         data.id = userId
         data.title = '修改员工基础信息'
         Object.assign(data.formData,userInfo)
       }
     }
 
-    const submitForm = async() => {
+    const submitForm = async () => {
       console.log(data.id);
-      if(!data.id){
+      if (!data.id) {
         let result = await addUserApi(data.formData)
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('添加成功')
           userAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false
-
-      }else{
+      } else {
         let result = await updateUserApi({...data.formData,id:data.id})
-        if(result.status === 200){
+        if (result.status === 200) {
           ElMessage.success('修改成功')
           userAllget()
-        }else{
+        } else {
           ElMessage.error('请添加必填项')
         }
         data.dialogFormVisible = false

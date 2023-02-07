@@ -95,7 +95,7 @@
     <!-- 流转记录弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
     <h4>申请表流转记录</h4>
-      <div class="block" style="margin-top: 20px;">
+      <div class="block" style="margin-top:20px">
         <el-timeline reverse="true" >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
             <el-card>
@@ -191,171 +191,167 @@ import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
 import { approveApi, approvedApi, auditApi, approveBackApi, recordApi } from "@/util/request";
 import { ElMessage } from "element-plus";
-/* 
-  定义数据
-*/
-const data = reactive({
-  deleteId: null,
-  textarea: "",
-  deleteDialog: false,
-  infoVisible: false,
-  auditDialog: false,
-  logDialog: false,
-  infotype: "",
-  id: "",
-  KeyWord: "",
-  title: "申请表",
-  label:"",
-  searchParams: {
-    idCard: "",
-    pagesize: 10,
-    pagenum: 1,
-  },
-  total: 0,
-  pendingApproveList: [],
-  approvedList: [],
-  // approveBackList: [],
-  userCheck: [],
-  Record: [],
-  educateCheck: [],
-  jobCheck: [],
-  performCheck: [],
-  salaryCheck: [],
-});
+    /* 
+      定义数据
+    */
+    const data = reactive({
+      deleteId: null,
+      textarea: "",
+      deleteDialog: false,
+      infoVisible: false,
+      auditDialog: false,
+      logDialog: false,
+      infotype: "",
+      id: "",
+      label: "",
+      searchParams: {
+        idCard: "",
+        pagesize: 10,
+        pagenum: 1,
+      },
+      total: 0,
+      pendingApproveList: [],
+      approvedList: [],
+      // approveBackList: [],
+      userCheck: [],
+      Record: [],
+      educateCheck: [],
+      jobCheck: [],
+      performCheck: [],
+      salaryCheck: [],
+    })
 
-const auditData = reactive({
-  opinion:"",
-  desc:""
-})
+    const auditData = reactive({
+      opinion: "",
+      desc: ""
+    })
 
-let AppData ={}
+    let AppData ={}
 
-const auditPass = async() => {
-  auditData.opinion = "PASS"
-  const data = {
-    ...auditData,
-    ...AppData
-  }
-  
-const result = await auditApi(data);
-  console.log(result);
-  closeAudit()
-}
+    const auditPass = async () => {
+      auditData.opinion = "PASS"
+      const data = {
+        ...auditData,
+        ...AppData
+      } 
+    const result = await auditApi(data)
+      console.log(result)
+      closeAudit()
+    }
 
-const auditReject = async() => {
-  auditData.opinion = "REJECT"
-  const data ={
-    ...auditData,
-    ...AppData
-  }
-  
-const result = await auditApi(data);
-  console.log(result);
-  closeAudit()
-}
+    const auditReject = async () => {
+      auditData.opinion = "REJECT"
+      const data = {
+        ...auditData,
+        ...AppData
+      } 
+      const result = await auditApi(data)
+      console.log(result)
+      closeAudit()
+    }
 
-const closeAudit = () => {
-  data.auditDialog = false
-}
+    const closeAudit = () => {
+      data.auditDialog = false
+    }
 
-const deleteUserDialog = (id) => {
-  data.deleteDialog = true;
-  data.deleteId = id;
-};
+    const deleteUserDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id
+    }
 
-const pageChange = (val) => {
-  console.log(val);
-  data.searchParams.pagenum = val;
-  switch(data.label){
-    case"待审批":
-    approveget(data.searchParams);
-      break
-    case"已审批":
-    approvedget(data.searchParams)
-      break
-  }
-};
+    const pageChange = (val) => {
+      console.log(val);
+      data.searchParams.pagenum = val
+      switch (data.label) {
+        case"待审批":
+          approveget(data.searchParams)
+          break
+        case"已审批":
+          approvedget(data.searchParams)
+          break
+      }
+    }
 
-const approveget = async () => { 
-  // console.log(data.searchParams);
-  const result = await approveApi(data.searchParams);
-  // console.log(result);
-  data.pendingApproveList = result.data;
-  data.total = result.total;
-};
+    const approveget = async () => { 
+      // console.log(data.searchParams)
+      const result = await approveApi(data.searchParams)
+      // console.log(result)
+      data.pendingApproveList = result.data
+      data.total = result.total
+    }
 
-const approvedget = async () => { 
-  const result = await approvedApi(data.searchParams);
-  console.log(result);
-  data.approvedList = result.data;
-  data.total = result.total;
-};
+    const approvedget = async () => { 
+      const result = await approvedApi(data.searchParams)
+      console.log(result)
+      data.approvedList = result.data
+      data.total = result.total
+    }
 
-// const approveBackget = async () => { 
-//   const result = await approveBackApi(data.searchParams);
-//   console.log(result);
-//   data.approveBackList = result.data;
-//   data.total = result.total;
-// };
+    // const approveBackget = async () => { 
+    //   const result = await approveBackApi(data.searchParams)
+    //   console.log(result)
+    //   data.approveBackList = result.data
+    //   data.total = result.total
+    // }
 
-const infoCheck = (e) => {
-  console.log(e.data);
-  data.infotype = e.type
-  // console.log();
-  data.infoVisible = true;
-  switch(e.type){
-    case "基础信息":
-      data.userCheck = e.data
-      break
-    case "教育信息":
-      data.educateCheck = e.data
-      // console.log(typeof(data.educateCheck),data.educateCheck);
-      break
-    case "岗级信息":
-      data.jobCheck = e.data
-      break
-    case "绩效信息":
-      data.performCheck = e.data
-      break
-    case "工资信息":
-      data.salaryCheck = e.data
-      break
-  }
-};
+    const infoCheck = (e) => {
+      console.log(e.data);
+      data.infotype = e.type
+      // console.log();
+      data.infoVisible = true
+      switch(e.type){
+        case "基础信息":
+          data.userCheck = e.data
+          break
+        case "教育信息":
+          data.educateCheck = e.data
+          // console.log(typeof(data.educateCheck),data.educateCheck);
+          break
+        case "岗级信息":
+          data.jobCheck = e.data
+          break
+        case "绩效信息":
+          data.performCheck = e.data
+          break
+        case "工资信息":
+          data.salaryCheck = e.data
+          break
+      }
+    }
 
-const handleClick = (tab) => {
-  console.log(tab);
-  const label = tab.props?.label;
-  data.label = label
-  console.log(label);
-  switch (label) {
-    case "待审批":
-      approveget()
-      break;
-    case "已审批":
-      approvedget()
-      break;
-    // case "个人已退回申请单":
-    //   approveBackget()
-    //   break;
-  }
-};
+    const handleClick = (tab) => {
+      console.log(tab);
+      const label = tab.props?.label
+      data.label = label
+      console.log(label);
+      switch (label) {
+        case "待审批":
+          approveget()
+          break
+        case "已审批":
+          approvedget()
+          break
+        // case "个人已退回申请单":
+        //   approveBackget()
+        //   break;
+      }
+    }
 
-// 审核同意或者不同意
-const auditCheck = (e) => {
-  AppData = e
-  console.log(AppData);
-  data.auditDialog = true;
-};
+    // 审核同意或者不同意
+    const auditCheck = (e) => {
+      AppData = e
+      console.log(AppData);
+      data.auditDialog = true
+    }
 
-// 获取审核记录
-const logCheck = async(e) => {
-  console.log(e.id);
-  data.logDialog = true
-  const result = await recordApi(e.id)
-  data.Record = result.data
-  // console.log(result);
-}
+    // 获取审核记录
+    const logCheck = async (e) => {
+      console.log(e.id);
+      data.logDialog = true
+      const result = await recordApi(e.id)
+      data.Record = result.data
+      // console.log(result);
+    }
 
 </script>
 

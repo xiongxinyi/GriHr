@@ -44,22 +44,21 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 分页器 -->
-      <el-pagination
-        background
-        layout="prev, pager, ->, total"
-        v-model:currentPage="data.searchParams.pagenum"
-        v-model:page-size="data.searchParams.pagesize"
-        :total="data.total"
-        @current-change="pageChange" />
+    <!-- 分页器 -->
+    <el-pagination background
+    layout="prev, pager, ->, total"  
+    v-model:currentPage="data.searchParams.pagenum"
+    v-model:page-size="data.searchParams.pagesize"
+    :total="data.total"
+    @current-change="pageChange" />
     </div>
-
+    <!-- 删除弹出框 -->
     <el-dialog v-model="data.deleteDialog" width="30%">
-      <span>确认删除此信息吗?</span>
+    <span>确认删除此信息吗?</span>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="data.deleteDialog=false">取消</el-button>
-          <el-button type="primary" @click="deletePerform">确定</el-button>
+          <el-button type="primary" @click="deleteEdu">确定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -131,130 +130,130 @@ import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
 import { performListApi, addPerformApi, deletePerformApi, updatePerformApi, searchPerformApi } from "@/util/request";
 import { ElMessage } from "element-plus";
-/* 
- 定义数据
-*/
-const data = reactive({
-  deleteId: null,
-  deleteDialog: false,
-  dialogFormVisible: false,
-  role: "",
-  id: "",
-  KeyWord: "",
-  title: "",
-  searchParams: {
-    idCard: "",
-    pagesize: 5,
-    pagenum: 1,
-  },
-  total: 0,
-  performList: [],
-  formData: {
-    name: "",
-    idCard: "",
-    department: "",
-    unit: "",
-    job: "",
-    exeLevel: "",
-    evaPeriod: "",
-    evaStaTime: "",
-    evaEndTime: "",
-    evaScore: "",
-    evaClass: "",
-    evaHead: "",
-  },
-  rules: {
-    name: [{ required: true, message: "此项为必填项", trigger: "blur" }],
-  },
-});
+    /* 
+    定义数据
+    */
+    const data = reactive({
+      deleteId: null,
+      deleteDialog: false,
+      dialogFormVisible: false,
+      role: "",
+      id: '',
+      title: "",
+      searchParams: {
+        idCard: "",
+        pagesize: 5,
+        pagenum: 1,
+      },
+      total: 0,
+      performList: [],
+      formData: {
+        name: "",
+        idCard: "",
+        department: "",
+        unit: "",
+        job: "",
+        exeLevel: "",
+        evaPeriod: "",
+        evaStaTime: "",
+        evaEndTime: "",
+        evaScore: "",
+        evaClass: "",
+        evaHead: "",
+      },
+      rules: {
+        name: [{ required: true, message: "此项为必填项", trigger: "blur" }],
+      },
+    })
 
-onMounted(() => {
-  data.role = localStorage.getItem("role")
-  console.log(data.role)
-  performAllget()
-});
+    onMounted(() => {
+      data.role = localStorage.getItem("role")
+      console.log(data.role)
+      performAllget()
+    })
 
-const deletePerformDialog = (id) => {
-  data.deleteDialog = true;
-  data.deleteId = id;
-};
-
-const pageChange = (val) => {
-  data.searchParams.pagenum = val;
-  performAllget();
-};
-
-const performAllget = async () => {
-  const result = await performListApi(data.searchParams);
-  data.performList = result.data;
-  data.total = result.total;
-};
-
-const searchPerform = async () => {
-  const result = await searchPerformApi(data.searchParams);
-  if (!data.searchParams.idCard) {
-    performAllget();
-  } else {
-    if (result.status === 200) {
-      data.performList = result.data;
-      data.total = result.total;
-      performAllget();
-    } else {
-      data.performList = [];
-      data.total = 0;
+    const deletePerformDialog = (id) => {
+      data.deleteDialog = true
+      data.deleteId = id
     }
-  }
-};
 
-const deletePerform = async () => {
-  const result = await deletePerformApi({ id: data.deleteId });
-  if (result.status === 200) {
-    ElMessage.success("删除成功");
-    performAllget();
-  } else {
-    ElMessage.error("接口报错");
-  }
-  data.deleteDialog = false;
-};
-
-const addPerform = (flag, userId, userInfo) => {
-  data.dialogFormVisible = true;
-  if (flag === 1) {
-    data.id = null;
-    data.title = "新增员工绩效信息";
-    data.formData = {};
-  } else {
-    data.id = userId;
-    data.title = "修改员工绩效信息";
-    Object.assign(data.formData, userInfo);
-  }
-};
-
-const submitForm = async () => {
-  console.log(data.id);
-  if (!data.id) {
-    let result = await addPerformApi(data.formData);
-    if (result.status === 200) {
-      ElMessage.success("添加成功");
-      performAllget();
-    } else {
-      ElMessage.error("请添加必填项");
+    const pageChange = (val) => {
+      data.searchParams.pagenum = val
+      performAllget()
     }
-    data.dialogFormVisible = false;
-  } else {
-    let result = await updatePerformApi({ ...data.formData, id: data.id });
-    console.log(result);
-    if (result.status === 200) {
-      ElMessage.success("修改成功");
-      performAllget();
-    } else {
-      ElMessage.error("请添加必填项");
-    }
-    data.dialogFormVisible = false;
-  }
-};
 
-const performForm = ref();
+    const performAllget = async () => {
+      const result = await performListApi(data.searchParams)
+      data.performList = result.data
+      data.total = result.total
+    };
+
+    const searchPerform = async () => {
+      const result = await searchPerformApi(data.searchParams)
+      if (!data.searchParams.idCard) {
+        performAllget()
+      } else {
+        if (result.status === 200) {
+          data.performList = result.data
+          data.total = result.total
+          performAllget()
+        } else {
+          data.performList = []
+          data.total = 0
+        }
+      }
+    }
+
+    const deletePerform = async () => {
+      const result = await deletePerformApi({ id: data.deleteId })
+      if (result.status === 200) {
+        ElMessage.success("删除成功")
+        performAllget()
+      } else {
+        ElMessage.error("接口报错")
+      }
+      data.deleteDialog = false
+    }
+
+    const addPerform = (flag, userId, userInfo) => {
+      data.dialogFormVisible = true
+      if (flag === 1) {
+        data.id = null
+        data.title = "新增员工绩效信息"
+        data.formData = {}
+      } else {
+        data.id = userId
+        data.title = "修改员工绩效信息"
+        Object.assign(data.formData, userInfo)
+      }
+    }
+
+    const submitForm = async () => {
+      console.log(data.id)
+      if (!data.id) {
+        let result = await addPerformApi(data.formData)
+        if (result.status === 200) {
+          ElMessage.success("添加成功")
+          performAllget()
+        } else {
+          ElMessage.error("请添加必填项")
+        }
+        data.dialogFormVisible = false
+      } else {
+        let result = await updatePerformApi({ ...data.formData, id: data.id })
+        console.log(result)
+        if (result.status === 200) {
+          ElMessage.success("修改成功")
+          performAllget()
+        } else {
+          ElMessage.error("请添加必填项")
+        }
+        data.dialogFormVisible = false
+      }
+    }
+
+    const performForm = ref()
+    
 </script>
 
 <style scoped>
