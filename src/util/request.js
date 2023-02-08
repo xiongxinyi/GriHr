@@ -334,4 +334,17 @@ export const downloadApi = (type) => {
       params: { type },
     });
   };
-  
+  /*
+ *   上传
+ */
+
+// export const uploadApi = (type) => {
+//     console.log(type);
+//     return post({
+//       url: "upload",
+//       FormData:{
+//         "Content-type" : 'multipart/form-data'
+//       },
+//       params: { type },
+//     });
+//   };
