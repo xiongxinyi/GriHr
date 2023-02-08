@@ -36,9 +36,20 @@
                     </div>
                 </el-card>
                 <el-card :body-style="{ padding: '0px' }">
-                    <img src="../../assets/baoshihua.jpg" class="image" />
+                    <img src="../../assets/物探249队勘探在群山之巅.jpg" class="image" />
                     <div style="padding: 14px">
-                        <span>夕阳下的磕头机</span>
+                        <span>物探249队勘探在群山之巅</span>
+                        <div class="bottom">
+                        <time class="time">{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() }}</time>
+                        <!-- {{date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()}} -->
+                        <el-button text class="button">Operating</el-button>
+                        </div>
+                    </div>
+                </el-card>
+                <el-card :body-style="{ padding: '0px' }">
+                    <img src="../../assets/勘探船“东方物探创新者”号.jpg" class="image" />
+                    <div style="padding: 14px">
+                        <span>勘探船“东方物探创新者”号</span>
                         <div class="bottom">
                         <time class="time">{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() }}</time>
                         <!-- {{date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()}} -->

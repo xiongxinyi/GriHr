@@ -71,7 +71,7 @@ export const updateUserApi = (data) => {
 export const eduListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
-        url: "educate/all",
+        url: "educatelist",
         headers: {
             authorization: `Bearer ${token}`,
         },
@@ -115,7 +115,7 @@ export const updateEduApi = (data) => {
 export const jobListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
-        url: "joblevel/all",
+        url: "joblevellist",
         headers: {
             authorization: `Bearer ${token}`,
         },
@@ -158,7 +158,7 @@ export const updateJobApi = (data) => {
 export const performListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
-        url: "performance/all",
+        url: "performancelist",
         headers: {
             authorization: `Bearer ${token}`,
         },
@@ -201,7 +201,7 @@ export const updatePerformApi = (data) => {
 export const salaryListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
-        url: "salary/all",
+        url: "salarylist",
         headers: {
             authorization: `Bearer ${token}`,
         },

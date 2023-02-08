@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="common-header flex-float">
         <div class="flex">
-          <img class="logo" src="../../assets/baoshihua.jpg" alt="" />
+          <img class="logo" src="../../assets/宝石花.jpg" alt="" />
           <h1 class="title">社招人员信息管理系统</h1>
           <!-- 日期 -->
           <time class="time">{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() }}</time>
