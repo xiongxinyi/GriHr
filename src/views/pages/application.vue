@@ -7,8 +7,8 @@
     </el-breadcrumb>
     <!-- 白色内容区域 -->
     <div class="page_content">
-      <div style="float:right">
-        <el-button type="primary" @click="downlolad()" style="margin-right:20px">模板下载</el-button>
+      <div style="float: right;">
+        <el-button type="primary" @click="download()" style="margin-right: 20px;">模板下载</el-button>
         <el-button type="primary" @click="addApp()" style="margin-left:auto">创建申请</el-button>
       </div>
       <!-- 表格 -->
@@ -22,7 +22,7 @@
         <el-table-column prop="status" label="审批单所处状态" width="140" />
         <el-table-column prop="type" label="审批类型"  width="100" />
         <el-table-column prop="handle" label="操作" width="80" />
-        <el-table-column prop="updatetime" label="更新时间" width="180" />
+        <el-table-column prop="createtime" label="创建时间" width="180" />
         <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
@@ -193,9 +193,38 @@
             <el-option label="修改" value="修改" />
           </el-select>
         </el-form-item>
+        <el-form-item label="创建方式" prop="createtype">
+          <el-select v-model="data.formData.createtype" placeholder="请选择创建方式">
+            <el-option label="手动添加" value="手动添加" />
+            <el-option label="模板导入" value="模板导入" />
+          </el-select>
+        </el-form-item>
       </el-form>
+      <!-- 下载按钮 -->
 
-     <el-form v-if="data.formData.type==='基础信息'">
+  <el-upload
+    ref="uploadRef"
+    :action=data.actionUrl
+    :before-upload="changeUrl"
+    :on-success	="uploadsuccess"
+    :auto-upload="false" v-if="data.formData.createtype==='模板导入'&&data.formData.type!==''" 
+  >
+    <template #trigger>
+      <el-button type="primary">选择文件</el-button>
+    </template>
+
+    <el-button class="ml-3" type="primary" @click="submitUpload" style="margin-left: 20px;">
+     上传
+    </el-button>
+
+    <template #tip>
+      <div class="el-upload__tip">
+        请填写下载的模板上传
+      </div>
+    </template>
+  </el-upload>
+
+     <el-form v-if="data.formData.type==='基础信息'&& data.formData.createtype==='手动添加'">
       <h4>导入员工基础信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -262,7 +291,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='教育信息'">
+      <el-form v-if="data.formData.type==='教育信息'&& data.formData.createtype==='手动添加'">
       <h4>导入员工教育信息</h4>
       <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -327,7 +356,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='岗级信息'">
+      <el-form v-if="data.formData.type==='岗级信息'&& data.formData.createtype==='手动添加'">
       <h4>导入员工岗级信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -381,7 +410,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='绩效信息'">
+      <el-form v-if="data.formData.type==='绩效信息'&& data.formData.createtype==='手动添加'">
       <h4>导入员工绩效信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -435,7 +464,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='工资信息'">
+      <el-form v-if="data.formData.type==='工资信息'&& data.formData.createtype==='手动添加'">
       <h4>导入员工工资信息</h4>
       <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
@@ -511,134 +540,156 @@ import axios, { Axios } from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
 import { updateUserApi, myApplicationApi, createApplicationApi, recordApi, downloadApi } from "@/util/request";
 import { ElMessage } from "element-plus";
-    /* 
-      定义数据
-    */
-    const options = [
-      {
-        value: '基础信息',
-        label: '基础信息',
-      },
-      {
-        value: '教育信息',
-        label: '教育信息',
-      },
-      {
-        value: '岗级信息',
-        label: '岗级信息',
-      },
-      {
-        value: '绩效信息',
-        label: '绩效信息',
-      },
-      {
-        value: '工资信息',
-        label: '工资信息',
-      },
-    ]
 
-    const data = reactive({
-      downloadVisble: false,
-      downloadtype: "",
-      dialogFormVisible: false,
-      logDialog: false,
-      infoVisible: false,
-      infotype: "",
-      id: "",
-      searchParams: {
-        idCard: "",
-        pagesize: 5,
-        pagenum: 1,
-      },
-      total: 0,
-      applicationList: [],
-      Record: [],
-      userCheck: [],
-      educateCheck: [],
-      jobCheck: [],
-      performCheck: [],
-      salaryCheck: [],
-      formData: {
-        name: localStorage.getItem("name"),
-        userCode: localStorage.getItem("usercode"),
-        department: localStorage.getItem("dept"),
-        process: "",
-        status: "",
-        type: "",
-        handle: "",
-      },
-      userdata:{
-        name:"",
-        sex: "",
-        idCard: "",
-        userCode: "",
-        nation: "",
-        political: "",
-        department: "",
-        basicUnit: "",
-        job: "",
-        source: "",
-        joinTime: "",
-        state: "",
-      },
-      educatedata:{
-        name: "",
-        idCard: "",
-        educateLevel: "",
-        academicQua: "",
-        academicDegree: "",
-        joinTime: "",
-        leaveTime: "",
-        graduateSchool: "",
-        institute: "",
-        major: "",
-        languageLevel: "",
-      },
-      jobdata:{
-        name: "",
-        userCode: "",
-        idCard: "",
-        job: "",
-        jobType: "",
-        level: "",
-        grade: "",
-        executeTime: "",
-        note: "",
-      },
-      performdata:{
-        name: "",
-        idCard: "",
-        department: "",
-        unit: "",
-        job: "",
-        exeLevel: "",
-        evaPeriod: "",
-        evaStaTime: "",
-        evaEndTime: "",
-        evaScore: "",
-        evaClass: "",
-        evaHead: "",
-      },
-      salarydata:{
-        wageDate: "",
-        name: "",
-        idCard: "",
-        department: "",
-        unit: "",
-        issAgency: "",
-        insurance: "",
-        basicSalary: "",
-        bonus: "",
-        other: "",
-        note: "",
-        shouldIssue: "",
-        realIssue: "",
-      },
-      rules:{
-            name:[{required:true,message:"此项为必填项",trigger:"blur"}],
-            userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
-          }
-    })
+const uploadRef = ref()
+
+const submitUpload = async() => {
+
+ uploadRef.value.submit()
+
+}
+/* 
+  定义数据
+*/
+const changeUrl = ()=>{
+  
+  data.actionUrl =  `http://localhost:9090/api/upload?type=${data.formData.type}`
+}
+const uploadsuccess = (res)=>{
+  data.uploaddata = res.data
+  console.log(data.uploaddata);
+}
+
+const options = [
+  {
+    value: '基础信息',
+    label: '基础信息',
+  },
+  {
+    value: '教育信息',
+    label: '教育信息',
+  },
+  {
+    value: '岗级信息',
+    label: '岗级信息',
+  },
+  {
+    value: '绩效信息',
+    label: '绩效信息',
+  },
+  {
+    value: '工资信息',
+    label: '工资信息',
+  },
+]
+// const uploadUrl = `http://localhost:9090/api/upload?type=${data.formData.type}`
+const data = reactive({
+  actionUrl:"",
+  downloadVisble:false,
+  downloadtype:"",
+  dialogFormVisible: false,
+  logDialog: false,
+  infoVisible: false,
+  infotype: "",
+  id: "",
+  KeyWord: "",
+  title: "申请表",  
+  searchParams: {
+    idCard: "",
+    pagesize: 5,
+    pagenum: 1,
+  },
+  total: 0,
+  applicationList: [],
+  uploaddata:[],
+  Record: [],
+  userCheck: [],
+  educateCheck: [],
+  jobCheck: [],
+  performCheck: [],
+  salaryCheck: [],
+  formData: {
+    name: localStorage.getItem("name"),
+    userCode: localStorage.getItem("usercode"),
+    department: localStorage.getItem("dept"),
+    process: "",
+    status: "",
+    type: "",
+    handle: "",
+    createtype:"",
+  },
+  userdata:{
+    name:"",
+    sex: "",
+    idCard: "",
+    userCode: "",
+    nation: "",
+    political: "",
+    department: "",
+    basicUnit: "",
+    job: "",
+    source: "",
+    joinTime: "",
+    state: "",
+  },
+  educatedata:{
+    name:"",
+    idCard:"",
+    educateLevel:"",
+    academicQua:"",
+    academicDegree:"",
+    joinTime:"",
+    leaveTime:"",
+    graduateSchool:"",
+    institute:"",
+    major:"",
+    languageLevel:"",
+  },
+  jobdata:{
+    name:"",
+    userCode: "",
+    idCard: "",
+    job: "",
+    jobType: "",
+    level: "",
+    grade: "",
+    executeTime: "",
+    note: "",
+  },
+  performdata:{
+    name:"",
+    idCard: "",
+    department: "",
+    unit: "",
+    job: "",
+    exeLevel: "",
+    evaPeriod: "",
+    evaStaTime: "",
+    evaEndTime: "",
+    evaScore: "",
+    evaClass: "",
+    evaHead: "",
+  },
+  salarydata:{
+    wageDate: "",
+    name:"",
+    idCard: "",
+    department: "",
+    unit: "",
+    issAgency: "",
+    insurance: "",
+    basicSalary: "",
+    bonus: "",
+    other: "",
+    note: "",
+    shouldIssue: "",
+    realIssue: "",
+  },
+  rules:{
+        name:[{required:true,message:"此项为必填项",trigger:"blur"}],
+        userCode:[{required:true,message:"此项为必填项",trigger:"blur"}],
+      }
+});
 
     onMounted(() => {
       applicationget()
@@ -681,118 +732,182 @@ import { ElMessage } from "element-plus";
       }
     }
 
-    // 获取审核记录
-    const logCheck = async(e) => {
-      console.log(e.id);
-      data.logDialog = true
-      const result = await recordApi(e.id)
-      data.Record = result.data
-      console.log(result);
-    }
-
-    const downlolad = () => {
-      data.downloadVisble = true
-    }
+// 获取审核记录
+const logCheck = async(e) =>{
+  console.log(e.id);
+  data.logDialog = true
+  const result = await recordApi(e.id)
+  data.Record = result.data
+  console.log(result);
+}
+const download = () =>{
+  data.downloadVisble = true
+}
 
     const addApp = () => {
       data.dialogFormVisible = true
     }
 
-    // 下载模板
-    const down = async () => {
-      // console.log(data.downloadtype);
-      const result = await downloadApi(data.downloadtype)
-      console.log(result);
+// 下载模板
+const down = async() =>{
+  // console.log(data.downloadtype);
+  if (data.downloadtype==='') {
+    ElMessage.error('请选择下载模板')
+  }else{
+    const result = await downloadApi(data.downloadtype)
+  console.log(result);
 
-      const binaryData = []
-        binaryData.push(result)
-        let url = window.URL.createObjectURL(new Blob(binaryData ,{type: 'application/vnd.ms-excel'}))//二进制转换
-        var anchor = document.createElement("a")
-        anchor.href = url
-        anchor.download = decodeURI(`${data.downloadtype}.xlsx`)
-        anchor.click()
-    }
+  const binaryData = [];
+    binaryData.push(result);
+    let url = window.URL.createObjectURL(new Blob(binaryData ,{type: 'application/vnd.ms-excel'}));//二进制转换
+    var anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = decodeURI(`${data.downloadtype}.xlsx`);
+    anchor.click();
+  }
 
-    // 创建申请
-    const submitForm = async () => {
-      data.formData.process = parseInt(data.formData.process) 
-      let data1
-      let result
-      switch(data.formData.type){
-        case "基础信息":
-          // 提交基础信息申请
-          data.userdata.joinTime = parseInt(data.userdata.joinTime)
-          data1 = {
-            ...data.formData,
-            "data":[data.userdata], 
-          }
-          result = await createApplicationApi(data1)
-          console.log(result);
-          ElMessage.success('提交成功')
-          data.dialogFormVisible = false
-          data.userdata = {}
-          break;
-        case "教育信息":
-          // 提交教育信息申请
-          data.educatedata.joinTime = parseInt(data.educatedata.joinTime)
-          data.educatedata.leaveTime = parseInt(data.educatedata.leaveTime)
-          data1 = {
-            ...data.formData,
-            "data":[data.educatedata]
-          }
-          result = await createApplicationApi(data1)
-          console.log(result);
-          ElMessage.success('提交成功')
-          data.dialogFormVisible = false
-          data.educatedata = {}
-          break;
-        case "岗级信息":
-          // 提交岗级信息申请
-          data.jobdata.executeTime = parseInt(data.jobdata.executeTime)
-          data1 = {
-            ...data.formData,
-            "data":[data.jobdata], 
-          }
-          result = await createApplicationApi(data1)
-          console.log(result);
-          ElMessage.success('提交成功')
-          data.dialogFormVisible = false
-          data.jobdata = {}
-          break;
-        case "绩效信息":
-          // 提交绩效信息申请
-          data.performdata.evaStaTime = parseInt(data.performdata.evaStaTime)
-          data.performdata.evaEndTime = parseInt(data.performdata.evaEndTime)
-          data.performdata.evaScore = parseFloat(data.performdata.evaScore)
-          data1 = {
-            ...data.formData,
-            "data":[data.performdata], 
-          }
-          result = await createApplicationApi(data1)
-          console.log(result);
-          ElMessage.success('提交成功')
-          data.dialogFormVisible = false
-          data.performdata = {}
-          break;
-        case "工资信息":
-          // 提交工资信息申请
-          data.salarydata.wageDate = parseInt(data.salarydata.wageDate)
-          data.salarydata.basicSalary = parseFloat(data.salarydata.basicSalary)
-          data.salarydata.bonus = parseFloat(data.salarydata.bonus)
-          data.salarydata.other = parseFloat(data.salarydata.other)
-          data.salarydata.shouldIssue = parseFloat(data.salarydata.shouldIssue)
-          data.salarydata.realIssue = parseFloat(data.salarydata.realIssue)
-          data1 = {
-            ...data.formData,
-            "data":[data.salarydata], 
-          }
-          result = await createApplicationApi(data1)
-          console.log(result);
-          ElMessage.success('提交成功')
-          data.dialogFormVisible = false
-          data.salarydata = {}
-          break;
+}
+
+// 创建申请
+const submitForm = async() => {
+  data.formData.process = parseInt(data.formData.process) 
+  let data1
+  let result
+  
+  switch(data.formData.type){
+    case "基础信息":
+      // 提交基础信息申请
+      data.userdata.joinTime = parseInt(data.userdata.joinTime)
+      if (data.formData.createtype ==="手动添加") {
+        data1 = {
+        ...data.formData,
+        "data":[data.userdata], 
       }
+      }else{
+        data1 = {
+        ...data.formData,
+        "data":data.uploaddata, 
+      }
+      }
+      if( data1.data.length===0){
+        ElMessage.error("请添加申请单内容")
+      }else{
+        result = await createApplicationApi(data1)
+        console.log(result);
+        ElMessage.success('提交成功')
+        data.dialogFormVisible = false
+        data.userdata = {}
+      }
+      break;
+    case "教育信息":
+      // 提交教育信息申请
+      data.educatedata.joinTime = parseInt(data.educatedata.joinTime)
+      data.educatedata.leaveTime = parseInt(data.educatedata.leaveTime)
+      if (data.formData.createtype ==="手动添加") {
+        data1 = {
+        ...data.formData,
+        "data":[data.educatedata], 
+      }
+      }else{
+        data1 = {
+        ...data.formData,
+        "data":data.uploaddata, 
+      }
+      }
+      if( data1.data.length===0){
+        ElMessage.error("请添加申请单内容")
+      }else{
+        result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible = false
+      data.educatedata = {}
+      }
+
+      break;
+    case "岗级信息":
+      // 提交岗级信息申请
+      data.jobdata.executeTime = parseInt(data.jobdata.executeTime)
+      if (data.formData.createtype ==="手动添加") {
+        data1 = {
+        ...data.formData,
+        "data":[data.jobdata], 
+      }
+      }else{
+        data1 = {
+        ...data.formData,
+        "data":data.uploaddata, 
+      }
+      }
+      if( data1.data.length===0){
+        ElMessage.error("请添加申请单内容")
+      }else{
+        result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible = false
+      data.jobdata = {}
+      }
+
+      break;
+    case "绩效信息":
+      // 提交绩效信息申请
+      data.performdata.evaStaTime = parseInt(data.performdata.evaStaTime)
+      data.performdata.evaEndTime = parseInt(data.performdata.evaEndTime)
+      data.performdata.evaScore = parseFloat(data.performdata.evaScore)
+      if (data.formData.createtype ==="手动添加") {
+        data1 = {
+        ...data.formData,
+        "data":[data.performdata], 
+      }
+      }else{
+        data1 = {
+        ...data.formData,
+        "data":data.uploaddata, 
+      }
+      }
+      if( data1.data.length===0){
+        ElMessage.error("请添加申请单内容")
+      }else{
+        result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible = false
+      data.performdata = {}
+      }
+
+      break;
+    case "工资信息":
+      // 提交工资信息申请
+      data.salarydata.wageDate = parseInt(data.salarydata.wageDate)
+      data.salarydata.basicSalary = parseFloat(data.salarydata.basicSalary)
+      data.salarydata.bonus = parseFloat(data.salarydata.bonus)
+      data.salarydata.other = parseFloat(data.salarydata.other)
+      data.salarydata.shouldIssue = parseFloat(data.salarydata.shouldIssue)
+      data.salarydata.realIssue = parseFloat(data.salarydata.realIssue)
+      if (data.formData.createtype ==="手动添加") {
+        data1 = {
+        ...data.formData,
+        "data":[data.salarydata], 
+      }
+      }else{
+        data1 = {
+        ...data.formData,
+        "data":data.uploaddata, 
+      }
+      }
+      if( data1.data.length===0){
+        ElMessage.error("请添加申请单内容")
+      }else{
+        result = await createApplicationApi(data1)
+      console.log(result);
+      ElMessage.success('提交成功')
+      data.dialogFormVisible = false
+      data.salarydata = {}
+      }
+
+      break;
+  }
 
       // console.log(data1);
       // if(!data.id){
