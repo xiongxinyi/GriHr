@@ -27,11 +27,12 @@
         <el-table-column prop="id" label="" width="60" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
+        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="educateLevel" label="现文化程度" width="100" />
         <el-table-column prop="academicQua" label="学历性质" width="80" />
         <el-table-column prop="academicDegree" label="学位" width="100" />
-        <el-table-column prop="joinTime" label="入学时间" width="100" />
-        <el-table-column prop="leaveTime" label="毕业时间" width="100" />
+        <el-table-column prop="joinTime" label="入学时间" width="110" />
+        <el-table-column prop="leaveTime" label="毕业时间" width="110" />
         <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
         <el-table-column prop="institute" label="院系" width="150" />
         <el-table-column prop="major" label="专业" width="130" />
@@ -82,6 +83,9 @@
             },
           ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.formData.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
           <el-input v-model="data.formData.educateLevel" placeholder="请输入现文化程度" />
@@ -147,6 +151,7 @@ import { ElMessage } from "element-plus";
       formData: {
         name: "",
         idCard: "",
+        department: "",
         educateLevel: "",
         academicQua: "",
         academicDegree: "",

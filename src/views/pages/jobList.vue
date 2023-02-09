@@ -28,11 +28,12 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
+        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="job" label="岗位名称" width="100" />
         <el-table-column prop="jobType" label="工作类型" width="100" />
         <el-table-column prop="level" label="岗级" width="80" />
         <el-table-column prop="grade" label="档次" width="80" />
-        <el-table-column prop="executeTime" label="执行开始时间" width="140" />
+        <el-table-column prop="executeTime" label="执行开始时间" width="110" />
         <el-table-column prop="note" label="备注" width="100" />
         <el-table-column label="操作">
           <template #default="scope">
@@ -90,6 +91,9 @@
           ]">
           <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.formData.department" placeholder="请输入部门" />
+        </el-form-item>
         <el-form-item label="岗位名称" prop="job">
           <el-input v-model="data.formData.job" placeholder="请输入岗位名称" />
         </el-form-item>
@@ -123,7 +127,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { jobListApi, addJobApi, deleteJobApi, updateJobApi, searchJobApi} from "@/util/request";
+import { jobListApi, addJobApi, deleteJobApi, updateJobApi, searchJobApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -142,10 +146,11 @@ import { ElMessage } from "element-plus";
       },
       total: 0,
       jobList: [],
-      formData :{
+      formData: {
         name: "",
         userCode: "",
         idCard: "",
+        department: "",
         job: "",
         jobType: "",
         level: "",

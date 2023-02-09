@@ -93,11 +93,12 @@
           <el-table :data="data.edu" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
+            <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="educateLevel" label="现文化程度" width="100" />
             <el-table-column prop="academicQua" label="学历性质" width="80" />
             <el-table-column prop="academicDegree" label="学位" width="100" />
-            <el-table-column prop="joinTime" label="入学时间" width="100" />
-            <el-table-column prop="leaveTime" label="毕业时间" width="100" />
+            <el-table-column prop="joinTime" label="入学时间" width="110" />
+            <el-table-column prop="leaveTime" label="毕业时间" width="110" />
             <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
             <el-table-column prop="institute" label="院系" width="150" />
             <el-table-column prop="major" label="专业" width="130" />
@@ -109,11 +110,12 @@
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="userCode" label="员工号" width="100" />
             <el-table-column prop="idCard" label="身份证号" width="180" />
+            <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="job" label="岗位名称" width="100" />
             <el-table-column prop="jobType" label="工作类型" width="100" />
             <el-table-column prop="level" label="岗级" width="80" />
             <el-table-column prop="grade" label="档次" width="80" />
-            <el-table-column prop="executeTime" label="执行开始时间" width="140" />
+            <el-table-column prop="executeTime" label="执行开始时间" width="110" />
             <el-table-column prop="note" label="备注" width="100" />
           </el-table>
         </el-tab-pane>
@@ -158,7 +160,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListCheckApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi } from "@/util/request";
+import { userListApi, searchUserApi, searchUserApi1, searchEduApi, searchJobApi, searchPerformApi, searchSalaryApi } from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -240,7 +242,7 @@ import { ElMessage } from "element-plus";
     }
 
     const userAllget = async () => {
-      const result = await userListCheckApi(data.searchParams)
+      const result = await userListApi(data.searchParams)
       console.log(result);
       data.userList = result.data
       data.total = result.total

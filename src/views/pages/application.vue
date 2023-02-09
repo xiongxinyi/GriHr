@@ -8,7 +8,7 @@
     <!-- 白色内容区域 -->
     <div class="page_content">
       <div style="float: right;">
-        <el-button type="primary" @click="download()" style="margin-right: 20px;">模板下载</el-button>
+        <el-button type="primary" @click="download()" style="margin-right:20px">模板下载</el-button>
         <el-button type="primary" @click="addApp()" style="margin-left:auto">创建申请</el-button>
       </div>
       <!-- 表格 -->
@@ -52,39 +52,42 @@
         <el-table-column prop="basicUnit" label="基层单位" width="140" />
         <el-table-column prop="job" label="工作岗位" width="100" />
         <el-table-column prop="source" label="员工来源" width="100" />
-        <el-table-column prop="joinTime" label="加入时间" width="100" />
+        <el-table-column prop="joinTime" label="加入时间" width="110" />
         <el-table-column prop="state" label="目前状态" width="60" />
       </el-table>
 
       <el-table :data="data.educateCheck" v-if="data.infotype==='教育信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
+        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="educateLevel" label="现文化程度" width="100" />
-        <el-table-column prop="academicQua" label="学历性质" width="180" />
-        <el-table-column prop="academicDegree" label="学位" width="70" />
-        <el-table-column prop="joinTime" label="入学时间" width="60" />
-        <el-table-column prop="leaveTime" label="毕业时间" width="120" />
+        <el-table-column prop="academicQua" label="学历性质" width="80" />
+        <el-table-column prop="academicDegree" label="学位" width="100" />
+        <el-table-column prop="joinTime" label="入学时间" width="110" />
+        <el-table-column prop="leaveTime" label="毕业时间" width="110" />
         <el-table-column prop="graduateSchool" label="毕业院校" width="140" />
-        <el-table-column prop="institute" label="院系" width="100" />
-        <el-table-column prop="major" label="专业" width="100" />
-        <el-table-column prop="languageLevel" label="外语水平" width="100" />
+        <el-table-column prop="institute" label="院系" width="150" />
+        <el-table-column prop="major" label="专业" width="130" />
+        <el-table-column prop="languageLevel" label="外语水平" width="80" />
       </el-table>
       
       <el-table :data="data.jobCheck" v-if="data.infotype==='岗级信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
+        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="job" label="岗位名称" width="100" />
         <el-table-column prop="jobType" label="工作类型" width="100" />
         <el-table-column prop="level" label="岗级" width="80" />
         <el-table-column prop="grade" label="档次" width="80" />
-        <el-table-column prop="executeTime" label="执行开始时间" width="140" />
+        <el-table-column prop="executeTime" label="执行开始时间" width="110" />
         <el-table-column prop="note" label="备注" width="100" />
       </el-table>
       
       <el-table :data="data.performCheck" v-if="data.infotype==='绩效信息'" style="width: 100%">
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
+        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="unit" label="基层单位" width="120" />
         <el-table-column prop="job" label="工作岗位" width="100" />
@@ -207,24 +210,19 @@
     :action=data.actionUrl
     :before-upload="changeUrl"
     :on-success	="uploadsuccess"
-    :auto-upload="false" v-if="data.formData.createtype==='模板导入'&&data.formData.type!==''" 
-  >
+    :auto-upload="false" v-if="data.formData.createtype==='模板导入'&&data.formData.type!==''">
     <template #trigger>
       <el-button type="primary">选择文件</el-button>
     </template>
 
-    <el-button class="ml-3" type="primary" @click="submitUpload" style="margin-left: 20px;">
-     上传
-    </el-button>
+    <el-button class="ml-3" type="primary" @click="submitUpload" style="margin-left:20px">上传</el-button>
 
     <template #tip>
-      <div class="el-upload__tip">
-        请填写下载的模板上传
-      </div>
+      <div class="el-upload__tip">请填写下载的模板上传</div>
     </template>
   </el-upload>
 
-     <el-form v-if="data.formData.type==='基础信息'&& data.formData.createtype==='手动添加'">
+     <el-form v-if="data.formData.type==='基础信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工基础信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -251,6 +249,9 @@
             },
           ]">
           <el-input v-model="data.userdata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.userdata.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="员工号" prop="userCode" :rules="[
             {
@@ -291,9 +292,9 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='教育信息'&& data.formData.createtype==='手动添加'">
+      <el-form v-if="data.formData.type==='教育信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工教育信息</h4>
-      <el-form-item label="姓名" prop="name" :rules="[
+        <el-form-item label="姓名" prop="name" :rules="[
             {
               required: true,
               message: '此项为必填项',
@@ -312,6 +313,12 @@
             },
           ]">
           <el-input v-model="data.educatedata.idCard" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.educatedata.department" placeholder="请输入部门" />
+        </el-form-item>
+        <el-form-item label="外语水平" prop="languageLevel">
+          <el-input v-model="data.educatedata.languageLevel" placeholder="请输入外语水平" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
           <el-select v-model="data.educatedata.educateLevel" placeholder="请选择现文化程度">
@@ -356,7 +363,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='岗级信息'&& data.formData.createtype==='手动添加'">
+      <el-form v-if="data.formData.type==='岗级信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工岗级信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -386,6 +393,9 @@
           ]">
           <el-input v-model="data.jobdata.idCard" placeholder="请输入身份证号" />
         </el-form-item>
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="data.jobdata.department" placeholder="请输入部门" />
+        </el-form-item>
         <el-form-item label="岗位名称" prop="job">
           <el-input v-model="data.jobdata.job" placeholder="请输入岗位名称" />
         </el-form-item>
@@ -410,7 +420,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='绩效信息'&& data.formData.createtype==='手动添加'">
+      <el-form v-if="data.formData.type==='绩效信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工绩效信息</h4>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -464,7 +474,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form v-if="data.formData.type==='工资信息'&& data.formData.createtype==='手动添加'">
+      <el-form v-if="data.formData.type==='工资信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工工资信息</h4>
       <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
@@ -584,9 +594,9 @@ const options = [
 ]
 // const uploadUrl = `http://localhost:9090/api/upload?type=${data.formData.type}`
 const data = reactive({
-  actionUrl:"",
-  downloadVisble:false,
-  downloadtype:"",
+  actionUrl: "",
+  downloadVisble: false,
+  downloadtype: "",
   dialogFormVisible: false,
   logDialog: false,
   infoVisible: false,
@@ -616,10 +626,10 @@ const data = reactive({
     status: "",
     type: "",
     handle: "",
-    createtype:"",
+    createtype: "",
   },
-  userdata:{
-    name:"",
+  userdata: {
+    name: "",
     sex: "",
     idCard: "",
     userCode: "",
@@ -632,23 +642,25 @@ const data = reactive({
     joinTime: "",
     state: "",
   },
-  educatedata:{
-    name:"",
-    idCard:"",
-    educateLevel:"",
-    academicQua:"",
-    academicDegree:"",
-    joinTime:"",
-    leaveTime:"",
-    graduateSchool:"",
-    institute:"",
-    major:"",
-    languageLevel:"",
+  educatedata: {
+    name: "",
+    idCard: "",
+    department: "",
+    educateLevel: "",
+    academicQua: "",
+    academicDegree: "",
+    joinTime: "",
+    leaveTime: "",
+    graduateSchool: "",
+    institute: "",
+    major: "",
+    languageLevel: "",
   },
-  jobdata:{
-    name:"",
+  jobdata: {
+    name: "",
     userCode: "",
     idCard: "",
+    department: "",
     job: "",
     jobType: "",
     level: "",
@@ -656,8 +668,8 @@ const data = reactive({
     executeTime: "",
     note: "",
   },
-  performdata:{
-    name:"",
+  performdata: {
+    name: "",
     idCard: "",
     department: "",
     unit: "",
@@ -670,7 +682,7 @@ const data = reactive({
     evaClass: "",
     evaHead: "",
   },
-  salarydata:{
+  salarydata: {
     wageDate: "",
     name:"",
     idCard: "",
@@ -691,46 +703,46 @@ const data = reactive({
       }
 });
 
-    onMounted(() => {
-      applicationget()
-    })
+onMounted(() => {
+  applicationget()
+})
 
-    const pageChange = (val) => {
-      data.searchParams.pagenum = val
-      applicationget()
-    }
+const pageChange = (val) => {
+  data.searchParams.pagenum = val
+  applicationget()
+}
 
-    const applicationget = async () => { 
-      const result = await myApplicationApi(data.searchParams)
-      data.applicationList = result.data
-      data.total = result.total
-    }
+const applicationget = async () => { 
+  const result = await myApplicationApi(data.searchParams)
+  data.applicationList = result.data
+  data.total = result.total
+}
 
-    // 查看申请信息
-    const infoCheck = (e) => {
-      console.log(e.data);
-      data.infotype = e.type
-      // console.log();
-      data.infoVisible = true
-      switch(e.type){
-        case "基础信息":
-          data.userCheck = e.data
-          break
-        case "教育信息":
-          data.educateCheck = e.data
-          // console.log(typeof(data.educateCheck),data.educateCheck);
-          break
-        case "岗级信息":
-          data.jobCheck = e.data
-          break
-        case "绩效信息":
-          data.performCheck = e.data
-          break
-        case "工资信息":
-          data.salaryCheck = e.data
-          break
-      }
-    }
+// 查看申请信息
+const infoCheck = (e) => {
+  console.log(e.data);
+  data.infotype = e.type
+  // console.log();
+  data.infoVisible = true
+  switch(e.type){
+    case "基础信息":
+      data.userCheck = e.data
+      break
+    case "教育信息":
+      data.educateCheck = e.data
+      // console.log(typeof(data.educateCheck),data.educateCheck);
+      break
+    case "岗级信息":
+      data.jobCheck = e.data
+      break
+    case "绩效信息":
+      data.performCheck = e.data
+      break
+    case "工资信息":
+      data.salaryCheck = e.data
+      break
+  }
+}
 
 // 获取审核记录
 const logCheck = async(e) =>{
@@ -744,9 +756,9 @@ const download = () =>{
   data.downloadVisble = true
 }
 
-    const addApp = () => {
-      data.dialogFormVisible = true
-    }
+const addApp = () => {
+  data.dialogFormVisible = true
+}
 
 // 下载模板
 const down = async() =>{

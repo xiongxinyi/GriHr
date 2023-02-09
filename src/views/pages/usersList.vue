@@ -54,7 +54,7 @@
         <el-table-column prop="basicUnit" label="基层单位" width="140" />
         <el-table-column prop="job" label="工作岗位" width="100" />
         <el-table-column prop="source" label="员工来源" width="100" />
-        <el-table-column prop="joinTime" label="加入时间" width="100" />
+        <el-table-column prop="joinTime" label="加入时间" width="110" />
         <el-table-column prop="state" label="目前状态" width="60" />
         <el-table-column label="操作">
           <template #default="scope">
@@ -159,7 +159,7 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { userListCheckApi, addUserApi, deleteUserApi, updateUserApi, searchUserApi, searchUserApi1} from "@/util/request";
+import { userListApi, addUserApi, deleteUserApi, updateUserApi, searchUserApi, searchUserApi1} from "@/util/request";
 import { ElMessage } from "element-plus";
     /* 
       定义数据
@@ -236,7 +236,7 @@ import { ElMessage } from "element-plus";
     }
 
     const userAllget = async () => {
-      const result = await userListCheckApi(data.searchParams)
+      const result = await userListApi(data.searchParams)
       data.userList = result.data
       data.total =  result.total
     }

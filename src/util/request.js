@@ -1,12 +1,5 @@
 import { post, get, deletex, put } from "./service"
 
-//基础信息usersList-查询全部
-export const userListApi = (params) => {
-    return get({
-        url: "user/all",
-        params
-    })
-}
 //基础信息usersList-按身份证号idcard精确查询
 export const searchUserApi = (idCard) => {
     const token = localStorage.getItem("token")
@@ -34,7 +27,7 @@ export const searchUserApi1 = (name) => {
     })
 }
 //基础信息usersList-查询用户列表（权限查询）
-export const userListCheckApi = (params) => {
+export const userListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
         url: "userlist",
@@ -67,7 +60,16 @@ export const updateUserApi = (data) => {
 }
 /**
  */
-//教育信息educationList-查询全部
+//教育信息educationList-按身份证号查询
+export const searchEduApi = (idCard) => {
+    return get({
+        url: "educate/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
+//教育信息educationList-查询教育信息
 export const eduListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
@@ -78,15 +80,6 @@ export const eduListApi = (params) => {
         params
     })
 }
-//教育信息educationList-按身份证号查询
-export const searchEduApi = (idCard) => {
-    return get({
-        url: "educate/get",
-        params:{
-            idcard:idCard
-        }
-    })
-}
 //教育信息educationList-删除
 export const deleteEduApi = (params) => {
     return deletex({
@@ -94,7 +87,6 @@ export const deleteEduApi = (params) => {
         params
     })
 }
-
 //教育信息educationList-新增
 export const addEduApi = (data) => {
     return post({
@@ -111,7 +103,16 @@ export const updateEduApi = (data) => {
 }
 /**
  */
-//岗级信息jobList-查询全部
+//岗级信息jobList-按身份证号查询
+export const searchJobApi = (idCard) => {
+    return get({
+        url: "joblevel/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
+//岗级信息jobList-查询岗级信息
 export const jobListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
@@ -120,15 +121,6 @@ export const jobListApi = (params) => {
             authorization: `Bearer ${token}`,
         },
         params
-    })
-}
-//岗级信息jobList-按身份证号查询
-export const searchJobApi = (idCard) => {
-    return get({
-        url: "joblevel/get",
-        params:{
-            idcard:idCard
-        }
     })
 }
 //岗级信息jobList-删除
@@ -154,7 +146,16 @@ export const updateJobApi = (data) => {
 }
 /**
  */
-//绩效信息performList-查询全部
+//绩效信息performList-按身份证号查询
+export const searchPerformApi = (idCard) => {
+    return get({
+        url: "performance/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
+//绩效信息performList-查询绩效信息
 export const performListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
@@ -163,15 +164,6 @@ export const performListApi = (params) => {
             authorization: `Bearer ${token}`,
         },
         params
-    })
-}
-//绩效信息performList-按身份证号查询
-export const searchPerformApi = (idCard) => {
-    return get({
-        url: "performance/get",
-        params:{
-            idcard:idCard
-        }
     })
 }
 //绩效信息performList-删除
@@ -197,7 +189,16 @@ export const updatePerformApi = (data) => {
 }
 /**
  */
-//工资信息salaryList-查询全部
+//工资信息salaryList-按身份证号查询
+export const searchSalaryApi = (idCard) => {
+    return get({
+        url: "salary/get",
+        params:{
+            idcard:idCard
+        }
+    })
+}
+//工资信息salaryList-查询工资信息
 export const salaryListApi = (params) => {
     const token = localStorage.getItem("token")
     return get({
@@ -206,15 +207,6 @@ export const salaryListApi = (params) => {
             authorization: `Bearer ${token}`,
         },
         params
-    })
-}
-//工资信息salaryList-按身份证号查询
-export const searchSalaryApi = (idCard) => {
-    return get({
-        url: "salary/get",
-        params:{
-            idcard:idCard
-        }
     })
 }
 //工资信息salaryList-删除
