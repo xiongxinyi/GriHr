@@ -11,8 +11,8 @@
         <div class="input_box">
           <el-input
             v-model="data.searchParams.idCard"
-            placeholder="搜索关键字"
-            class="input-with-select">
+            placeholder="请输入身份证号查询"
+            clearable class="input-with-select">
             <template #append>
               <el-button @click="searchEdu"><el-icon><Search /></el-icon></el-button>
             </template>
@@ -189,15 +189,23 @@ import { ElMessage } from "element-plus";
       data.total = result.total
     }
 
+    const eduget = async (idCard) => {
+      const result = await searchEduApi(idCard)
+      data.eduList = result.data
+      data.total = 1
+      return result
+    }
+
     const searchEdu = async () => {
-      const result = await searchEduApi(data.searchParams)
+      // const result = await searchEduApi(data.searchParams)
+      // console.log(result);
       if (!data.searchParams.idCard) {
         eduAllget()
       } else {
+        const result = await eduget(data.searchParams.idCard)
         if (result.status === 200) {
           data.eduList = result.data
           data.total = result.total
-          eduAllget()
         } else {
           data.eduList = []
           data.total = 0
@@ -258,7 +266,13 @@ import { ElMessage } from "element-plus";
 
 <style scoped>
 .input_box {
-  width: 200px;
+  width: 340px;
   margin-right: 15px;
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select {
+  background-color: #fff;
 }
 </style>
