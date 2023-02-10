@@ -88,7 +88,6 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="department" label="部门" width="120" />
         <el-table-column prop="unit" label="基层单位" width="120" />
         <el-table-column prop="job" label="工作岗位" width="100" />
         <el-table-column prop="exeLevel" label="行政级别" width="80" />
@@ -249,9 +248,6 @@
             },
           ]">
           <el-input v-model="data.userdata.idCard" placeholder="请输入身份证号" />
-        </el-form-item>
-        <el-form-item label="部门" prop="department">
-          <el-input v-model="data.userdata.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="员工号" prop="userCode" :rules="[
             {
