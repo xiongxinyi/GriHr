@@ -210,7 +210,7 @@ import { ElMessage } from "element-plus";
     onMounted(() => {
       data.role = localStorage.getItem("role")
       console.log(data.role);
-      userAllget()
+      userAllget() 
     })
 
     const onSearch = (id,content) => {
@@ -232,13 +232,15 @@ import { ElMessage } from "element-plus";
 
     const pageChange = (val) => {
       data.searchParams.pagenum = val
-      userAllget()
+      if(data.searchParams.content===""){
+        userAllget()
+      }
     }
-
-    const userAllget = async () => {
+    
+     const userAllget = async () => {
       const result = await userListApi(data.searchParams)
       data.userList = result.data
-      data.total =  result.total
+      data.total = result.total
     }
 
     const userget = async (idCard) => {
@@ -251,6 +253,7 @@ import { ElMessage } from "element-plus";
     const userget1 = async (name) => {
       const result = await searchUserApi1(name)
       data.userList = result.data
+      data.total = result.total
       return result
     }
 

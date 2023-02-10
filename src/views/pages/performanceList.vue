@@ -179,7 +179,9 @@ import { ElMessage } from "element-plus";
 
     const pageChange = (val) => {
       data.searchParams.pagenum = val
-      performAllget()
+      if(data.searchParams.idCard===""){
+        performAllget()
+      }
     }
 
     const performAllget = async () => {

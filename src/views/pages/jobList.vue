@@ -177,7 +177,9 @@ import { ElMessage } from "element-plus";
 
     const pageChange = (val) => {
       data.searchParams.pagenum = val
-      jobAllget()
+      if(data.searchParams.idCard===""){
+        jobAllget()
+      }
     }
 
     const jobAllget = async () => {

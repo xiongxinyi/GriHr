@@ -185,7 +185,9 @@ import { ElMessage } from "element-plus";
 
     const pageChange = (val) => {
       data.searchParams.pagenum = val
-      salaryAllget()
+      if(data.searchParams.idCard===""){
+        salaryAllget()
+      }
     }
 
     const salaryAllget = async () => {
