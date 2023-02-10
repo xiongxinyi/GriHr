@@ -215,6 +215,10 @@ import { ElMessage } from "element-plus";
 
     const infoCheck = (e) => {
       data.user = []
+      data.edu = []
+      data.job = []
+      data.performance = []
+      data.salary = []
       data.idCard = e.idCard
       userget(e.idCard)
       // eduget(e.idCard)
