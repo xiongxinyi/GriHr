@@ -214,6 +214,7 @@ import { ElMessage } from "element-plus";
     }
 
     const infoCheck = (e) => {
+      data.tabselect = "基础信息"
       data.user = []
       data.edu = []
       data.job = []
