@@ -72,7 +72,7 @@
     <!-- 弹窗 -->
     <el-dialog v-model="data.infoVisible" title="查看此员工信息">
       <!-- 查看员工基础、教育、岗级、绩效、工资五个模块的信息 -->
-      <el-tabs v-model="基础信息" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="data.tabselect" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="基础信息" name="基础信息">
           <el-table :data="data.user" style="width: 100%">
             <el-table-column prop="name" label="姓名" width="80" />
@@ -157,6 +157,7 @@
   </div>
 </template>
 
+
 <script setup>
 import axios from "axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
@@ -166,6 +167,7 @@ import { ElMessage } from "element-plus";
       定义数据
     */
     const data = reactive({
+      tabselect:"基础信息",
       infoVisible: false,
       id: "",
       idCard: "",
@@ -183,9 +185,20 @@ import { ElMessage } from "element-plus";
       performance: [],
       salary: [],
     })
+    const userAllget = async () => {
+      const result = await userListApi(data.searchParams)
+      console.log(result);
+      data.userList = result.data
+      data.total = result.total
+    }
 
+
+
+
+    
     onMounted(() => {
-      userAllget()
+      
+    userAllget()
     })
 
     const onSearch = (id,content) => {
@@ -203,7 +216,7 @@ import { ElMessage } from "element-plus";
     const infoCheck = (e) => {
       data.user = []
       data.idCard = e.idCard
-      // userget(e.idCard)
+      userget(e.idCard)
       // eduget(e.idCard)
       // jobget(e.idCard)
       // performget(e.idCard)
@@ -238,26 +251,30 @@ import { ElMessage } from "element-plus";
     const pageChange = (val) => {
       console.log(val);
       data.searchParams.pagenum = val
-      userAllget()
+      if(data.searchParams.content===""){
+        userAllget()
+      }
+
     }
 
-    const userAllget = async () => {
-      const result = await userListApi(data.searchParams)
-      console.log(result);
-      data.userList = result.data
-      data.total = result.total
-    }
+
 
     const userget = async (idCard) => {
       const result = await searchUserApi(idCard)
       data.user = result.data
-      data.total = 1
+      if(data.infoVisible===false){
+        data.total = 1
+      }
       return result
     }
 
     const userget1 = async (name) => {
       const result = await searchUserApi1(name)
+      console.log(result);
       data.user = result.data
+      if(data.infoVisible===false){
+        data.total = result.total
+      }
       return result
     }
 
