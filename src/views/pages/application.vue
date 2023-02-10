@@ -171,9 +171,7 @@
           <el-input v-model="data.formData.department" disabled placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="流程数" prop="process">
-          <el-select v-model="data.formData.process" placeholder="流程数">
-            <el-option label="3" value="3" />
-          </el-select>
+          <el-input v-model="data.formData.process" disabled placeholder="3" />
         </el-form-item>
         <el-form-item label="审批单所处状态" prop="status">
           <el-select v-model="data.formData.status" placeholder="审批单状态">
@@ -312,9 +310,6 @@
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input v-model="data.educatedata.department" placeholder="请输入部门" />
-        </el-form-item>
-        <el-form-item label="外语水平" prop="languageLevel">
-          <el-input v-model="data.educatedata.languageLevel" placeholder="请输入外语水平" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
           <el-select v-model="data.educatedata.educateLevel" placeholder="请选择现文化程度">

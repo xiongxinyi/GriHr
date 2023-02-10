@@ -185,6 +185,7 @@ import { ElMessage } from "element-plus";
       performance: [],
       salary: [],
     })
+
     const userAllget = async () => {
       const result = await userListApi(data.searchParams)
       console.log(result);
@@ -192,13 +193,8 @@ import { ElMessage } from "element-plus";
       data.total = result.total
     }
 
-
-
-
-    
     onMounted(() => {
-      
-    userAllget()
+      userAllget()
     })
 
     const onSearch = (id,content) => {
@@ -261,9 +257,7 @@ import { ElMessage } from "element-plus";
       }
 
     }
-
-
-
+    
     const userget = async (idCard) => {
       const result = await searchUserApi(idCard)
       data.user = result.data

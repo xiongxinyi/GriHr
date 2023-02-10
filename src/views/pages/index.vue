@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <h1>今天是{{ date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' }}，欢迎来到社招人员信息管理系统</h1>
-        <time class="time">{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' }}</time>
+        <time>{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' }}</time>
                      <!-- {{date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()}} -->
       </el-header>
       <el-main>
@@ -13,7 +13,7 @@
                 :key="o"
                 :span="8"
                 :offset="index > 0 ? 2 : 0">
-                <el-card :body-style="{ padding: '0px' }">
+                <el-card shadow="hover" :body-style="{ padding: '0px' }">
                     <img src="../../assets/磕头机.jpg" class="image" />
                     <div style="padding: 14px">
                         <span>夕阳下的磕头机</span>
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </el-card>
-                <el-card :body-style="{ padding: '0px' }">
+                <el-card shadow="always" :body-style="{ padding: '0px' }">
                     <img src="../../assets/震源车.jpg" class="image" />
                     <div style="padding: 14px">
                         <span>野外作业的震源车</span>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </el-card>
-                <el-card :body-style="{ padding: '0px' }">
+                <el-card shadow="always" :body-style="{ padding: '0px' }">
                     <img src="../../assets/物探249队勘探在群山之巅.jpg" class="image" />
                     <div style="padding: 14px">
                         <span>物探249队勘探在群山之巅</span>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </el-card>
-                <el-card :body-style="{ padding: '0px' }">
+                <el-card shadow="always" :body-style="{ padding: '0px' }">
                     <img src="../../assets/勘探船“东方物探创新者”号.jpg" class="image" />
                     <div style="padding: 14px">
                         <span>勘探船“东方物探创新者”号</span>
@@ -72,14 +72,13 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const date = ref(new Date())
 </script>
 
 <style>
 .time {
   font-size: 12px;
-  color: rgb(9, 9, 9);
+  color: #999;
 }
 .bottom {
   margin-top: 13px;
