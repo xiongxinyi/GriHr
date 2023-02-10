@@ -5,9 +5,6 @@
         <div class="flex">
           <img class="logo" src="../../assets/宝石花.jpg" alt="" />
           <h1 class="title">社招人员信息管理系统</h1>
-          <!-- 日期 -->
-          <time class="time">{{ date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() }}</time>
-          <time class="time">{{ nowWeek }}</time>
         </div>
         <!-- 头像 -->
         <el-avatar style="position: relative; left: 560px" shape="square" :size="50">{{ name }}</el-avatar>
@@ -85,34 +82,6 @@ import { useRouter } from "vue-router";
 export default {
   name: "layOut",
   setup() {
-    // const data = reactive({
-    //   timer: null,    
-		//   nowWeek: '',    
-		//   nowDate: '',    
-		//   nowTime: '' 
-    // })
-    const date = ref(new Date())
-    
-    //获取当前时间
-    const setNowTimes = () => {
-		let myDate = new Date()  
-		let wk = myDate.getDay()  
-		let yy = String(myDate.getFullYear())  
-		let mm = myDate.getMonth() + 1  
-		let dd = String(myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate())  
-		let hou = String(myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours())  
-		let min = String(myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes())  
-		let sec = String(myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds())  
-		let weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-		let week = weeks[wk]  
-		this.nowDate = yy + '-' + mm + '-' + dd  
-		this.nowTime = hou + ':' + min + ':' + sec  
-		this.nowWeek = week
-	}
-  // onMounted(() => {{
-	//  this.timer = setInterval(() => {    
-	//  this.setNowTimes()},1000)} })
-
     const name = localStorage.getItem("name");
     const role = localStorage.getItem("role")
     console.log(role);
@@ -138,17 +107,10 @@ export default {
       });
     };
     return {
-      setNowTimes,
       loginOut,
       name,
       role,
-      date,
-         
-		  // nowWeek,    
-		  // nowDate,    
-		  // nowTime
     };
-    
   },
 };
 </script>
