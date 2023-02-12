@@ -68,7 +68,7 @@
     <!-- 表单 -->
     <el-form :rules="rules" ref="salaryForm" :model="data.formData">
         <el-form-item label="工资发放年月" prop="wageDate">
-          <el-input v-model.number="data.formData.wageDate" placeholder="请输入工资发放年月" />
+          <el-input v-model.number="data.formData.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
         </el-form-item>
         <el-form-item label="姓名" prop="name" :rules="[
             {
@@ -79,10 +79,12 @@
           ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard" :rules="[
+         <el-form-item label="身份证号" prop="idCard" :rules="[
             {
-              required: true,
-              message: '此项为必填项',
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
               trigger: 'blur',
             },
           ]">
@@ -98,7 +100,10 @@
           <el-input v-model="data.formData.issAgency" placeholder="请输入工资代发机构" />
         </el-form-item>
         <el-form-item label="社保是否缴纳" prop="insurance">
-          <el-input v-model="data.formData.insurance" placeholder="请输入社保是否缴纳" />
+          <el-select v-model="data.formData.insurance" placeholder="请选择社保是否缴纳">
+            <el-option label="是" value="是" />
+            <el-option label="否" value="否" />
+          </el-select>
         </el-form-item>
         <el-form-item label="基本工资" prop="basicSalary">
           <el-input v-model.number="data.formData.basicSalary" placeholder="请输入基本工资" />

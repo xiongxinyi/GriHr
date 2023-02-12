@@ -100,7 +100,21 @@
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-input v-model="data.formData.sex" placeholder="请输入性别" />
+          <el-select v-model="data.formData.sex" placeholder="请选择性别">
+            <el-option label="男" value="男" />
+            <el-option label="女" value="女" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="身份证号" prop="idCard" :rules="[
+            {
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+              trigger: 'blur',
+            },
+          ]">
+          <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
         </el-form-item>
         <el-form-item label="员工号" prop="userCode" :rules="[
             {
@@ -111,20 +125,15 @@
           ]">
           <el-input v-model="data.formData.userCode" placeholder="请输入员工号" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard" :rules="[
-            {
-              required: true,
-              message: '此项为必填项',
-              trigger: 'blur',
-            },
-          ]">
-          <el-input v-model="data.formData.idCard" placeholder="请输入身份证号" />
-        </el-form-item>
         <el-form-item label="民族" prop="nation">
           <el-input v-model="data.formData.nation" placeholder="请输入民族" />
         </el-form-item>
         <el-form-item label="政治面貌" prop="political">
-          <el-input v-model="data.formData.political" placeholder="请输入政治面貌" />
+          <el-select v-model="data.formData.political" placeholder="请选择政治面貌">
+            <el-option label="党员" value="党员" />
+            <el-option label="团员" value="团员" />
+            <el-option label="群众" value="群众" />
+          </el-select>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input v-model="data.formData.department" placeholder="请输入部门" />
@@ -139,7 +148,7 @@
           <el-input v-model="data.formData.source" placeholder="请输入员工来源" />
         </el-form-item>
         <el-form-item label="加入时间" prop="joinTime">
-          <el-input v-model.number="data.formData.joinTime" placeholder="请输入时间" />
+          <el-input v-model.number="data.formData.joinTime" placeholder="请输入加入时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="目前状态" prop="state">
           <el-input v-model="data.formData.state" placeholder="请输入目前状态" />

@@ -75,10 +75,12 @@
           ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard" :rules="[
+         <el-form-item label="身份证号" prop="idCard" :rules="[
             {
-              required: true,
-              message: '此项为必填项',
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
               trigger: 'blur',
             },
           ]">
@@ -97,13 +99,13 @@
           <el-input v-model="data.formData.exeLevel" placeholder="请输入行政级别" />
         </el-form-item>
         <el-form-item label="考核期" prop="evaPeriod">
-          <el-input v-model="data.formData.evaPeriod" placeholder="请输入考核期" />
+          <el-input v-model="data.formData.evaPeriod" placeholder="请输入考核期（例如:2022年度）" />
         </el-form-item>
         <el-form-item label="考核开始时间" prop="evaStaTime">
-          <el-input v-model.number="data.formData.evaStaTime" placeholder="请输入考核开始时间" />
+          <el-input v-model.number="data.formData.evaStaTime" placeholder="请输入考核开始时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="考核结束时间" prop="evaEndTime">
-          <el-input v-model.number="data.formData.evaEndTime" placeholder="请输入考核结束时间" />
+          <el-input v-model.number="data.formData.evaEndTime" placeholder="请输入考核结束时间（例如:20221201）" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
           <el-input v-model.number="data.formData.evaScore" placeholder="请输入考核得分" />

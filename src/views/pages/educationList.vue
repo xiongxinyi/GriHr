@@ -77,8 +77,10 @@
         </el-form-item>
         <el-form-item label="身份证号" prop="idCard" :rules="[
             {
-              required: true,
-              message: '此项为必填项',
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern:
+                 /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
               trigger: 'blur',
             },
           ]">
@@ -88,19 +90,33 @@
           <el-input v-model="data.formData.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="现文化程度" prop="educateLevel">
-          <el-input v-model="data.formData.educateLevel" placeholder="请输入现文化程度" />
+          <el-select v-model="data.formData.educateLevel" placeholder="请选择现文化程度">
+            <el-option label="大专" value="大专" />
+            <el-option label="大学本科" value="大学本科" />
+            <el-option label="硕士研究生" value="硕士研究生" />
+            <el-option label="博士研究生" value="博士研究生" />
+          </el-select>
         </el-form-item>
         <el-form-item label="学历性质" prop="academicQua">
-          <el-input v-model="data.formData.academicQua" placeholder="请输入学历性质" />
+          <el-select v-model="data.formData.academicQua" placeholder="请选择学历性质">
+            <el-option label="普通" value="普通" />
+            <el-option label="国外性质" value="国外性质" />
+            <el-option label="网络教育" value="网络教育" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="学位" prop="academicDegree">
-          <el-input v-model="data.formData.academicDegree" placeholder="请输入学位" />
+         <el-form-item label="学位" prop="academicDegree">
+          <el-select v-model="data.formData.academicDegree" placeholder="请选择学位">
+            <el-option label="无" value="无" />
+            <el-option label="学士" value="学士" />
+            <el-option label="硕士" value="硕士" />
+            <el-option label="博士" value="博士" />
+          </el-select>
         </el-form-item>
         <el-form-item label="入学时间" prop="joinTime">
-          <el-input v-model.number="data.formData.joinTime" placeholder="请输入入学时间" />
+          <el-input v-model.number="data.formData.joinTime" placeholder="请输入入学时间（例如:20190910）" />
         </el-form-item>
         <el-form-item label="毕业时间" prop="leaveTime">
-          <el-input v-model.number="data.formData.leaveTime" placeholder="请输入毕业时间" />
+          <el-input v-model.number="data.formData.leaveTime" placeholder="请输入毕业时间（例如:20220610）" />
         </el-form-item>
         <el-form-item label="毕业院校" prop="graduateSchool">
           <el-input v-model="data.formData.graduateSchool" placeholder="请输入毕业院校" />

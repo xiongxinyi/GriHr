@@ -84,8 +84,9 @@
         </el-form-item>
         <el-form-item label="身份证号" prop="idCard" :rules="[
             {
-              required: true,
-              message: '此项为必填项',
+              required: false,
+              message: '请填写正确的身份证号',
+              pattern: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
               trigger: 'blur',
             },
           ]">
@@ -98,7 +99,11 @@
           <el-input v-model="data.formData.job" placeholder="请输入岗位名称" />
         </el-form-item>
         <el-form-item label="工作类型" prop="jobType">
-          <el-input v-model="data.formData.jobType" placeholder="请输入工作类型" />
+          <el-select v-model="data.formData.jobType" placeholder="请选择工作类型">
+            <el-option label="专业技术岗" value="专业技术岗" />
+            <el-option label="管理岗" value="管理岗" />
+            <el-option label="操作岗" value="操作岗" />
+          </el-select>
         </el-form-item>
         <el-form-item label="岗级" prop="level">
           <el-input v-model="data.formData.level" placeholder="请输入岗级" />
@@ -107,7 +112,7 @@
           <el-input v-model="data.formData.grade" placeholder="请输入档次" />
         </el-form-item>
         <el-form-item label="执行开始时间" prop="executeTime">
-          <el-input v-model.number="data.formData.executeTime" placeholder="请输入执行开始时间" />
+          <el-input v-model.number="data.formData.executeTime" placeholder="请输入执行开始时间（例如:20220821）" />
         </el-form-item>
         <el-form-item label="备注" prop="note">
           <el-input v-model="data.formData.note" placeholder="请输入备注" />
