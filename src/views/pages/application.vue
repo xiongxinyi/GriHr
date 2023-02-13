@@ -554,6 +554,7 @@ const submitUpload = async() => {
 */
 const changeUrl = ()=>{
   
+  // data.actionUrl =  `http://localhost:9090/api/upload?type=${data.formData.type}`
   data.actionUrl =  `http://123.249.26.49:8082/api/upload?type=${data.formData.type}`
 }
 const uploadsuccess = (res)=>{
