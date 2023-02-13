@@ -8,7 +8,7 @@
     <!-- 白色内容区域 -->
     <div class="page_content">
     <!-- 表格 -->
-      <el-tabs v-model="待审批" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="data.tabname" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="待审批" name="待审批">
           <el-table :data="data.pendingApproveList" style="width: 100%">
             <el-table-column prop="id" label="申请表id" width="80" />
@@ -17,6 +17,7 @@
             <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="status" label="审批单所处状态" width="140" />
             <el-table-column prop="type" label="审批类型" width="100" />
+            <!-- <el-table-column prop="process" label="流程数" width="80" /> -->
             <el-table-column prop="handle" label="操作" width="80" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="data" label="查看申请信息  审核   申请单记录">
@@ -196,7 +197,9 @@ import { ElMessage } from "element-plus";
     /* 
       定义数据
     */
+
     const data = reactive({
+      tabname:"待审批",
       deleteId: null,
       textarea: "",
       deleteDialog: false,
@@ -222,6 +225,11 @@ import { ElMessage } from "element-plus";
       performCheck: [],
       salaryCheck: [],
     })
+    onMounted(() => {
+      approveget()
+    })
+
+
 
     const auditData = reactive({
       opinion: "",
@@ -277,7 +285,7 @@ import { ElMessage } from "element-plus";
     const approveget = async () => { 
       // console.log(data.searchParams)
       const result = await approveApi(data.searchParams)
-      // console.log(result)
+      console.log(result)
       data.pendingApproveList = result.data
       data.total = result.total
     }
@@ -341,6 +349,7 @@ import { ElMessage } from "element-plus";
 
     // 审核同意或者不同意
     const auditCheck = (e) => {
+      console.log(e);
       AppData = e
       console.log(AppData);
       data.auditDialog = true

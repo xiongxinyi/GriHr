@@ -614,7 +614,7 @@ const data = reactive({
     name: localStorage.getItem("name"),
     userCode: localStorage.getItem("usercode"),
     department: localStorage.getItem("dept"),
-    process: "",
+    process: 3,
     status: "",
     type: "",
     handle: "",
