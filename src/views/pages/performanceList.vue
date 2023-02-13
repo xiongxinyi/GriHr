@@ -108,7 +108,7 @@
           <el-input v-model.number="data.formData.evaEndTime" placeholder="请输入考核结束时间（例如:20221201）" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
-          <el-input v-model.number="data.formData.evaScore" placeholder="请输入考核得分" />
+          <el-input v-model="data.formData.evaScore" placeholder="请输入考核得分" />
         </el-form-item>
         <el-form-item label="考核档次" prop="evaClass">
           <el-input v-model="data.formData.evaClass" placeholder="请输入考核档次" />

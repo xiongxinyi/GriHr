@@ -215,7 +215,7 @@
     <el-button class="ml-3" type="primary" @click="submitUpload" style="margin-left:20px">上传</el-button>
 
     <template #tip>
-      <div class="el-upload__tip">请填写下载的模板上传</div>
+      <div class="el-upload__tip">请选择文件并点击上传</div>
     </template>
   </el-upload>
 
@@ -455,7 +455,7 @@
           <el-input v-model.number="data.performdata.evaEndTime" placeholder="请输入考核结束时间（例如:20221201）" />
         </el-form-item>
         <el-form-item label="考核得分" prop="evaScore">
-          <el-input v-model.number="data.performdata.evaScore" placeholder="请输入考核得分" />
+          <el-input v-model="data.performdata.evaScore" placeholder="请输入考核得分" />
         </el-form-item>
         <el-form-item label="考核档次" prop="evaClass">
           <el-input v-model="data.performdata.evaClass" placeholder="请输入考核档次" />
