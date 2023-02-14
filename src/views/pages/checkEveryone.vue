@@ -188,7 +188,7 @@ import { ElMessage } from "element-plus";
 
     const userAllget = async () => {
       const result = await userListApi(data.searchParams)
-      console.log(result);
+      // console.log(result);
       data.userList = result.data
       data.total = result.total
     }
@@ -226,10 +226,10 @@ import { ElMessage } from "element-plus";
     }
 
     const handleClick = (tab) => {
-      console.log(tab);
+      // console.log(tab);
       const label = tab.props?.label
       const idCard = data.idCard
-      console.log(label);
+      // console.log(label);
       switch (label) {
         case "基础信息":
           userget(idCard)
@@ -250,7 +250,7 @@ import { ElMessage } from "element-plus";
     }
 
     const pageChange = (val) => {
-      console.log(val);
+      // console.log(val);
       data.searchParams.pagenum = val
       if(data.searchParams.content===""){
         userAllget()
@@ -269,7 +269,7 @@ import { ElMessage } from "element-plus";
 
     const userget1 = async (name) => {
       const result = await searchUserApi1(name)
-      console.log(result);
+      // console.log(result);
       data.user = result.data
       if(data.infoVisible===false){
         data.total = result.total
@@ -303,11 +303,11 @@ import { ElMessage } from "element-plus";
         userAllget()
       } else {
         const result = await userget(content)
-        console.log(result)
+        // console.log(result)
         if (result.status === 200) {
           data.userList = result.data
         } else {
-          console.log(123)
+          // console.log(123)
           data.userList = []
           data.total = 0
         }

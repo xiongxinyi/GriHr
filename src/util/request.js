@@ -319,7 +319,7 @@ export const recordApi = (id) =>{
  */
 //下载申请模板
 export const downloadApi = (type) => {
-    console.log(type);
+    // console.log(type);
     return post({
       url: "download",
       responseType: "blob",

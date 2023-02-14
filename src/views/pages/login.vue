@@ -49,7 +49,7 @@ const login = async (id) => {
   const result = await axios.post("http://123.249.26.49:8082/api/user/login",{
     id:id,
   })
-  console.log(result);
+  // console.log(result);
   localStorage.setItem("token",result.data.token)
   localStorage.setItem("name",result.data.username)
   localStorage.setItem("usercode",result.data.usercode) 
@@ -59,7 +59,7 @@ const login = async (id) => {
       usercode:result.data.usercode,
     }
   })
-  console.log(res)
+  // console.log(res)
   localStorage.setItem("role",res.data.data.role)
   localStorage.setItem("dept",res.data.data.department)
   // 页面刷新

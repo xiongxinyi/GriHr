@@ -41,7 +41,7 @@
         <el-table-column label="操作">
           <template #default="scope">
             <!-- <el-button v-if="data.role==='2'" type="primary" @click="addSalary(2,scope.row.id,scope.row)">修改</el-button> -->
-            <!-- <el-button type="danger"  @click="deleteSalaryDialog(scope.row.id)">删除</el-button>  -->
+            <!-- <el-button type="danger" @click="deleteSalaryDialog(scope.row.id)">删除</el-button>  -->
           </template>
         </el-table-column>
       </el-table>
@@ -53,13 +53,23 @@
      :total="data.total"
      @current-change="pageChange" />
     </div>
-    <!-- 删除弹出框 -->
-    <el-dialog v-model="data.deleteDialog" width="30%">
-    <span>确认删除此信息吗?</span>
+    <!-- 删除对话框 -->
+    <el-dialog v-model="data.deleteDialog" title="提示" width="30%">
+      <span>确认删除此信息吗？</span>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="data.deleteDialog=false">取消</el-button>
-          <el-button type="primary" @click="deleteEdu">确定</el-button>
+          <el-button type="primary" @click="deleteSalary">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+    <!-- 新增对话框 -->
+    <el-dialog v-model="data.addDialog" title="提示" width="30%">
+      <span>确认新增此信息吗？</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="data.addDialog=false">取消</el-button>
+          <el-button type=primary @click="submitForm(salaryForm)">确定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -127,7 +137,8 @@
     <template #footer>
       <div class="flex-float">
         <el-button @click="data.dialogFormVisible=false">取消</el-button>
-        <el-button type=primary @click="submitForm(salaryForm)">确定</el-button>
+        <el-button v-if="data.title==='新增员工工资信息'" type=primary @click="data.addDialog=true">确定</el-button>
+        <!-- <el-button type=primary @click="submitForm(salaryForm)">确定</el-button> -->
       </div>
     </template>
   </el-dialog>
@@ -146,6 +157,8 @@ import { ElMessage } from "element-plus";
     const data = reactive({
       deleteId: null,
       deleteDialog: false,
+      addDialog: false,
+      updateDialog: false,
       dialogFormVisible: false,
       role: "",
       id: '',
@@ -179,7 +192,7 @@ import { ElMessage } from "element-plus";
 
     onMounted(() => {
       data.role = localStorage.getItem("role")
-      console.log(data.role)
+      // console.log(data.role)
       salaryAllget()
     })
 
@@ -215,7 +228,7 @@ import { ElMessage } from "element-plus";
         salaryAllget()
       } else {
         const result = await salaryget(data.searchParams.idCard)
-        console.log(result);
+        // console.log(result);
         if (result.status === 200) {
           data.salaryList = result.data
           data.total = result.total
@@ -228,7 +241,7 @@ import { ElMessage } from "element-plus";
 
     const deleteSalary = async () => {
       const result = await deleteSalaryApi({id:data.deleteId})
-      console.log(result);
+      // console.log(result);
       if (result.status === 200) {
         ElMessage.success('删除成功')
         salaryAllget()
@@ -252,7 +265,7 @@ import { ElMessage } from "element-plus";
     }
 
     const submitForm = async () => {
-      console.log(data.id);
+      // console.log(data.id);
       if (!data.id) {
         let result = await addSalaryApi(data.formData)
         if (result.status === 200) {
@@ -261,6 +274,7 @@ import { ElMessage } from "element-plus";
         } else {
           ElMessage.error('请添加必填项')
         }
+        data.addDialog = false
         data.dialogFormVisible = false
       } else {
         let result = await updateSalaryApi({...data.formData,id:data.id})
@@ -270,6 +284,7 @@ import { ElMessage } from "element-plus";
         } else {
           ElMessage.error('请添加必填项')
         }
+        data.updateDialog = false
         data.dialogFormVisible = false
       }
     }
@@ -288,5 +303,8 @@ import { ElMessage } from "element-plus";
 }
 .input-with-select {
   background-color: #fff;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
 }
 </style>

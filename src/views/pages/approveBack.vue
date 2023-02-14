@@ -170,14 +170,14 @@ import { ElMessage } from "element-plus";
 
       const approveBackget = async () => { 
       const result = await approveBackApi(data.searchParams)
-      console.log(result);
+      // console.log(result);
       data.approveBackList = result.data
       data.total = result.total
       }
 
       // 查看申请信息
       const infoCheck = (e) => {
-      console.log(e.data);
+      // console.log(e.data);
       data.infotype = e.type
       data.infoVisible = true
       switch (e.type) {
@@ -202,7 +202,7 @@ import { ElMessage } from "element-plus";
 
       // 获取审核记录
       const logCheck = async(e) => {
-      console.log(e.id);
+      // console.log(e.id);
       data.logDialog = true
       const result = await recordApi(e.id)
       data.Record = result.data

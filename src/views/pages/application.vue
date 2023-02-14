@@ -555,11 +555,11 @@ const submitUpload = async() => {
 const changeUrl = ()=>{
   
   // data.actionUrl =  `http://localhost:9090/api/upload?type=${data.formData.type}`
-  data.actionUrl =  `http://123.249.26.49:8082/api/upload?type=${data.formData.type}`
+  data.actionUrl = `http://123.249.26.49:8082/api/upload?type=${data.formData.type}`
 }
 const uploadsuccess = (res)=>{
   data.uploaddata = res.data
-  console.log(data.uploaddata);
+  // console.log(data.uploaddata);
 }
 
 const options = [
@@ -712,7 +712,7 @@ const applicationget = async () => {
 
 // 查看申请信息
 const infoCheck = (e) => {
-  console.log(e.data);
+  // console.log(e.data);
   data.infotype = e.type
   // console.log();
   data.infoVisible = true
@@ -738,11 +738,11 @@ const infoCheck = (e) => {
 
 // 获取审核记录
 const logCheck = async(e) =>{
-  console.log(e.id);
+  // console.log(e.id);
   data.logDialog = true
   const result = await recordApi(e.id)
   data.Record = result.data
-  console.log(result);
+  // console.log(result);
 }
 const download = () =>{
   data.downloadVisble = true
@@ -759,7 +759,7 @@ const down = async() =>{
     ElMessage.error('请选择下载模板')
   }else{
     const result = await downloadApi(data.downloadtype)
-  console.log(result);
+  // console.log(result);
 
   const binaryData = [];
     binaryData.push(result);
@@ -797,7 +797,7 @@ const submitForm = async() => {
         ElMessage.error("请添加申请单内容")
       }else{
         result = await createApplicationApi(data1)
-        console.log(result);
+        // console.log(result);
         ElMessage.success('提交成功')
         data.dialogFormVisible = false
         data.userdata = {}
@@ -822,7 +822,7 @@ const submitForm = async() => {
         ElMessage.error("请添加申请单内容")
       }else{
         result = await createApplicationApi(data1)
-      console.log(result);
+      // console.log(result);
       ElMessage.success('提交成功')
       data.dialogFormVisible = false
       data.educatedata = {}
@@ -847,7 +847,7 @@ const submitForm = async() => {
         ElMessage.error("请添加申请单内容")
       }else{
         result = await createApplicationApi(data1)
-      console.log(result);
+      // console.log(result);
       ElMessage.success('提交成功')
       data.dialogFormVisible = false
       data.jobdata = {}
@@ -874,7 +874,7 @@ const submitForm = async() => {
         ElMessage.error("请添加申请单内容")
       }else{
         result = await createApplicationApi(data1)
-      console.log(result);
+      // console.log(result);
       ElMessage.success('提交成功')
       data.dialogFormVisible = false
       data.performdata = {}
@@ -904,7 +904,7 @@ const submitForm = async() => {
         ElMessage.error("请添加申请单内容")
       }else{
         result = await createApplicationApi(data1)
-      console.log(result);
+      // console.log(result);
       ElMessage.success('提交成功')
       data.dialogFormVisible = false
       data.salarydata = {}

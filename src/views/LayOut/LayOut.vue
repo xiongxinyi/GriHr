@@ -84,7 +84,7 @@ export default {
   setup() {
     const name = localStorage.getItem("name");
     const role = localStorage.getItem("role")
-    console.log(role);
+    // console.log(role);
     const store = useStore();
     const router = useRouter();
     const loginOut = () => {
