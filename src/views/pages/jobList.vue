@@ -18,7 +18,7 @@
             </template>
           </el-input>
         </div>
-        <el-button type="primary" @click="addJob(1)" style="margin-left:auto">新增</el-button>
+        <el-button v-if="data.role==='1'||data.role==='2'" type="primary" @click="addJob(1)" style="margin-left:auto">新增</el-button>
       </div>
       <!-- 表格 -->
       <!-- el-table的data:要展示的数据数组，el-table-column是一列，prop每条数据的对应属性，
