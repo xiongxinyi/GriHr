@@ -8,7 +8,7 @@
     <!-- 白色内容区域 -->
     <div class="page_content">
     <!-- 表格 -->
-      <el-tabs v-model="data.tabname" class="demo-tabs" @tab-click="handleClick">
+      <el-tabs v-model="data.tabselect" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="待审批" name="待审批">
           <el-table :data="data.pendingApproveList" style="width: 100%">
             <el-table-column prop="id" label="申请表id" width="80" />
@@ -197,7 +197,7 @@ import { ElMessage } from "element-plus";
       定义数据
     */
     const data = reactive({
-      tabname:"待审批",
+      tabselect:"待审批",
       deleteId: null,
       textarea: "",
       deleteDialog: false,
