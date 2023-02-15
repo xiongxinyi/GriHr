@@ -19,11 +19,11 @@
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="status" label="审批单所处状态" width="140" />
+        <el-table-column prop="status" label="申请表审批状态" width="140" />
         <el-table-column prop="type" label="审批类型"  width="100" />
         <el-table-column prop="handle" label="操作" width="80" />
         <el-table-column prop="createtime" label="创建时间" width="180" />
-        <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
+        <el-table-column prop="data" label="申请信息&nbsp;&nbsp;&nbsp;&nbsp;审批进度">
           <template #default="scope">
             <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
             <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
@@ -116,9 +116,9 @@
       </el-table>
     </el-dialog>
 
-    <!-- 流转记录弹出框 -->
+    <!-- 审批进度弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
-    <h4>申请表流转记录</h4>
+    <h4>申请表审批进度</h4>
       <div class="block" style="margin-top:20px">
         <el-timeline :reverse="reverse" >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
@@ -134,7 +134,7 @@
 
     <!-- 下载内容弹框 -->
     <el-dialog v-model="data.downloadVisble" width="50%">
-      <h4>申请单模板下载</h4>
+      <h4>申请表模板下载</h4>
       <el-select v-model="data.downloadtype" placeholder="模板选择">
       <el-option
         v-for="item in options"
@@ -173,8 +173,8 @@
         <el-form-item label="流程数" prop="process">
           <el-input v-model="data.formData.process" disabled placeholder="3" />
         </el-form-item>
-        <el-form-item label="审批单所处状态" prop="status">
-          <el-select v-model="data.formData.status" placeholder="审批单状态">
+        <el-form-item label="申请表审批状态" prop="status">
+          <el-select v-model="data.formData.status" placeholder="请选择申请表审批状态">
             <el-option label="创建申请" value="创建申请" />
           </el-select>
         </el-form-item>
@@ -794,7 +794,7 @@ const submitForm = async() => {
       }
       }
       if( data1.data.length===0){
-        ElMessage.error("请添加申请单内容")
+        ElMessage.error("请添加申请表内容")
       }else{
         result = await createApplicationApi(data1)
         // console.log(result);
@@ -819,7 +819,7 @@ const submitForm = async() => {
       }
       }
       if( data1.data.length===0){
-        ElMessage.error("请添加申请单内容")
+        ElMessage.error("请添加申请表内容")
       }else{
         result = await createApplicationApi(data1)
       // console.log(result);
@@ -844,7 +844,7 @@ const submitForm = async() => {
       }
       }
       if( data1.data.length===0){
-        ElMessage.error("请添加申请单内容")
+        ElMessage.error("请添加申请表内容")
       }else{
         result = await createApplicationApi(data1)
       // console.log(result);
@@ -871,7 +871,7 @@ const submitForm = async() => {
       }
       }
       if( data1.data.length===0){
-        ElMessage.error("请添加申请单内容")
+        ElMessage.error("请添加申请表内容")
       }else{
         result = await createApplicationApi(data1)
       // console.log(result);
@@ -901,7 +901,7 @@ const submitForm = async() => {
       }
       }
       if( data1.data.length===0){
-        ElMessage.error("请添加申请单内容")
+        ElMessage.error("请添加申请表内容")
       }else{
         result = await createApplicationApi(data1)
       // console.log(result);

@@ -28,7 +28,7 @@
 
             <el-menu-item index="/approveBack" v-if="role==='1'">
               <el-icon><Failed /></el-icon>
-                <span>已退回申请单</span>
+                <span>已退回申请表</span>
             </el-menu-item>
 
             <el-menu-item index="/checkEveryone" v-if="role==='1'||role==='2'||role==='3'">

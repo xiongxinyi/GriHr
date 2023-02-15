@@ -15,11 +15,11 @@
             <el-table-column prop="userCode" label="员工号" width="100" />
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="department" label="部门" width="120" />
-            <el-table-column prop="status" label="审批单所处状态" width="140" />
+            <el-table-column prop="status" label="申请表审批状态" width="140" />
             <el-table-column prop="type" label="审批类型" width="100" />
             <el-table-column prop="handle" label="操作" width="80" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
-            <el-table-column prop="data" label="查看申请信息  审核   申请单记录">
+            <el-table-column prop="data" label="申请信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审批进度">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
                 <el-button type="primary" @click="auditCheck(scope.row)">审核</el-button>
@@ -34,12 +34,12 @@
             <el-table-column prop="userCode" label="员工号" width="100" />
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="department" label="部门" width="120" />
-            <el-table-column prop="status" label="审批单所处状态" width="140" />
+            <el-table-column prop="status" label="申请表审批状态" width="140" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="updatetime" label="更新时间" width="180" />
             <el-table-column prop="type" label="审批类型" width="100" />
             <el-table-column prop="handle" label="操作" width="80" />  
-            <el-table-column prop="data" label="查看申请信息&nbsp;申请单记录">
+            <el-table-column prop="data" label="申请信息&nbsp;&nbsp;&nbsp;&nbsp;审批进度">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
                 <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
@@ -47,19 +47,19 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <!-- <el-tab-pane label="个人已退回申请单" name="个人已退回申请单">
+        <!-- <el-tab-pane label="个人已退回申请表" name="个人已退回申请表">
           <el-table :data="data.approveBackList" style="width: 100%">
             <el-table-column prop="id" label="申请表id" width="80" />
             <el-table-column prop="userCode" label="员工号" width="100" />
             <el-table-column prop="name" label="姓名" width="80" />
             <el-table-column prop="department" label="部门" width="120" />
             <el-table-column prop="process" label="流程数" width="80" />
-            <el-table-column prop="status" label="审批单所处状态" width="140" />
+            <el-table-column prop="status" label="申请表审批状态" width="140" />
             <el-table-column prop="createtime" label="创建时间" width="180" />
             <el-table-column prop="updatetime" label="更新时间" width="180" />
             <el-table-column prop="type" label="审批类型" width="100" />
             <el-table-column prop="handle" label="操作" width="100" />  
-            <el-table-column prop="data" label="查看申请信息">
+            <el-table-column prop="data" label="申请信息">
               <template #default="scope">
                 <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
               </template>
@@ -92,9 +92,9 @@
           type="textarea"
           placeholder="备注" />
     </el-dialog>
-    <!-- 流转记录弹出框 -->
+    <!-- 审批进度弹出框 -->
     <el-dialog v-model="data.logDialog" width="50%">
-    <h4>申请表流转记录</h4>
+    <h4>申请表审批进度</h4>
       <div class="block" style="margin-top:20px">
         <el-timeline reverse="true" >
           <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
@@ -337,7 +337,7 @@ import { ElMessage } from "element-plus";
         case "已审批":
           approvedget()
           break
-        // case "个人已退回申请单":
+        // case "个人已退回申请表":
         //   approveBackget()
         //   break;
       }

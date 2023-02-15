@@ -255,7 +255,7 @@ export const myApplicationApi = (pageParams) => {
         params:pageParams
     })
 }
-//查询待审批申请单
+//查询待审批申请表
 export const approveApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
@@ -266,7 +266,7 @@ export const approveApi = (pageParams) => {
         params:pageParams
     })
 }
-//查询已审批申请单
+//查询已审批申请表
 export const approvedApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({
@@ -277,7 +277,7 @@ export const approvedApi = (pageParams) => {
         params:pageParams
     })
 }
-//查询个人已退回申请单
+//查询个人已退回申请表
 export const approveBackApi = (pageParams) => {
     const token = localStorage.getItem("token")
     return get({

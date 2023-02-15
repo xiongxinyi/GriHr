@@ -3,7 +3,7 @@
       <!-- 面包屑 -->
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>已退回申请单</el-breadcrumb-item>
+        <el-breadcrumb-item>已退回申请表</el-breadcrumb-item>
       </el-breadcrumb>
       <!-- 白色内容区域 -->
       <div class="page_content">
@@ -15,21 +15,21 @@
           <el-table-column prop="userCode" label="员工号" width="100" />
           <el-table-column prop="name" label="姓名" width="80" />
           <el-table-column prop="department" label="部门" width="120" />
-          <el-table-column prop="status" label="审批单所处状态" width="140" />
+          <el-table-column prop="status" label="申请表审批状态" width="140" />
           <el-table-column prop="createtime" label="创建时间" width="180" />
           <el-table-column prop="updatetime" label="更新时间" width="180" />
           <el-table-column prop="type" label="审批类型" width="100" />
           <el-table-column prop="handle" label="操作" width="80" />
-          <el-table-column label="操作&nbsp;申请单记录">
+          <el-table-column label="申请信息&nbsp;&nbsp;&nbsp;&nbsp;审批进度">
             <template #default="scope">
               <el-button type="primary" @click="infoCheck(scope.row)">查看</el-button>
               <el-button type="primary" @click="logCheck(scope.row)">记录</el-button>
             </template>
           </el-table-column>
         </el-table>
-      <!-- 流转记录弹出框 -->
+      <!-- 审批进度弹出框 -->
       <el-dialog v-model="data.logDialog" width="50%">
-      <h4>申请表流转记录</h4>
+      <h4>申请表审批进度</h4>
         <div class="block" style="margin-top:20px">
           <el-timeline reverse=true >
             <el-timeline-item v-for="(item, index) in data.Record" :key="index" :timestamp="item.approvalTime" placement="top">
