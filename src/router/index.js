@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory,} from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import LayOut from '../views/LayOut/LayOut.vue'
 import store from '../store/index.js'
 //路由配置

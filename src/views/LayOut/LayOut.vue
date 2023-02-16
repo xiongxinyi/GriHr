@@ -38,7 +38,7 @@
             
             <!-- 信息模块 -->
             <el-menu-item index="/users">
-              <el-icon><Box /></el-icon>
+              <el-icon style="font-size: 20px"><Box /></el-icon>
                 <span>基础信息</span>
             </el-menu-item>
 
