@@ -51,8 +51,8 @@
         <el-table-column prop="nation" label="民族" width="70" />
         <el-table-column prop="political" label="政治面貌" width="60" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="basicUnit" label="基层单位" width="140" />
-        <el-table-column prop="job" label="工作岗位" width="100" />
+        <el-table-column prop="basicUnit" label="基层单位" width="160" />
+        <el-table-column prop="job" label="工作岗位" width="120" />
         <el-table-column prop="source" label="员工来源" width="100" />
         <el-table-column prop="joinTime" label="加入时间" width="110" />
         <el-table-column prop="state" label="目前状态" width="60" />

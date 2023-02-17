@@ -29,7 +29,7 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="unit" label="基层单位" width="120" />
+        <el-table-column prop="unit" label="基层单位" width="160" />
         <el-table-column prop="issAgency" label="工资代发机构" width="110" />
         <el-table-column prop="insurance" label="社保是否缴纳" width="60" />
         <el-table-column prop="basicSalary" label="基本工资" width="100" />

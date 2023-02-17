@@ -28,8 +28,8 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="unit" label="基层单位" width="120" />
-        <el-table-column prop="job" label="工作岗位" width="100" />
+        <el-table-column prop="unit" label="基层单位" width="160" />
+        <el-table-column prop="job" label="工作岗位" width="120" />
         <el-table-column prop="exeLevel" label="行政级别" width="80" />
         <el-table-column prop="evaPeriod" label="考核期" width="100" />
         <el-table-column prop="evaStaTime" label="考核开始时间" width="110" />

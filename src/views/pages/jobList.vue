@@ -29,7 +29,7 @@
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="job" label="岗位名称" width="100" />
+        <el-table-column prop="job" label="岗位名称" width="120" />
         <el-table-column prop="jobType" label="工作类型" width="100" />
         <el-table-column prop="level" label="岗级" width="80" />
         <el-table-column prop="grade" label="档次" width="80" />

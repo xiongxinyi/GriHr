@@ -118,8 +118,8 @@
         <el-table-column prop="nation" label="民族" width="70" />
         <el-table-column prop="political" label="政治面貌" width="60" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="basicUnit" label="基层单位" width="140" />
-        <el-table-column prop="job" label="工作岗位" width="100" />
+        <el-table-column prop="basicUnit" label="基层单位" width="160" />
+        <el-table-column prop="job" label="工作岗位" width="120" />
         <el-table-column prop="source" label="员工来源" width="100" />
         <el-table-column prop="joinTime" label="加入时间" width="110" />
         <el-table-column prop="state" label="目前状态" width="60" />
@@ -145,7 +145,7 @@
         <el-table-column prop="userCode" label="员工号" width="100" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="job" label="岗位名称" width="100" />
+        <el-table-column prop="job" label="岗位名称" width="120" />
         <el-table-column prop="jobType" label="工作类型" width="100" />
         <el-table-column prop="level" label="岗级" width="80" />
         <el-table-column prop="grade" label="档次" width="80" />
@@ -157,8 +157,8 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="unit" label="基层单位" width="120" />
-        <el-table-column prop="job" label="工作岗位" width="100" />
+        <el-table-column prop="unit" label="基层单位" width="160" />
+        <el-table-column prop="job" label="工作岗位" width="120" />
         <el-table-column prop="exeLevel" label="行政级别" width="80" />
         <el-table-column prop="evaPeriod" label="考核期" width="100" />
         <el-table-column prop="evaStaTime" label="考核开始时间" width="110" />
@@ -173,7 +173,7 @@
         <el-table-column prop="name" label="姓名" width="80" />
         <el-table-column prop="idCard" label="身份证号" width="180" />
         <el-table-column prop="department" label="部门" width="120" />
-        <el-table-column prop="unit" label="基层单位" width="120" />
+        <el-table-column prop="unit" label="基层单位" width="160" />
         <el-table-column prop="issAgency" label="工资代发机构" width="110" />
         <el-table-column prop="insurance" label="社保是否缴纳" width="60" />
         <el-table-column prop="basicSalary" label="基本工资" width="100" />
