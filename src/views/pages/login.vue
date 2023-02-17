@@ -115,6 +115,13 @@ export default {
   background: rgb(56, 86, 139);
   position: relative;
 }
+/* .login-wrap {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background-image: url(../../assets/login-bg.jpg);
+	background-size: 100%;
+} */
 .form_wrap {
   position: fixed;
   top: 50%;

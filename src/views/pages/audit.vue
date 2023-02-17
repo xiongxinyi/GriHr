@@ -223,9 +223,9 @@ import { ElMessage } from "element-plus";
       performCheck: [],
       salaryCheck: [],
     })
-    // onMounted(() => {
-    //   approveget()
-    // })
+    onMounted(() => {
+      approveget()
+    })
 
     const auditData = reactive({
       opinion: "",

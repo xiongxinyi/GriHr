@@ -9,6 +9,37 @@
       <img style="object-fit: scale-down; width:100%; height:100%;" :src="item.url" alt="" />
     </el-carousel-item>
   </el-carousel>
+  <!-- 数据统计 -->
+  <el-row>
+    <el-col :span="6">
+      <el-statistic title="Daily active users" :value="268500" />
+    </el-col>
+    <el-col :span="6">
+      <el-statistic :value="138">
+        <template #title>
+          <div style="display: inline-flex; align-items: center">
+            Ratio of men to women
+            <el-icon style="margin-left: 4px" :size="12">
+              <Male />
+            </el-icon>
+          </div>
+        </template>
+        <template #suffix>/100</template>
+      </el-statistic>
+    </el-col>
+    <el-col :span="6">
+      <el-statistic title="Total Transactions" :value="172000" />
+    </el-col>
+    <el-col :span="6">
+      <el-statistic title="Feedback number" :value="562">
+        <template #suffix>
+          <el-icon style="vertical-align: -0.125em">
+            <ChatLineRound />
+          </el-icon>
+        </template>
+      </el-statistic>
+    </el-col>
+  </el-row>
   <!-- 首页展示 -->
   <el-row :gutter="20">
 
@@ -147,7 +178,7 @@
         <el-col :span="8">
             <el-card shadow="hover" style="height:252px;" class="card-1">
                 <div style="padding: 14px">
-                    <span><el-link href='http://localhost:8080/login#/index' :underline="false">基础信息</el-link></span>
+                    <span><el-link href='http://localhost:8080/login#/users' :underline="false">基础信息</el-link></span>
                 </div>
             </el-card>
         </el-col>
@@ -155,7 +186,7 @@
         <el-col :span="8">
             <el-card shadow="hover" style="height:252px;" class="card-2">
                 <div style="padding: 14px">
-                    <span>教育信息</span>
+                    <span><el-link href='http://localhost:8080/login#/education' :underline="false">教育信息</el-link></span>
                 </div>
             </el-card>
         </el-col>
@@ -163,7 +194,7 @@
         <el-col :span="8">
             <el-card shadow="hover" style="height:252px;" class="card-3">
                 <div style="padding: 14px">
-                    <span>岗级信息</span>
+                    <span><el-link href='http://localhost:8080/login#/job' :underline="false">岗级信息</el-link></span>
                 </div>
             </el-card>
         </el-col>
@@ -173,17 +204,18 @@
     <el-row :gutter="20">
 
         <el-col :span="8">
-            <el-card shadow="hover" style="height:252px;" class="card-4">
-                <div style="padding: 14px">
-                    <span>绩效信息</span>
-                </div>
-            </el-card>
+          <el-card shadow="hover" style="height:400px;" class="card-4">
+            <img src="../../assets/震源车.jpg" class="image" />
+            <div class="cont">
+            <span><el-link href='http://localhost:8080/login#/performance' :underline="false">绩效信息</el-link></span>
+            </div>
+          </el-card>
         </el-col>
 
         <el-col :span="8">
             <el-card shadow="hover" style="height:252px;" class="card-5">
                 <div style="padding: 14px">
-                    <span>工资信息</span>
+                    <span><el-link href='http://localhost:8080/login#/salary' :underline="false">工资信息</el-link></span>
                 </div>
             </el-card>
         </el-col>
@@ -191,7 +223,7 @@
         <el-col :span="8">
             <el-card shadow="hover" style="height:252px;" class="card-6">
                 <div style="padding: 14px">
-                    <span>查看部门所有人</span>
+                    <span><el-link href='http://localhost:8080/login#/checkEveryone' :underline="false">查看部门所有人</el-link></span>
                 </div>
             </el-card>
         </el-col>
@@ -244,6 +276,38 @@
         </el-card>
     </el-col>
   </el-row>
+  <!-- 统计组件 -->
+  <el-row>
+    <el-col :span="6">
+      <el-statistic title="Daily active users" :value="268500" />
+    </el-col>
+    <el-col :span="6">
+      <el-statistic :value="138">
+        <template #title>
+          <div style="display: inline-flex; align-items: center">
+            Ratio of men to women
+            <el-icon style="margin-left: 4px" :size="12">
+              <Male />
+            </el-icon>
+          </div>
+        </template>
+        <template #suffix>/100</template>
+      </el-statistic>
+    </el-col>
+    <el-col :span="6">
+      <el-statistic title="Total Transactions" :value="172000" />
+    </el-col>
+    <el-col :span="6">
+      <el-statistic title="Feedback number" :value="562">
+        <template #suffix>
+          <el-icon style="vertical-align: -0.125em">
+            <ChatLineRound />
+          </el-icon>
+        </template>
+      </el-statistic>
+    </el-col>
+  </el-row>
+
     <el-divider />
       <div class="copyright">
           <div class="my-1">Copyright © 2023 | 东方地球物理公司-研究院-计服中心-信息技术室</div>
@@ -256,6 +320,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ChatLineRound, Male } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
     /* 
       定义数据
@@ -315,6 +380,10 @@ import { ref, reactive } from 'vue'
 }
 .el-carousel__item {
   background-color: #fff;
+}
+.cont {
+   font-size: 120px;
+   color: #999;
 }
 .card-1 {
     background-color: #d3dce6;
