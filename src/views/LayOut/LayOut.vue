@@ -9,7 +9,7 @@
         <!-- 头像 -->
         <el-avatar style="position: relative; left: 560px" shape="square" :size="50">{{ name }}</el-avatar>
         <!-- 退出按钮 -->
-        <el-button type="danger" @click="loginOut">退出登录</el-button>
+        <el-button type="danger" style="float: right; padding: 3px 0" @click="loginOut">退出登录</el-button>
       </el-header>
 
       <el-container>

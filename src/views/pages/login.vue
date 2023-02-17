@@ -6,7 +6,6 @@
         :model="loginData"
         label-width="100px"
         class="demo-dynamic">
-
 <!-- 员工编号 -->
         <el-form-item
           prop="username"
@@ -18,8 +17,7 @@
               trigger: 'blur',
             },
           ]"
-        >
-          <el-input v-model="loginData.username" />
+        ><el-input v-model="loginData.username" />
         </el-form-item>
 <!-- 密码 -->
         <!-- <el-form-item
@@ -79,9 +77,9 @@ export default {
       },
       num:count,
     })
-    const handleLogin=()=>{  
+    const handleLogin = () => {  
       //请求后台接口
-      let id =parseInt(data.loginData.username)
+      let id = parseInt(data.loginData.username)
       login(id)
       store.commit('setUserInfo',data.loginData)
       localStorage.setItem("loginData",JSON.stringify(data.loginData))
