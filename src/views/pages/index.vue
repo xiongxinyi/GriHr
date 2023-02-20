@@ -49,10 +49,10 @@
 
                 <el-card shadow="hover" :body-style="{ padding: '0px' }">
                     <div class="grid-content grid-con-1">
-                        <i class="el-icon-user-solid grid-con-icon"></i>
+                        <i class="el-icon-user grid-con-icon"><el-icon><User /></el-icon></i>
                         <div class="grid-cont-right">
-                            <div class="grid-num">1234</div>
-                            <div>用户访问量</div>
+                            <div class="grid-num">20</div>
+                            <div>人员总数</div>
                         </div>
                     </div>
                 </el-card>
@@ -62,10 +62,10 @@
 
                 <el-card shadow="hover" :body-style="{ padding: '0px' }">
                     <div class="grid-content grid-con-2">
-                        <i class="el-icon-message-solid grid-con-icon"></i>
+                        <i class="el-icon-pass grid-con-icon"><el-icon><DocumentChecked /></el-icon></i>
                         <div class="grid-cont-right">
-                            <div class="grid-num">321</div>
-                            <div>系统消息</div>
+                            <div class="grid-num">19</div>
+                            <div>申请通过</div>
                         </div>
                     </div>
                 </el-card>
@@ -75,10 +75,10 @@
 
                 <el-card shadow="hover" :body-style="{ padding: '0px' }">
                     <div class="grid-content grid-con-3">
-                        <i class="el-icon-s-goods grid-con-icon"></i>
+                        <i class="el-icon-reject grid-con-icon"><el-icon><DocumentDelete /></el-icon></i>
                         <div class="grid-cont-right">
-                            <div class="grid-num">5000</div>
-                            <div>数量</div>
+                            <div class="grid-num">1</div>
+                            <div>申请退回</div>
                         </div>
                     </div>
                 </el-card>
@@ -394,7 +394,7 @@ import { ref, reactive } from 'vue'
   background: rgb(100, 213, 114);
 }
 .grid-con-2 .grid-num {
-  color: rgb(45, 140, 252);
+  color: rgb(100, 213, 114);
 }
 .grid-con-3 .grid-con-icon {
   background: rgb(242, 94, 67);

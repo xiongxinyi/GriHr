@@ -212,7 +212,7 @@
       <el-button type="primary">选择文件</el-button>
     </template>
 
-    <el-button class="ml-3" type="primary" @click="submitUpload" style="margin-left:20px">上传</el-button>
+    <el-button type="primary" @click="submitUpload" style="margin-left:20px">上传</el-button>
 
     <template #tip>
       <div class="el-upload__tip">请选择文件并点击上传</div>
@@ -422,7 +422,7 @@
           ]">
           <el-input v-model="data.performdata.name" placeholder="请输入姓名" />
         </el-form-item>
-         <el-form-item label="身份证号" prop="idCard" :rules="[
+        <el-form-item label="身份证号" prop="idCard" :rules="[
             {
               required: false,
               message: '请填写正确的身份证号',
@@ -467,7 +467,7 @@
 
       <el-form v-if="data.formData.type==='工资信息'&&data.formData.createtype==='手动添加'">
       <h4>导入员工工资信息</h4>
-      <el-form-item label="工资发放年月" prop="wageDate">
+        <el-form-item label="工资发放年月" prop="wageDate">
           <el-input v-model.number="data.salarydata.wageDate" placeholder="请输入工资发放年月（例如:202203）" />
         </el-form-item>
         <el-form-item label="姓名" prop="name" :rules="[
@@ -479,7 +479,7 @@
           ]">
           <el-input v-model="data.salarydata.name" placeholder="请输入姓名" />
         </el-form-item>
-         <el-form-item label="身份证号" prop="idCard" :rules="[
+        <el-form-item label="身份证号" prop="idCard" :rules="[
             {
               required: false,
               message: '请填写正确的身份证号',

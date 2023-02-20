@@ -14,7 +14,11 @@
             placeholder="请输入身份证号查询"
             clearable class="input-with-select">
             <template #append>
-              <el-button @click="searchSalary"><el-icon><Search /></el-icon></el-button>
+              <!-- <el-button @click="searchSalary"><el-icon><Search /></el-icon></el-button> -->
+              <el-button type="primary" @click="searchSalary">
+                <el-icon style="vertical-align: middle"><Search /></el-icon>
+                <span style="vertical-align: middle">搜索</span>
+              </el-button>
             </template>
           </el-input>
         </div>
@@ -89,7 +93,7 @@
           ]">
           <el-input v-model="data.formData.name" placeholder="请输入姓名" />
         </el-form-item>
-         <el-form-item label="身份证号" prop="idCard" :rules="[
+        <el-form-item label="身份证号" prop="idCard" :rules="[
             {
               required: false,
               message: '请填写正确的身份证号',
@@ -116,22 +120,22 @@
           </el-select>
         </el-form-item>
         <el-form-item label="基本工资" prop="basicSalary">
-          <el-input v-model="data.formData.basicSalary" placeholder="请输入基本工资" />
+          <el-input v-model.number="data.formData.basicSalary" placeholder="请输入基本工资" />
         </el-form-item>
         <el-form-item label="奖金" prop="bonus">
-          <el-input v-model="data.formData.bonus" placeholder="请输入奖金" />
+          <el-input v-model.number="data.formData.bonus" placeholder="请输入奖金" />
         </el-form-item>
         <el-form-item label="其他" prop="other">
-          <el-input v-model="data.formData.other" placeholder="请输入其他" />
+          <el-input v-model.number="data.formData.other" placeholder="请输入其他" />
         </el-form-item>
         <el-form-item label="备注" prop="note">
           <el-input v-model="data.formData.note" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="应发金额" prop="shouldIssue">
-          <el-input v-model="data.formData.shouldIssue" placeholder="请输入应发金额" />
+          <el-input v-model.number="data.formData.shouldIssue" placeholder="请输入应发金额" />
         </el-form-item>
         <el-form-item label="实发金额" prop="realIssue">
-          <el-input v-model="data.formData.realIssue" placeholder="请输入实发金额" />
+          <el-input v-model.number="data.formData.realIssue" placeholder="请输入实发金额" />
         </el-form-item>
     </el-form>
     <template #footer>
@@ -295,7 +299,7 @@ import { ElMessage } from "element-plus";
 
 <style scoped>
 .input_box {
-  width: 340px;
+  width: 300px;
   margin-right: 15px;
 }
 .el-select .el-input {

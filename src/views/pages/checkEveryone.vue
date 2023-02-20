@@ -17,7 +17,11 @@
             </el-select>
             </template>
             <template #append>
-             <el-button @click="onSearch(data.searchParams.select,data.searchParams.content)"><el-icon><Search /></el-icon></el-button>
+             <!-- <el-button @click="onSearch(data.searchParams.select,data.searchParams.content)"><el-icon><Search /></el-icon></el-button> -->
+              <el-button type="primary" @click="onSearch(data.searchParams.select,data.searchParams.content)">
+                <el-icon style="vertical-align: middle"><Search /></el-icon>
+                <span style="vertical-align: middle">搜索</span>
+              </el-button>
             </template>
           </el-input>
           <!-- <el-input
@@ -333,7 +337,7 @@ import { ElMessage } from "element-plus";
 
 <style scoped>
 .input_box {
-  width: 340px;
+  width: 380px;
   margin-right: 15px;
 }
 .el-select .el-input {

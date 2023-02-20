@@ -14,7 +14,11 @@
             placeholder="请输入身份证号查询"
             clearable class="input-with-select">
             <template #append>
-              <el-button @click="searchPerform"><el-icon><Search /></el-icon></el-button>
+              <!-- <el-button @click="searchPerform"><el-icon><Search /></el-icon></el-button> -->
+              <el-button type="primary" @click="searchPerform">
+                <el-icon style="vertical-align: middle"><Search /></el-icon>
+                <span style="vertical-align: middle">搜索</span>
+              </el-button>
             </template>
           </el-input>
         </div>
@@ -297,7 +301,7 @@ import { ElMessage } from "element-plus";
 
 <style scoped>
 .input_box {
-  width: 340px;
+  width: 300px;
   margin-right: 15px;
 }
 .el-select .el-input {
