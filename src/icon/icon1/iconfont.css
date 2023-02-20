@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1676854326240') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-gerenxinxi-1:before {
+  content: "\e680";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 180px;
+  color:rgb(45, 140, 240);
+}
+
+.icon-education-1-copy:before {
+  content: "\e614";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 190px;
+  color:rgb(45, 140, 240);
+}
+
+.icon-gangwei:before {
+  content: "\e658";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 180px;
+  color:rgb(45, 140, 240);
+}
+
+.icon-jixiaokaohe:before {
+  content: "\e62f";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 180px;
+  color:rgb(45, 140, 240);
+}
+
+.icon-gongziguanli:before {
+  content: "\e6db";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 180px;
+  color:rgb(45, 140, 240);
+}
+
+.icon-xiaozu:before {
+  content: "\e764";
+  font-size: 200px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 180px;
+  color:rgb(45, 140, 240);
+}
