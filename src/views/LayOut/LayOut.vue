@@ -17,48 +17,48 @@
           <el-menu background-color="none" text-color="#fff" :router="true">
 
             <el-menu-item index="/audit" v-if="role==='2'||role==='3'">
-             <el-icon size="20px" color="#409EFC"><Checked /></el-icon>
+             <el-icon size="20px"><Checked /></el-icon>
                 <span style="font-size: 15px">审批审核</span>
             </el-menu-item>
         
             <el-menu-item index="/application" v-if="role==='1'">
-              <el-icon size="20px" color="#409EFC"><List /></el-icon>
+              <el-icon size="20px"><List /></el-icon>
                 <span style="font-size: 15px">查询个人申请表</span>
             </el-menu-item>
 
             <el-menu-item index="/approveBack" v-if="role==='1'">
-              <el-icon size="20px" color="#409EFC"><Failed /></el-icon>
+              <el-icon size="20px"><Failed /></el-icon>
                 <span style="font-size: 15px">已退回申请表</span>
             </el-menu-item>
 
             <el-menu-item index="/checkEveryone" v-if="role==='1'||role==='2'||role==='3'">
-              <el-icon size="20px" color="#409EFC"><Avatar /></el-icon>
+              <el-icon size="20px"><Avatar /></el-icon>
                 <span style="font-size: 15px">查看部门所有人</span>
             </el-menu-item>
             
             <!-- 信息模块 -->
             <el-menu-item index="/users">
-              <el-icon size="20px" color="#409EFC"><Box /></el-icon>
+              <el-icon size="20px"><Box /></el-icon>
                 <span style="font-size: 15px">基础信息</span>
             </el-menu-item>
 
             <el-menu-item index="/education">
-              <el-icon size="20px" color="#409EFC"><Box /></el-icon>
+              <el-icon size="20px"><Box /></el-icon>
                 <span style="font-size: 15px">教育信息</span>
             </el-menu-item>
 
             <el-menu-item index="/job">
-              <el-icon size="20px" color="#409EFC"><Box /></el-icon>
+              <el-icon size="20px"><Box /></el-icon>
                 <span style="font-size: 15px">岗级信息</span>
             </el-menu-item>
 
             <el-menu-item index="/performance">
-              <el-icon size="20px" color="#409EFC"><Box /></el-icon>
+              <el-icon size="20px"><Box /></el-icon>
                 <span style="font-size: 15px">绩效信息</span>
             </el-menu-item>
 
             <el-menu-item index="/salary">
-              <el-icon size="20px" color="#409EFC"><Box /></el-icon>
+              <el-icon size="20px"><Box /></el-icon>
                 <span style="font-size: 15px">工资信息</span>
             </el-menu-item>
 
