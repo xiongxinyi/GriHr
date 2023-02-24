@@ -175,19 +175,19 @@ import { ElMessage } from "element-plus";
       total: 0,
       salaryList: [],
       formData: {
-        wageDate: "",
+        wageDate: 0,
         name: "",
         idCard: "",
         department: "",
         unit: "",
         issAgency: "",
         insurance: "",
-        basicSalary: "",
-        bonus: "",
-        other: "",
+        basicSalary: 0,
+        bonus: 0,
+        other: 0,
         note: "",
-        shouldIssue: "",
-        realIssue: "",
+        shouldIssue: 0,
+        realIssue: 0,
       },
       rules:{
         name:[{required:true,message:"此项为必填项",trigger:"blur"}],
@@ -270,6 +270,11 @@ import { ElMessage } from "element-plus";
 
     const submitForm = async () => {
       // console.log(data.id);
+      data.formData.basicSalary =  parseFloat(data.formData.basicSalary)
+      data.formData.bonus = parseFloat(data.formData.bonus)
+      data.formData.other = parseFloat(data.formData.other)
+      data.formData.shouldIssue = parseFloat(data.formData.shouldIssue)
+      data.formData.realIssue =  parseFloat(data.formData.realIssue)
       if (!data.id) {
         let result = await addSalaryApi(data.formData)
         if (result.status === 200) {

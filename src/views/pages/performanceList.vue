@@ -185,9 +185,9 @@ import { ElMessage } from "element-plus";
         job: "",
         exeLevel: "",
         evaPeriod: "",
-        evaStaTime: "",
-        evaEndTime: "",
-        evaScore: "",
+        evaStaTime: 0,
+        evaEndTime: 0,
+        evaScore: 0,
         evaClass: "",
         evaHead: "",
       },
@@ -257,7 +257,9 @@ import { ElMessage } from "element-plus";
     }
 
     const addPerform = (flag, userId, userInfo) => {
+      
       data.dialogFormVisible = true
+      console.log(userInfo);
       if (flag === 1) {
         data.id = null
         data.title = "新增员工绩效信息"
@@ -272,6 +274,7 @@ import { ElMessage } from "element-plus";
     const submitForm = async () => {
       // console.log(data.id)
       if (!data.id) {
+        data.formData.evaScore = parseFloat(data.formData.evaScore)
         let result = await addPerformApi(data.formData)
         if (result.status === 200) {
           ElMessage.success("添加成功")
