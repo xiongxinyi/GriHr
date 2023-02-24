@@ -472,10 +472,10 @@ import { ref, reactive } from 'vue'
   vertical-align: text-bottom;
 }
 .el-calendar {
-    --el-calendar-border: var(--el-table-border, 1px solid var(--el-border-color-lighter));
-    --el-calendar-header-border-bottom: var(--el-calendar-border);
-    --el-calendar-selected-bg-color: var(--el-color-primary-light-9);
-    --el-calendar-cell-width: 50px;
-    background-color: var(--el-fill-color-blank);
+  --el-calendar-border: var(--el-table-border, 1px solid var(--el-border-color-lighter));
+  --el-calendar-header-border-bottom: var(--el-calendar-border);
+  --el-calendar-selected-bg-color: var(--el-color-primary-light-9);
+  --el-calendar-cell-width: 50px;
+  background-color: var(--el-fill-color-blank);
 }
 </style>
