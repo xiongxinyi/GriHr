@@ -120,22 +120,22 @@
           </el-select>
         </el-form-item>
         <el-form-item label="基本工资" prop="basicSalary">
-          <el-input v-model.number="data.formData.basicSalary" placeholder="请输入基本工资" />
+          <el-input v-model="data.formData.basicSalary" placeholder="请输入基本工资" />
         </el-form-item>
         <el-form-item label="奖金" prop="bonus">
-          <el-input v-model.number="data.formData.bonus" placeholder="请输入奖金" />
+          <el-input v-model="data.formData.bonus" placeholder="请输入奖金" />
         </el-form-item>
         <el-form-item label="其他" prop="other">
-          <el-input v-model.number="data.formData.other" placeholder="请输入其他" />
+          <el-input v-model="data.formData.other" placeholder="请输入其他" />
         </el-form-item>
         <el-form-item label="备注" prop="note">
           <el-input v-model="data.formData.note" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="应发金额" prop="shouldIssue">
-          <el-input v-model.number="data.formData.shouldIssue" placeholder="请输入应发金额" />
+          <el-input v-model="data.formData.shouldIssue" placeholder="请输入应发金额" />
         </el-form-item>
         <el-form-item label="实发金额" prop="realIssue">
-          <el-input v-model.number="data.formData.realIssue" placeholder="请输入实发金额" />
+          <el-input v-model="data.formData.realIssue" placeholder="请输入实发金额" />
         </el-form-item>
     </el-form>
     <template #footer>
