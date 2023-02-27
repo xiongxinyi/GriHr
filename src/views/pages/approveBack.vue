@@ -121,7 +121,7 @@
           <el-table-column prop="insurance" label="社保是否缴纳" width="60" />
           <el-table-column prop="basicSalary" label="基本工资" width="100" />
           <el-table-column prop="bonus" label="奖金" width="100" />
-          <el-table-column prop="other" label="其他" width="60" />
+          <el-table-column prop="other" label="其他" width="100" />
           <el-table-column prop="note" label="备注" width="100" />
           <el-table-column prop="shouldIssue" label="应发金额" width="100" />
           <el-table-column prop="realIssue" label="实发金额" width="100" />
