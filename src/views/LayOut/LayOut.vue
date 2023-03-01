@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="common-header flex-float">
         <div class="flex">
-          <img class="logo" src="../../assets/宝石花.jpg" alt="" />
+          <img class="logo" src="@/assets/baoshihua.jpg" alt="" />
           <h1 class="title">社招人员信息管理系统</h1>
         </div>
         <!-- 头像 -->

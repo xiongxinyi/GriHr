@@ -1,3 +1,4 @@
+<!-- eslint-disable no-mixed-spaces-and-tabs -->
 <template>
 <div class="common-layout">
   <h1>今天是{{ date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' }}，欢迎{{ name }}来到社招人员信息管理系统</h1>
@@ -5,8 +6,9 @@
   <!-- {{date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()}} --> 
   <!-- 走马灯 -->
   <el-carousel :interval="4000" type="card" height="280px">
-    <el-carousel-item v-for="item in carouselData" :key="item">
-      <img style="object-fit: scale-down; width:100%; height:100%;" :src="item.url" alt="" />
+    <el-carousel-item v-for="item in data.carouselData" :key="item">
+
+      <img style="object-fit: scale-down; width:100%; height:100%;" :src="item" alt="" />
     </el-carousel-item>
   </el-carousel>
   <!-- 首页展示 -->
@@ -16,7 +18,7 @@
       <!-- 登录者个人信息 -->
 			<el-card shadow="hover" class="mgb20" style="height:252px">
 				<div class="user-info">
-          <img src="../../assets/宝石花.jpg" class="user-avator" alt />
+          <img src="@/assets/baoshihua.jpg" class="user-avator"  />
             <div class="user-info-cont">
               <div class="user-info-name">{{ name }}</div>
                 <h3>东方地球物理公司</h3>
@@ -339,9 +341,7 @@
 
 <script lang="ts" setup>
 
-import { ChatLineRound, Male } from '@element-plus/icons-vue'
 import { ref, reactive, onMounted } from 'vue'
-import { get } from 'http'
 // import "./../../assets/iconfont/iconfont.css"
 import "@/assets/iconfont/iconfont.css"
     /* 
@@ -375,7 +375,13 @@ import "@/assets/iconfont/iconfont.css"
       apps:0,
       return:0,
       approve:0,
-      approved:0
+      approved:0,
+      carouselData:[
+      require("@/assets/ketouji.jpg"),
+      require("@/assets/zhenyuanche.jpg"),
+      require("@/assets/249dui.jpg"),
+      require("@/assets/kantanchuan.jpg"),
+      ]
     })
     console.log(role);
     
@@ -391,58 +397,15 @@ import "@/assets/iconfont/iconfont.css"
     const name = localStorage.getItem("name")
     const dept = localStorage.getItem("dept")
 
-    // onMounted(()=>{
-  	// 	// 获取日期-星期
-  	// 	this.getdataTime()
-  	// 	// 读秒
-  	// 	setInterval(() => {
-    //     	this.getnewTime()
-    //   	},1000)
-  	// }),
-  	// 	// 获取当前系统日期
-		// getdataTime(()=>{
-	  //     let wk = new Date().getDay()  
-	  //     let yy = new Date().getFullYear();
-	  //     let mm = new Date().getMonth() + 1;
-	  //     let dd = new Date().getDate();
-	  //     let weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-	  //     this.week = weeks[wk]
-	  //     this.date_show = yy + "年" + mm + "月" + dd + "日"
-	  //   }),
-	  //   // 获取当前系统的时间
-	  //   getnewTime(()=>{
-	  //     let hh = new Date().getHours();
-	  //     let mf =
-	  //       new Date().getMinutes() < 10
-	  //         ? "0" + new Date().getMinutes()
-	  //         : new Date().getMinutes();
-	  //     let ss =
-	  //       new Date().getSeconds() < 10
-	  //         ? "0" + new Date().getSeconds()
-	  //         : new Date().getSeconds();
-	  //     this.time_show = hh + ":" + mf + ":" + ss;
-	  //   })
-    declare var require: any
-    const carouselData = [
-      {url: require("@/assets/磕头机.jpg")},
-      {url: require("@/assets/震源车.jpg")},
-      {url: require("@/assets/物探249队勘探在群山之巅.jpg")},
-      {url: require("@/assets/勘探船“东方物探创新者”号.jpg")},
-    ]
-    const todoList = reactive([
-	{
-		title: '完成汇报材料',
-		status: false
-	},
-	{
-		title: 'ppt汇报',
-		status: false
-	},
-	{
-		title: '开会',
-		status: false
-	},
-]);
+    
+     
+    // const carouselData = [
+    //   {url: 'assets/ketouji.jpg'},
+    //   {url:require("@/assets/zhenyuanche.jpg")},
+    //   {url: require("@/assets/249dui.jpg")},
+    //   {url: require("@/assets/kantanchuan.jpg")},
+    // ]
+    
 </script>
 
 <style>
