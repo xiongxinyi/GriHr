@@ -8,7 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import locale from 'element-plus/lib/locale/lang/zh-cn'//分页中文：element-plus
 //import locale from 'element-plus/lib/locale/zh-cn'//分页中文：element-ui
 // 阿里图标库
-import "@/icon/icon1/iconfont.css"
+import "@/assets/iconfont/iconfont.css"
 
 const app = createApp(App)
 //element icon 注册

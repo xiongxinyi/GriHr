@@ -29,7 +29,7 @@
               <h4>上次登录时间：{{ logintime }}</h4>
             </div>
 		  </el-card>
-      <!-- 待办事项 -->
+      <!-- 快捷栏 -->
       <el-card shadow="hover" style="height: 252px">
         <template #header>
           <div class="clearfix">
@@ -43,16 +43,15 @@
   
     <router-link to="/users">
     <el-card shadow="always">
-      <i class="iconfont icon-jichuxinxi" style="font-size: 22px;color: #1296db;"></i>
+      <i class="iconfont icon-gerenxinxi-1" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
       基础信息
     </el-card>
   </router-link>
   </el-col>
-
   <el-col :span="8">
     <router-link to="/education">
     <el-card shadow="always">
-      <i class="iconfont icon-jiaoyuxinxi" style="font-size: 22px;color: #1296db;"></i>
+      <i class="iconfont icon-education-1-copy" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
       教育信息
     </el-card>
   </router-link>
@@ -60,7 +59,7 @@
   <el-col :span="8">
     <router-link to="/job">
     <el-card shadow="always">
-      <i class="iconfont icon-zhiwei" style="font-size: 22px;color: #1296db;"></i>
+      <i class="iconfont icon-gangwei" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
       岗级信息
     </el-card>
   </router-link>
@@ -70,7 +69,7 @@
   <el-col :span="8">
     <router-link to="performance">
     <el-card shadow="always">
-      <i class="iconfont icon-jixiao" style="font-size: 22px;color: #1296db;"></i>
+      <i class="iconfont icon-jixiaokaohe" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
       绩效信息
     </el-card>
   </router-link>
@@ -78,8 +77,16 @@
   <el-col :span="8">
     <router-link to="salary">
     <el-card shadow="always">
-      <i class="iconfont icon-gongzi" style="font-size: 22px;color: #1296db;"></i>
+      <i class="iconfont icon-gongziguanli" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
       工资信息
+    </el-card>
+  </router-link>
+  </el-col>
+  <el-col :span="8">
+    <router-link to="checkEveryone">
+    <el-card shadow="always">
+      <i class="iconfont icon-xiaozu" style="font-size: 20px;color: rgb(45, 140, 240);"></i>
+      部门所有人
     </el-card>
   </router-link>
   </el-col>
@@ -369,6 +376,7 @@ import "@/assets/iconfont/iconfont.css"
         
        }
     })
+    declare var require: any
     const data = reactive({
       deptcount:0,
       count:0,
