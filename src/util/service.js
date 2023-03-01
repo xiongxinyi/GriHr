@@ -15,6 +15,7 @@ const Service = axios.create({
 })
 //请求拦截-增加loading,对请求做统一处理
 Service.interceptors.request.use(config=>{
+    config.headers.Authorization = 'Bearer ' + localStorage.getItem('token')
     loadingObj=ElLoading.service({
         lock: true,
         text: 'Loading',
@@ -27,21 +28,21 @@ Service.interceptors.response.use(response=>{
 
         loadingObj.close()
         const data = response.data
-       
+
         if (data.message === "token授权已过期,请重新登录") {
-            
+
             ElMessage({
                 message:"登录过期请重新登录!",
                 type:"error",
                 duration:2000
             })
             window.location.replace("/login#/login")
-            
+
             // router.push({path:"/login"})
         }
         // if(!data.data){
         //     //请求出错
-        //     ElMessage.error(data.meta.msg||"服务器错误")   
+        //     ElMessage.error(data.meta.msg||"服务器错误")
         //     return data
         // }
         return data
