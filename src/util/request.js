@@ -1,5 +1,25 @@
 import { post, get, deletex, put } from "./service"
 
+//用户登录
+export const loginApi = (id) => {
+    return post({
+        url: "user/login",
+        data:{
+            "id":id
+        }
+    })
+}
+// 获取权限信息
+export const getroleApi = (usercode) => {
+    return get({
+        url: "user/getrole",
+        params:{
+            usercode:usercode
+        }
+    })
+}
+// 获取用户登陆时间
+
 //基础信息usersList-按身份证号idcard精确查询
 export const searchUserApi = (idCard) => {
     const token = localStorage.getItem("token")

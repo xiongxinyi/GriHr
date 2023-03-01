@@ -39,27 +39,24 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import { loginApi,getroleApi } from "@/util/request";
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+
 const login = async (id) => {
-  const result = await axios.post("http://123.249.26.49:8082/api/user/login",{
-    id:id,
-  })
-  // console.log(result);
-  localStorage.setItem("token",result.data.token)
-  localStorage.setItem("name",result.data.username)
-  localStorage.setItem("usercode",result.data.usercode) 
+
+  const result = await loginApi(id)
+
+  localStorage.setItem("token",result.token)
+  localStorage.setItem("name",result.username)
+  localStorage.setItem("usercode",result.usercode) 
+  localStorage.setItem("logintime",result.logintime)
   // 获取用户权限和部门
-  const res = await axios.get("http://123.249.26.49:8082/api/user/getrole",{
-    params:{
-      usercode:result.data.usercode,
-    }
-  })
-  // console.log(res)
-  localStorage.setItem("role",res.data.data.role)
-  localStorage.setItem("dept",res.data.data.department)
+  const res = await getroleApi(result.usercode)
+  console.log(res);
+  localStorage.setItem("role",res.data.role)
+  localStorage.setItem("dept",res.data.department)
   // 页面刷新
   window.location.reload()
 }
