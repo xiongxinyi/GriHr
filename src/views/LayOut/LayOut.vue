@@ -78,6 +78,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { getLogoutUri } from '@/util/sso'
 
 export default {
   name: "layOut",
@@ -102,9 +103,7 @@ export default {
       localStorage.removeItem("name");
       localStorage.removeItem("token");
       store.commit("setUserInfo", {});
-      router.push({
-        path: "./login",
-      });
+      window.location = getLogoutUri()
     };
     return {
       loginOut,

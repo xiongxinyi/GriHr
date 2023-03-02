@@ -1,12 +1,9 @@
 import { post, get, deletex, put } from "./service"
 
 //用户登录
-export const loginApi = (id) => {
+export const loginApi = (code) => {
     return post({
-        url: "user/login",
-        data:{
-            "id":id
-        }
+        url: `user/login?code=${code}`,
     })
 }
 // 获取权限信息

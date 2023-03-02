@@ -391,7 +391,6 @@ import "@/assets/iconfont/iconfont.css"
       require("@/assets/kantanchuan.jpg"),
       ]
     })
-    console.log(role);
     
     const logintime = localStorage.getItem("logintime")
     // console.log(logintime);
