@@ -41,18 +41,19 @@ export default {
         const response = await loginApi(code)
         console.log(response);
         if (response.status===200) {
-          alert('登陆成功！')
+          // alert('登陆成功！')
            localStorage.setItem("token", response.token)
             localStorage.setItem("name", response.username)
             localStorage.setItem("usercode", response.usercode)
             localStorage.setItem("logintime", response.logintime)
             // 获取用户权限和部门
-            const res = getroleApi(response.usercode)
+            const res = await getroleApi(response.usercode)
             localStorage.setItem("role", res.data.role)
             localStorage.setItem("dept", res.data.department)
             //跳转
+            // this.$router.push("/index")
             router.push({
-              path: "/index"
+              path: "/#/index"
             })
           }
         

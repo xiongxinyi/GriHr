@@ -2,10 +2,12 @@
   <div class="common-layout">
     <el-container>
       <el-header class="common-header flex-float">
-        <div class="flex">
+   
+        <div class="flex" @click="gotoindex" style="cursor: pointer;">
           <img class="logo" src="@/assets/baoshihua.jpg" alt="" />
           <h1 class="title">社招人员信息管理系统</h1>
         </div>
+  
         <!-- 头像 -->
         <el-avatar style="position: relative; left: 560px" shape="square" :size="50">{{ name }}</el-avatar>
         <!-- 退出按钮 -->
@@ -80,6 +82,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { getLogoutUri } from '@/util/sso'
 
+
 export default {
   name: "layOut",
   setup() {
@@ -88,6 +91,12 @@ export default {
     // console.log(role);
     const store = useStore();
     const router = useRouter();
+    const gotoindex = ()=>{
+
+        router.push({
+              path: "/#/index"
+            })
+    }
     const loginOut = () => {
       localStorage.removeItem(
         "dept",
@@ -106,6 +115,7 @@ export default {
       window.location = getLogoutUri()
     };
     return {
+      gotoindex,
       loginOut,
       name,
       role,
