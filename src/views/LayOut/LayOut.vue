@@ -111,6 +111,7 @@ export default {
       localStorage.removeItem("role");
       localStorage.removeItem("name");
       localStorage.removeItem("token");
+      localStorage.removeItem("logintime")
       store.commit("setUserInfo", {});
       window.location = getLogoutUri()
     };
