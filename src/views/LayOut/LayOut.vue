@@ -9,7 +9,8 @@
         </div>
   
         <!-- 头像 -->
-        <el-avatar style="position: relative; left: 560px" shape="square" :size="50">{{ name }}</el-avatar>
+        <el-avatar style="float: right;margin-left: auto;margin-right: 50px;" shape="circle" :size="50">{{ name }}</el-avatar>
+
         <!-- 退出按钮 -->
         <el-button type="danger" style="float: right; padding: 3px 0" @click="loginOut">退出登录</el-button>
       </el-header>
@@ -111,7 +112,6 @@ export default {
       localStorage.removeItem("role");
       localStorage.removeItem("name");
       localStorage.removeItem("token");
-      localStorage.removeItem("logintime")
       store.commit("setUserInfo", {});
       window.location = getLogoutUri()
     };

@@ -259,7 +259,7 @@ import { ElMessage } from "element-plus";
     const addPerform = (flag, userId, userInfo) => {
       
       data.dialogFormVisible = true
-      console.log(userInfo);
+      // console.log(userInfo);
       if (flag === 1) {
         data.id = null
         data.title = "新增员工绩效信息"
