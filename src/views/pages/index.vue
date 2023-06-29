@@ -90,7 +90,6 @@
     </el-card>
   </router-link>
   </el-col>
-
 </el-row>
 
         <!-- <el-table :show-header="false" :data="todoList" style="width: 100%">
@@ -126,6 +125,7 @@
 
     <el-col :span="16" > 
       <el-row :gutter="20" class="mgb20" v-if="role==='1'">
+
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-1">
@@ -137,8 +137,8 @@
             </div>
           </el-card>
         </el-col>
-        <el-col :span="8">
 
+        <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-2">
               <el-icon class="el-icon-pass grid-con-icon"><DocumentChecked /></el-icon>
@@ -148,10 +148,9 @@
               </div>
             </div>
           </el-card>
-
         </el-col>
-        <el-col :span="8">
 
+        <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-3">
               <el-icon class="el-icon-reject grid-con-icon"><DocumentDelete /></el-icon>
@@ -161,11 +160,12 @@
               </div>
             </div>
           </el-card>
-
         </el-col>
+
       </el-row>
 
       <el-row :gutter="20" class="mgb20" v-if="role==='2'||role==='3'">
+
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-1">
@@ -177,8 +177,8 @@
             </div>
           </el-card>
         </el-col>
-        <el-col :span="8">
 
+        <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-2">
               <el-icon class="el-icon-pass grid-con-icon"><DocumentChecked /></el-icon>
@@ -188,10 +188,9 @@
               </div>
             </div>
           </el-card>
-
         </el-col>
-        <el-col :span="8">
 
+        <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <div class="grid-content grid-con-3">
               <el-icon class="el-icon-reject grid-con-icon"><DocumentDelete /></el-icon>
@@ -201,10 +200,9 @@
               </div>
             </div>
           </el-card>
-
         </el-col>
-      </el-row>
 
+      </el-row>
 
       <!-- 日历 -->
       <el-card shadow="hover" style="height:403px;">
@@ -217,7 +215,6 @@
       </el-card>
 
     </el-col>
-
   </el-row>
   <!-- 信息模块使用阿里图标 -->
   <!-- <el-row :gutter="20">
